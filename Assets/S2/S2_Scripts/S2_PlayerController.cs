@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class S2_PlayerController : MonoBehaviour
 {
-    GameManager gameManager;
+    public ParticleSystem playerDeathParticles;
+    public AudioClip[] clips;
 
-    readonly List<GameObject> shipChoice = new List<GameObject>();
+    GameManager gameManager;
+    AudioSource audioSource;
+    RaycastHit hit;
+
     int index;
     Transform shipModel;
+    readonly List<GameObject> shipChoice = new List<GameObject>();
 
     new Collider collider;
     readonly Vector3[] dir = new Vector3[] { Vector3.up, Vector3.down, Vector3.right, Vector3.left };
@@ -19,6 +24,11 @@ public class S2_PlayerController : MonoBehaviour
     void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = clips[0];
+        audioSource.loop = true;
+        audioSource.playOnAwake = true;
 
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("Player"))
         {
@@ -34,6 +44,8 @@ public class S2_PlayerController : MonoBehaviour
 
         shipModel = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         collider = GetComponent<Collider>();
+
+        audioSource.Play();
     }
 
     void Update()
@@ -52,14 +64,20 @@ public class S2_PlayerController : MonoBehaviour
 
         if (Physics.BoxCast(collider.bounds.center, collider.bounds.extents / 2, Vector3.forward, transform.rotation, 2.1f, 1 << 9))
         {
-            Destroy(gameObject);
+            audioSource.clip = clips[1];
+            audioSource.Play();
+            playerDeathParticles.Play();
+
+            shipChoice[index].SetActive(false);
             gameManager.ResetGame(null);
-            gameManager.TraverseScenes(1, 2);
+
+            if(!playerDeathParticles.IsAlive())
+                gameManager.TraverseScenes(1, 2);
         }
 
         if (Physics.BoxCast(collider.bounds.center, collider.bounds.extents / 2, Vector3.forward, transform.rotation, 2.1f, 1 << 10))
         {
-            if(gameManager.GetisAlive() && canScore)
+            if (gameManager.GetisAlive() && canScore)
             {
                 gameManager.SetScore(1);
                 canScore = false;

@@ -9,7 +9,7 @@ public class S1_ButtonsController : MonoBehaviour
     GameManager gameManager;
 
     Text titleText;
-    
+
     GameObject titleButtons;
     GameObject controls;
     GameObject selectScreen;
@@ -42,7 +42,7 @@ public class S1_ButtonsController : MonoBehaviour
         selectScreen.SetActive(false);
     }
 
-    private void Update()
+    void Update()
     {
         center = new Vector3(Camera.main.pixelWidth / 100, Camera.main.pixelHeight / 100, 700);
 
@@ -54,12 +54,16 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void StartButton()
     {
+        gameManager.ButtonPressed();
+
         gameManager.ResetGame("Reset");
         gameManager.TraverseScenes(0, 1);
     }
 
     public void ControlsButton()
     {
+        gameManager.ButtonPressed();
+
         titleText.text = "Controls";
         titleButtons.SetActive(false);
         controls.SetActive(true);
@@ -67,6 +71,8 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void ShipSelect()
     {
+        gameManager.ButtonPressed();
+
         titleText.text = "Ship Selection";
         selectScreen.SetActive(true);
         titleButtons.SetActive(false);
@@ -79,6 +85,8 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void SelectButton()
     {
+        gameManager.ButtonPressed();
+
         titleText.text = "HyperDrive";
         ships[index].SetActive(false);
         selectScreen.SetActive(false);
@@ -90,10 +98,12 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void Previous()
     {
+        gameManager.ButtonPressed();
+
         ships[index].SetActive(false);
         index--;
 
-        if(index < 0)
+        if (index < 0)
             index = ships.Count - 1;
 
         ships[index].SetActive(true);
@@ -102,10 +112,12 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void Next()
     {
+        gameManager.ButtonPressed();
+
         ships[index].SetActive(false);
         index++;
 
-        if(index > ships.Count - 1)
+        if (index > ships.Count - 1)
             index = 0;
 
         ships[index].SetActive(true);
@@ -114,6 +126,8 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void BackButton()
     {
+        gameManager.ButtonPressed();
+
         titleText.text = "HyperDrive";
         titleButtons.SetActive(true);
         controls.SetActive(false);
@@ -121,6 +135,8 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void QuitGame()
     {
+        gameManager.ButtonPressed();
+
         Application.Quit();
     }
 }

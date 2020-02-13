@@ -17,6 +17,7 @@ TagManager:
   - HAsteroid
   - NewHighScore
   - NameInput
+  - Score1
   layers:
   - Default
   - TransparentFX
