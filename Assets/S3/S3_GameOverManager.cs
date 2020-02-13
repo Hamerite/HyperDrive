@@ -5,36 +5,34 @@ using UnityEngine.UI;
 
 public class S3_GameOverManager : MonoBehaviour
 {
-    GameManager gameManager;
-
     public AudioClip saveSound;
-    AudioSource audioSource;
-    Button[] buttons;
-
-    Text scoreText;
-    Text highScoreText;
-    Text newHighScore;
-
     public InputField nameInput;
-    string champName;
+
+    Button[] buttons;
+    Text scoreText;
+    Text newHighScore;
+    Text highScoreText;
+    GameManager gameManager;
+    AudioSource audioSource;
 
     readonly WaitForSeconds timer = new WaitForSeconds(0.15f);
 
+    string champName;
+
     void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        buttons = FindObjectsOfType<Button>();
         audioSource = GetComponent<AudioSource>();
+        gameManager = FindObjectOfType<GameManager>();
+
         audioSource.clip = saveSound;
         audioSource.loop = false;
         audioSource.playOnAwake = false;
 
         scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<Text>();
         highScoreText = GameObject.FindGameObjectWithTag("HighScoreText").GetComponent<Text>();
-
         newHighScore = GameObject.FindGameObjectWithTag("NewHighScore").GetComponent<Text>();
         newHighScore.gameObject.SetActive(false);
-
-        buttons = FindObjectsOfType<Button>();
     }
 
     void Start()
@@ -44,16 +42,16 @@ public class S3_GameOverManager : MonoBehaviour
         else
             champName = PlayerPrefs.GetString("ChampName");
 
-        if (PlayerPrefs.GetInt("HighScore") < gameManager.GetScore())
+        if (PlayerPrefs.GetInt("HighScore") < gameManager.GetNumbers("Score"))
         {
-            PlayerPrefs.SetInt("HighScore", gameManager.GetScore());
+            PlayerPrefs.SetInt("HighScore", gameManager.GetNumbers("Score"));
             newHighScore.gameObject.SetActive(true);
-            StartCoroutine(FlashingLetters());
 
+            StartCoroutine(FlashingLetters());
             ButtonsInteractability();
         }
 
-        scoreText.text = "Score: " + gameManager.GetScore().ToString();
+        scoreText.text = "Score: " + gameManager.GetNumbers("Score").ToString();
         highScoreText.text = "High Score: " + champName + "  " + PlayerPrefs.GetInt("HighScore").ToString();
     }
 
@@ -68,14 +66,13 @@ public class S3_GameOverManager : MonoBehaviour
         gameManager.ButtonPressed();
 
         gameManager.ResetGame("Reset");
-        gameManager.TraverseScenes(2, 1);
+        gameManager.TraverseScenes(3, 2);
     }
 
     public void MainMenuButton()
     {
         gameManager.ButtonPressed();
-
-        gameManager.TraverseScenes(2, 0);
+        gameManager.TraverseScenes(3, 1);
     }
 
     public void SetName()
