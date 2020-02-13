@@ -65,11 +65,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42e2909c545c4264a9776841b084da70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDeathParticles: {fileID: 3124038253959315864, guid: c5fc38a63a69c74479fdf7718edf4761,
-    type: 3}
   clips:
   - {fileID: 8300000, guid: eac4f276d71b0aa4c8d8c6485262840f, type: 3}
   - {fileID: 8300000, guid: bd7f682db98e6c64c92a1c3823d49b7c, type: 3}
+  - {fileID: 8300000, guid: ffecf098cdbe5af438ab9bea799db090, type: 3}
+  playerDeathParticles: {fileID: 3124038253959315864, guid: c5fc38a63a69c74479fdf7718edf4761,
+    type: 3}
 --- !u!65 &4619151840774833364
 BoxCollider:
   m_ObjectHideFlags: 0

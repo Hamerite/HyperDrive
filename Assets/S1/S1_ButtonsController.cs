@@ -6,28 +6,26 @@ using UnityEngine.SceneManagement;
 
 public class S1_ButtonsController : MonoBehaviour
 {
-    GameManager gameManager;
-
     Text titleText;
-
-    GameObject titleButtons;
     GameObject controls;
     GameObject selectScreen;
+    GameObject titleButtons;
+    GameManager gameManager;
+
     readonly List<GameObject> ships = new List<GameObject>();
 
-    int index;
     Vector3 center;
-
     Vector3 rotaion = new Vector3(0, 70, 0);
+
+    int index;
 
     void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
-
-        titleText = GameObject.FindGameObjectWithTag("TitleText").GetComponent<Text>();
-        titleButtons = GameObject.FindGameObjectWithTag("TitleButtons");
         controls = GameObject.FindGameObjectWithTag("Controls");
+        titleButtons = GameObject.FindGameObjectWithTag("TitleButtons");
         selectScreen = GameObject.FindGameObjectWithTag("SelectScreen");
+        titleText = GameObject.FindGameObjectWithTag("TitleText").GetComponent<Text>();
 
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("ShipSelect"))
         {
@@ -57,7 +55,7 @@ public class S1_ButtonsController : MonoBehaviour
         gameManager.ButtonPressed();
 
         gameManager.ResetGame("Reset");
-        gameManager.TraverseScenes(0, 1);
+        gameManager.TraverseScenes(1, 2);
     }
 
     public void ControlsButton()
@@ -65,8 +63,8 @@ public class S1_ButtonsController : MonoBehaviour
         gameManager.ButtonPressed();
 
         titleText.text = "Controls";
-        titleButtons.SetActive(false);
         controls.SetActive(true);
+        titleButtons.SetActive(false);
     }
 
     public void ShipSelect()
@@ -79,7 +77,6 @@ public class S1_ButtonsController : MonoBehaviour
 
         ships[PlayerPrefs.GetInt("Selection")].SetActive(true);
         ships[PlayerPrefs.GetInt("Selection")].transform.position = center;
-
         index = PlayerPrefs.GetInt("Selection");
     }
 

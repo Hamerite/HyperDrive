@@ -5,19 +5,17 @@ using UnityEngine;
 public class S2_AsteroidController : MonoBehaviour
 {
     GameManager gameManager;
-
     Transform[] asteroids;
     GameObject destroyer;
 
-    readonly List<Vector3> rotateDir =  new List<Vector3>();
     readonly List<float> rotateSpeed =  new List<float>();
+    readonly List<Vector3> rotateDir =  new List<Vector3>();
 
     float speed = 50.0f;
 
     void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
-
         asteroids = GetComponentsInChildren<Transform>();
         destroyer = GameObject.FindGameObjectWithTag("Destroyer");
     }
@@ -42,10 +40,10 @@ public class S2_AsteroidController : MonoBehaviour
         if (transform.position == destroyer.transform.position)
         {
             gameObject.SetActive(false);
-            gameManager.SetCounter();
+            gameManager.SetNumbers("Counter", 0);
         }
 
-        if (gameManager.GetCounter() != 0 && gameManager.GetCounter() % 20 == 0)
+        if (gameManager.GetNumbers("Counter") != 0 && gameManager.GetNumbers("Counter") % 20 == 0)
             speed += 10;
     }
 }

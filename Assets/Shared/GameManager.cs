@@ -6,15 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    GameManager instance;
-    AudioSource audioSource;
-
     public AudioClip[] clips;
 
     Text scoreText;
+    GameManager instance;
+    AudioSource audioSource;
+
     int score;
     int counter;
-
     bool isAlive;
     bool s2Start;
 
@@ -38,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (s2Start && SceneManager.GetActiveScene().buildIndex == 1)
+        if (s2Start && SceneManager.GetActiveScene().buildIndex == 2)
         {
             scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<Text>();
             s2Start = false;
@@ -54,27 +53,24 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(load);
     }
 
-    public int GetScore()
-    {
-        return score;
-    }
-    public void SetScore(int add)
-    {
-        score += add;
-    }
-
     public bool GetisAlive()
     {
         return isAlive;
     }
-
-    public int GetCounter()
+    public int GetNumbers(string operation)
     {
-        return counter;
+        if (operation == "Score")
+            return score;
+        if (operation == "Counter")
+            return counter;
+        return 0;
     }
-    public void SetCounter()
+    public void SetNumbers(string operation, int add)
     {
-        counter++;
+        if (operation == "Score")
+            score += add;
+        if (operation == "Counter")
+            counter++;
     }
 
     public void ResetGame(string operation)
@@ -87,12 +83,11 @@ public class GameManager : MonoBehaviour
         isAlive = !isAlive;
     }
 
-    //public void ButtonSelected()
-    //{
-    //    audioSource.clip = clips[0];
-    //    audioSource.Play();
-    //}
-
+    public void ButtonSelected()
+    {
+        audioSource.clip = clips[0];
+        audioSource.Play();
+    }
     public void ButtonPressed()
     {
         audioSource.clip = clips[1];
