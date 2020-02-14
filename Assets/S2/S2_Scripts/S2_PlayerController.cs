@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class S2_PlayerController : MonoBehaviour
 {
-    public AudioClip[] clips;
-    public ParticleSystem playerDeathParticles;
+    [SerializeField]
+    AudioClip[] clips;
+    [SerializeField]
+    ParticleSystem playerDeathParticles;
 
     Transform shipModel;
     GameManager gameManager;

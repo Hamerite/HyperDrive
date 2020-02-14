@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour
 {
@@ -16,10 +17,16 @@ public class MusicPlayer : MonoBehaviour
 
     void Update()
     {
-        if (!audioSource.isPlaying)
+        if (SceneManager.GetActiveScene().buildIndex != 4 && !audioSource.isPlaying)
         {
             audioSource.clip = clips[Random.Range(0, clips.Length)];
             audioSource.Play();
         }
+    }
+
+    public void PlaySong(int index)
+    {
+        audioSource.clip = clips[index];
+        audioSource.Play();
     }
 }
