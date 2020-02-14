@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 public class S3_GameOverManager : MonoBehaviour
 {
-    public AudioClip saveSound;
-    public InputField nameInput;
+    [SerializeField]
+    AudioClip[] clips;
+    [SerializeField]
+    InputField nameInput;
 
     Button[] buttons;
-    Text scoreText;
-    Text newHighScore;
-    Text highScoreText;
     GameManager gameManager;
     AudioSource audioSource;
 
     readonly WaitForSeconds timer = new WaitForSeconds(0.15f);
+    readonly List<GameObject> textElements = new List<GameObject>();
 
     string champName;
 
@@ -25,14 +25,15 @@ public class S3_GameOverManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         gameManager = FindObjectOfType<GameManager>();
 
-        audioSource.clip = saveSound;
+        audioSource.clip = clips[0];
         audioSource.loop = false;
         audioSource.playOnAwake = false;
 
-        scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<Text>();
-        highScoreText = GameObject.FindGameObjectWithTag("HighScoreText").GetComponent<Text>();
-        newHighScore = GameObject.FindGameObjectWithTag("NewHighScore").GetComponent<Text>();
-        newHighScore.gameObject.SetActive(false);
+        foreach (GameObject item in GameObject.FindGameObjectsWithTag("ScoreText"))
+        {
+            textElements.Add(item);
+        }
+        textElements[1].SetActive(false);
     }
 
     void Start()
@@ -45,20 +46,26 @@ public class S3_GameOverManager : MonoBehaviour
         if (PlayerPrefs.GetInt("HighScore") < gameManager.GetNumbers("Score"))
         {
             PlayerPrefs.SetInt("HighScore", gameManager.GetNumbers("Score"));
-            newHighScore.gameObject.SetActive(true);
 
+            textElements[1].SetActive(true);
             StartCoroutine(FlashingLetters());
             ButtonsInteractability();
         }
 
-        scoreText.text = "Score: " + gameManager.GetNumbers("Score").ToString();
-        highScoreText.text = "High Score: " + champName + "  " + PlayerPrefs.GetInt("HighScore").ToString();
+        textElements[0].GetComponent<Text>().text = "Score: " + gameManager.GetNumbers("Score").ToString();
+        textElements[2].GetComponent<Text>().text = "High Score: " + champName + "  " + PlayerPrefs.GetInt("HighScore").ToString();
     }
 
     void ButtonsInteractability()
     {
         foreach (Button item in buttons)
             item.interactable = !item.interactable;
+    }
+
+    public void ButtonSelected()
+    {
+        audioSource.clip = clips[1];
+        audioSource.Play();
     }
 
     public void PlayAgainButton()
@@ -77,6 +84,7 @@ public class S3_GameOverManager : MonoBehaviour
 
     public void SetName()
     {
+        audioSource.clip = clips[0];
         audioSource.Play();
 
         champName = nameInput.text;
@@ -84,18 +92,18 @@ public class S3_GameOverManager : MonoBehaviour
         PlayerPrefs.Save();
 
         nameInput.enabled = false;
-        highScoreText.text = "High Score: " + champName + "  " + PlayerPrefs.GetInt("HighScore").ToString();
+        textElements[1].SetActive(false);
+        textElements[2].GetComponent<Text>().text = "High Score: " + champName + "  " + PlayerPrefs.GetInt("HighScore").ToString();
 
         ButtonsInteractability();
-        newHighScore.gameObject.SetActive(false);
     }
 
     IEnumerator FlashingLetters()
     {
         yield return timer;
-        newHighScore.color = Color.red;
+        textElements[1].GetComponent<Text>().color = Color.red;
         yield return timer;
-        newHighScore.color = Color.white;
+        textElements[1].GetComponent<Text>().color = Color.white;
 
         StartCoroutine(FlashingLetters());
     }

@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
-    public AudioClip[] clips;
+    [SerializeField]
+    AudioClip Pressed;
+    [SerializeField]
+    AudioMixer audioMixer;
+    [SerializeField]
+    Toggle mute;
+    [SerializeField]
+    Slider[] volumes;
 
     Text scoreText;
     GameManager instance;
@@ -33,6 +41,15 @@ public class GameManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.loop = false;
         audioSource.playOnAwake = false;
+
+        mute.isOn = (PlayerPrefs.GetInt("Mute") != 0);
+        audioMixer.SetFloat("MasterVolume", PlayerPrefs.GetFloat("MasterVolume"));
+        audioMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicVolume"));
+        audioMixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("SFXVolume"));
+
+        volumes[0].value = PlayerPrefs.GetFloat("MasterVolume");
+        volumes[1].value = PlayerPrefs.GetFloat("MusicVolume");
+        volumes[2].value = PlayerPrefs.GetFloat("SFXVolume");
     }
 
     void Update()
@@ -53,6 +70,36 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(load);
     }
 
+    #region Audio Functions
+    public void SetMute(bool value)
+    {
+        AudioListener.pause = value;
+        PlayerPrefs.SetInt("Mute", (value ? 1 : 0));
+        PlayerPrefs.Save();
+    }
+
+    public void SetMasterVolume(float value)
+    {
+        audioMixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20);
+        PlayerPrefs.SetFloat("MasterVolume", Mathf.Log10(value) * 20);
+        PlayerPrefs.Save();
+    }
+    public void SetMusicVolume(float value)
+    {
+        audioMixer.SetFloat("MusicVolume", Mathf.Log10(value) * 20);
+        PlayerPrefs.SetFloat("MusicVolume", Mathf.Log10(value) * 20);
+        PlayerPrefs.Save();
+    }
+
+    public void SetSFXVolume(float value)
+    {
+        audioMixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20);
+        PlayerPrefs.SetFloat("SFXVolume", Mathf.Log10(value) * 20);
+        PlayerPrefs.Save();
+    }
+    #endregion
+
+    #region Gamplay Functions
     public bool GetisAlive()
     {
         return isAlive;
@@ -81,16 +128,13 @@ public class GameManager : MonoBehaviour
             score = 0;
         }
         isAlive = !isAlive;
+        counter = 0;
     }
+    #endregion
 
-    public void ButtonSelected()
-    {
-        audioSource.clip = clips[0];
-        audioSource.Play();
-    }
     public void ButtonPressed()
     {
-        audioSource.clip = clips[1];
+        audioSource.clip = Pressed;
         audioSource.Play();
     }
 }

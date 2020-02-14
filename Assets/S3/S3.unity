@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 19884164}
   m_Layer: 5
   m_Name: NewHighScoreText
-  m_TagString: NewHighScore
+  m_TagString: ScoreText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -437,7 +437,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0, g: 0.13725491, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.50980395, g: 0.50980395, b: 0.50980395, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0, g: 0.13725491, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -521,8 +521,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4604568823956872141, guid: 34ee5c4e3375f2749ba3dc6dd6031d2f,
-            type: 3}
+        - m_Target: {fileID: 2028329335}
           m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
@@ -821,7 +820,7 @@ GameObject:
   - component: {fileID: 469445475}
   m_Layer: 5
   m_Name: HighScoreText
-  m_TagString: HighScoreText
+  m_TagString: ScoreText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1486,7 +1485,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0, g: 0.13725491, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.50980395, g: 0.50980395, b: 0.50980395, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0, g: 0.13725491, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1570,8 +1569,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4604568823956872141, guid: 34ee5c4e3375f2749ba3dc6dd6031d2f,
-            type: 3}
+        - m_Target: {fileID: 2028329335}
           m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
@@ -1777,7 +1775,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05074012f625aa04f957c3eb503120ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveSound: {fileID: 8300000, guid: e04bf6362f5b9894eb01251a103d282d, type: 3}
+  clips:
+  - {fileID: 8300000, guid: e04bf6362f5b9894eb01251a103d282d, type: 3}
+  - {fileID: 8300000, guid: c8f1b093ec725904aaaad7c302b14606, type: 3}
   nameInput: {fileID: 786763177}
 --- !u!82 &2028329336
 AudioSource:

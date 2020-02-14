@@ -7,17 +7,13 @@ TagManager:
   - Destroyer
   - ScoreText
   - TitleText
-  - HighScoreText
-  - Controls
-  - TitleButtons
   - ShipSelect
-  - SelectScreen
   - EAsteroid
   - MAsteroid
   - HAsteroid
-  - NewHighScore
   - NameInput
-  - Score1
+  - Instructions
+  - StartMenus
   layers:
   - Default
   - TransparentFX
