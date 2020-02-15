@@ -1,15 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Music_ButtonController : MonoBehaviour
 {
     [SerializeField]
-    AudioClip musicSelect;
+    AudioClip mouseOverSound;
 
     AudioSource audioSource;
     GameManager gameManager;
     MusicPlayer musicPlayer;
+
+    Button mainMenu;
+
+    Vector3 mousePos;
+
+    bool usingKeys;
 
     private void Awake()
     {
@@ -17,14 +25,25 @@ public class Music_ButtonController : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         musicPlayer = FindObjectOfType<MusicPlayer>();
 
-        audioSource.clip = musicSelect;
+        mainMenu = GameObject.FindGameObjectWithTag("Main").GetComponent<Button>();
+
+        audioSource.clip = mouseOverSound;
         audioSource.playOnAwake = false;
         audioSource.loop = false;
     }
 
-    public void ButtonSelected()
+    private void Update()
     {
-        audioSource.Play();
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton17))
+            mainMenu.Select();
+
+        MouseToKeys();
+        KeysToMouse();
+    }
+
+    public Button GetMainMenuButton()
+    {
+        return mainMenu;
     }
 
     #region Song Choice
@@ -84,9 +103,42 @@ public class Music_ButtonController : MonoBehaviour
 
     #endregion
 
+    #region Button Fuctions
+    public void ButtonSelected()
+    {
+        audioSource.Play();
+    }
+
     public void MainMenuButton()
     {
         gameManager.ButtonPressed();
         gameManager.TraverseScenes(4, 1);
     }
+    #endregion
+
+    #region Navigation Functions
+    void MouseToKeys()
+    {
+        if (!usingKeys && Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        {
+            if (!usingKeys)
+                mousePos = Input.mousePosition;
+
+            usingKeys = false;
+            Cursor.visible = false;
+
+            mainMenu.Select();
+        }
+    }
+
+    void KeysToMouse()
+    {
+        if (mousePos != Input.mousePosition)
+        {
+            Cursor.visible = true;
+            usingKeys = false;
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+    }
+    #endregion
 }

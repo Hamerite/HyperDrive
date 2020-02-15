@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MusicPlayer : MonoBehaviour
 {
     public AudioClip[] clips;
+
     AudioSource audioSource;
 
     void Awake()

@@ -6,9 +6,15 @@ public class S2_PoolController : MonoBehaviour
 {
     GameManager gameManager;
 
-    readonly WaitForSeconds timer = new WaitForSeconds(2.0f);
+    WaitForSeconds spawnTimer;
+
+    readonly WaitForSeconds LimitTimer = new WaitForSeconds(2.5f);
     readonly List<GameObject>[] asteroids = new List<GameObject>[3];
     readonly List<GameObject>[] asteroidsArray = new List<GameObject>[5];
+
+    bool hasChanged;
+    float speed = 75.0f;
+    float waitTime = 2.0f;
 
     void Awake()
     {
@@ -34,6 +40,8 @@ public class S2_PoolController : MonoBehaviour
             asteroids[2].Add(item);
             item.SetActive(false);
         }
+
+        spawnTimer = new WaitForSeconds(waitTime);
     }
 
     void Start()
@@ -50,21 +58,41 @@ public class S2_PoolController : MonoBehaviour
 
     void Update()
     {
-        if (gameManager.GetNumbers("Counter") % 30 == 0 && gameManager.GetNumbers("Counter") != 0)
-            if (gameManager.GetNumbers("Counter") == 30)
+        if (gameManager.GetNumbers("Counter") % 15 == 0 && gameManager.GetNumbers("Counter") != 0 && !hasChanged)
+        {
+            if (gameManager.GetNumbers("Counter") % 30 == 0 && gameManager.GetNumbers("Counter") != 90 && 
+                gameManager.GetNumbers("Counter") != 180 && gameManager.GetNumbers("Counter") < 301)
+            {
+                speed += 5.0f;
+            }
+            else if (gameManager.GetNumbers("Counter") != 90 && gameManager.GetNumbers("Counter") != 180 &&
+                    gameManager.GetNumbers("Counter") < 286)
+                 {
+                     waitTime -= 0.1f;
+                 }
+            if (gameManager.GetNumbers("Counter") == 90)
+            {
                 for (int i = 0; i < asteroids[1].Count - 1; i++)
                 {
-                        asteroidsArray[i].Clear();
-                        asteroidsArray[i].Add(asteroids[1][i]);
+                    asteroidsArray[i].Clear();
+                    asteroidsArray[i].Add(asteroids[1][i]);
                 }
-            if (gameManager.GetNumbers("Counter") == 60)
+            }
+            if (gameManager.GetNumbers("Counter") == 180)
+            {
                 for (int i = 0; i < asteroids[1].Count - 1; i++)
                 {
                     asteroidsArray[i].Clear();
                     asteroidsArray[i].Add(asteroids[2][i]);
                 }
+            }
+
+            hasChanged = true;
+            StartCoroutine(LimitChange());
+        }
     }
 
+    #region Object Pooler
     IEnumerator ChooseObstacle()
     {
         int RNG = Random.Range(0, asteroidsArray.Length - 1);
@@ -73,7 +101,7 @@ public class S2_PoolController : MonoBehaviour
         newObstacle.transform.position = transform.position;
         newObstacle.SetActive(true);
 
-        yield return timer;
+        yield return spawnTimer;
 
         StartCoroutine(ChooseObstacle());
     }
@@ -89,7 +117,9 @@ public class S2_PoolController : MonoBehaviour
         asteroidsArray[index].Add(obstacle);
         return obstacle;
     }
+    #endregion
 
+    #region Gameplay Functions
     public void ResetArrays()
     {
         for (int i = 0; i < asteroids[2].Count - 1; i++)
@@ -98,4 +128,21 @@ public class S2_PoolController : MonoBehaviour
             asteroidsArray[i].Add(asteroids[0][i]);
         }
     }
+
+    public float GetSpeed()
+    {
+        return speed;
+    }
+
+    public void SetDifficultyPerameters()
+    {
+        waitTime = 2.0f;
+    }
+
+    IEnumerator LimitChange()
+    {
+        yield return LimitTimer;
+        hasChanged = false;
+    }
+    #endregion
 }

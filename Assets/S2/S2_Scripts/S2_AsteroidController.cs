@@ -5,17 +5,20 @@ using UnityEngine;
 public class S2_AsteroidController : MonoBehaviour
 {
     GameManager gameManager;
+    S2_PoolController s2_PoolController;
+
     Transform[] asteroids;
+
     GameObject destroyer;
 
-    readonly List<float> rotateSpeed =  new List<float>();
     readonly List<Vector3> rotateDir =  new List<Vector3>();
-
-    float speed = 50.0f;
+    readonly List<float> rotateSpeed =  new List<float>();
 
     void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
+        s2_PoolController = FindObjectOfType<S2_PoolController>();
+
         asteroids = GetComponentsInChildren<Transform>();
         destroyer = GameObject.FindGameObjectWithTag("Destroyer");
     }
@@ -32,7 +35,7 @@ public class S2_AsteroidController : MonoBehaviour
     void Update()
     {
         if (isActiveAndEnabled)
-            transform.position = Vector3.MoveTowards(transform.position, destroyer.transform.position, 1.0f * speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, destroyer.transform.position, 1.0f * s2_PoolController.GetSpeed() * Time.deltaTime);
 
         for (int i = 1; i < asteroids.Length - 4; i++)
              asteroids[i].Rotate(rotateDir[i] * rotateSpeed[i]);
@@ -42,8 +45,5 @@ public class S2_AsteroidController : MonoBehaviour
             gameObject.SetActive(false);
             gameManager.SetNumbers("Counter", 0);
         }
-
-        if (gameManager.GetNumbers("Counter") != 0 && gameManager.GetNumbers("Counter") % 20 == 0)
-            speed += 10;
     }
 }
