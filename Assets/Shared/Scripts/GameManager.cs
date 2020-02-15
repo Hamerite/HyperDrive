@@ -16,14 +16,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Slider[] volumes;
 
-    Text scoreText;
-    GameManager instance;
     AudioSource audioSource;
+    GameManager instance;
+    S1_ButtonsController S1_ButtonsController;
+    Music_ButtonController music_ButtonController;
+    S3_GameOverManager S3_GameOverManager;
 
+    Text scoreText;
+
+    bool s2Start;
     int score;
     int counter;
-    bool isAlive;
-    bool s2Start;
 
     void Awake()
     {
@@ -34,11 +37,12 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         audioSource.loop = false;
         audioSource.playOnAwake = false;
 
@@ -46,29 +50,37 @@ public class GameManager : MonoBehaviour
         audioMixer.SetFloat("MasterVolume", PlayerPrefs.GetFloat("MasterVolume"));
         audioMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicVolume"));
         audioMixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("SFXVolume"));
-
-        volumes[0].value = PlayerPrefs.GetFloat("MasterVolume");
-        volumes[1].value = PlayerPrefs.GetFloat("MusicVolume");
-        volumes[2].value = PlayerPrefs.GetFloat("SFXVolume");
     }
 
     void Update()
     {
-        if (s2Start && SceneManager.GetActiveScene().buildIndex == 2)
+        if(s2Start && SceneManager.GetActiveScene().buildIndex == 2)
         {
             scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<Text>();
             s2Start = false;
         }
-
         if (scoreText)
             scoreText.text = "Score: " + score.ToString();
     }
 
-    public void TraverseScenes(int unload, int load)
+    #region Gamplay Functions
+    public int GetNumbers(string operation)
     {
-        SceneManager.UnloadSceneAsync(unload);
-        SceneManager.LoadScene(load);
+        if (operation == "Score")
+            return score;
+        if (operation == "Counter")
+            return counter;
+        return 0;
     }
+
+    public void SetNumbers(string operation, int add)
+    {
+        if (operation == "Score")
+            score += add;
+        if (operation == "Counter")
+            counter++;
+    }
+    #endregion
 
     #region Audio Functions
     public void SetMute(bool value)
@@ -99,42 +111,50 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region Gamplay Functions
-    public bool GetisAlive()
+    #region Helper Fuctions
+    public void TraverseScenes(int unload, int load)
     {
-        return isAlive;
-    }
-    public int GetNumbers(string operation)
-    {
-        if (operation == "Score")
-            return score;
-        if (operation == "Counter")
-            return counter;
-        return 0;
-    }
-    public void SetNumbers(string operation, int add)
-    {
-        if (operation == "Score")
-            score += add;
-        if (operation == "Counter")
-            counter++;
-    }
+        SceneManager.LoadScene(load);
+        SceneManager.UnloadSceneAsync(unload);
 
-    public void ResetGame(string operation)
-    {
-        if (operation == "Reset")
+        if(Cursor.visible == false)
         {
-            s2Start = !s2Start;
-            score = 0;
+            if (load == 1)
+            {
+                S1_ButtonsController = FindObjectOfType<S1_ButtonsController>();
+                List<GameObject> startElements = S1_ButtonsController.GetStartMenus();
+                startElements[0].GetComponent<Button>().Select();
+
+                volumes[0].value = PlayerPrefs.GetFloat("MasterVolume");
+                volumes[1].value = PlayerPrefs.GetFloat("MusicVolume");
+                volumes[2].value = PlayerPrefs.GetFloat("SFXVolume");
+            }
+            if (load == 3)
+            {
+                S3_GameOverManager = FindObjectOfType<S3_GameOverManager>();
+                Button overButton = S3_GameOverManager.GetPlayButton();
+                overButton.Select();
+            }
+            if(load == 4)
+            {
+                music_ButtonController = FindObjectOfType<Music_ButtonController>();
+                Button musicMain = music_ButtonController.GetMainMenuButton();
+                musicMain.Select();
+            }
         }
-        isAlive = !isAlive;
-        counter = 0;
+
+        if (load == 2)
+        {
+            s2Start = true;
+            score = 0;
+            counter = 0;
+        }
     }
-    #endregion
 
     public void ButtonPressed()
     {
         audioSource.clip = Pressed;
         audioSource.Play();
     }
+    #endregion
 }

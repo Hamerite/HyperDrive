@@ -51,6 +51,8 @@ MonoBehaviour:
   - {fileID: 3704364243243631021, guid: 1c370f6bb8f068e418b5864d259927fa, type: 3}
   - {fileID: 18253260423410636, guid: 83da05cd21aafa84b86bde00209344ec, type: 3}
   - {fileID: 1923012907462869996, guid: 2efe3a67c598b7c4295a6f14c26e2b97, type: 3}
+  S2_PoolController: {fileID: 6315799074424085545, guid: 6d2542c78a31ef34692296af7bfb971e,
+    type: 3}
 --- !u!82 &6618464736259449610
 AudioSource:
   m_ObjectHideFlags: 0

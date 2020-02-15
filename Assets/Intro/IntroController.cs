@@ -8,7 +8,7 @@ public class IntroController : MonoBehaviour
 
     readonly WaitForSeconds timer = new WaitForSeconds(4.5f);
 
-    void Start()
+    void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
         StartCoroutine(MoveToMenu());

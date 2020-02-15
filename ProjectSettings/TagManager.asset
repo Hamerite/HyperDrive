@@ -14,6 +14,8 @@ TagManager:
   - NameInput
   - Instructions
   - StartMenus
+  - Score1
+  - Main
   layers:
   - Default
   - TransparentFX

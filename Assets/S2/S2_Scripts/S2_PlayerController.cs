@@ -5,33 +5,31 @@ using UnityEngine;
 public class S2_PlayerController : MonoBehaviour
 {
     [SerializeField]
-    AudioClip[] clips;
+    AudioClip[] s2PlayerClips;
     [SerializeField]
     ParticleSystem playerDeathParticles;
 
-    Transform shipModel;
     GameManager gameManager;
     AudioSource audioSource;
 
+    Transform shipModel;
     new Collider collider;
+
     readonly WaitForSeconds timer = new WaitForSeconds(0.25f);
     readonly List<GameObject> shipChoice = new List<GameObject>();
 
     readonly LayerMask[] layers = { 9, 10, 11, 12 };
     readonly Vector3[] dir = new Vector3[] { Vector3.up, Vector3.down, Vector3.right, Vector3.left };
 
-    int index;
+    bool isAlive;
     bool canScore = true;
+    int index;
 
     void Awake()
     {
-        collider = GetComponent<Collider>();
         audioSource = GetComponent<AudioSource>();
         gameManager = FindObjectOfType<GameManager>();
-
-        audioSource.clip = clips[0];
-        audioSource.loop = true;
-        audioSource.playOnAwake = true;
+        collider = GetComponent<Collider>();
 
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("Player"))
         {
@@ -46,7 +44,12 @@ public class S2_PlayerController : MonoBehaviour
         shipChoice[index].SetActive(true);
         shipModel = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
+        audioSource.clip = s2PlayerClips[0];
+        audioSource.loop = true;
+        audioSource.playOnAwake = true;
         audioSource.Play();
+
+        isAlive = true;
     }
 
     void Update()
@@ -64,22 +67,22 @@ public class S2_PlayerController : MonoBehaviour
             if (Physics.Raycast(transform.position, item, out RaycastHit hit, 0.5f, 1 << 8))
                 transform.Translate(hit.normal / 4.5f);
             if (Physics.Raycast(transform.position, item, 10.0f, 1 << 9))
-                audioSource.PlayOneShot(clips[2]);
+                audioSource.PlayOneShot(s2PlayerClips[2]);
         }
 
         foreach (LayerMask item in layers)
         {
             if (Physics.BoxCast(collider.bounds.center, collider.bounds.extents / 2, Vector3.forward, transform.rotation, 2.1f, 1 << item))
-                if (gameManager.GetisAlive() && canScore)
+                if (isAlive && canScore)
                 {
                     if (item == 9)
                     {
-                        audioSource.clip = clips[1];
+                        audioSource.clip = s2PlayerClips[1];
                         audioSource.Play();
-                        playerDeathParticles.Play();
+                        Instantiate(playerDeathParticles, transform);
 
                         shipChoice[index].SetActive(false);
-                        gameManager.ResetGame(null);
+                        isAlive = false;
 
                         if (!playerDeathParticles.IsAlive())
                             gameManager.TraverseScenes(2, 3);
