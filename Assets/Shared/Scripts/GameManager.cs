@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
     AudioMixer audioMixer;
     [SerializeField]
     Toggle mute;
-    [SerializeField]
-    Slider[] volumes;
 
     AudioSource audioSource;
     GameManager instance;
@@ -27,6 +25,7 @@ public class GameManager : MonoBehaviour
     bool s2Start;
     int score;
     int counter;
+    int coins;
 
     void Awake()
     {
@@ -50,6 +49,8 @@ public class GameManager : MonoBehaviour
         audioMixer.SetFloat("MasterVolume", PlayerPrefs.GetFloat("MasterVolume"));
         audioMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicVolume"));
         audioMixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("SFXVolume"));
+
+        coins = PlayerPrefs.GetInt("Coins");
     }
 
     void Update()
@@ -70,6 +71,8 @@ public class GameManager : MonoBehaviour
             return score;
         if (operation == "Counter")
             return counter;
+        if (operation == "Coins")
+            return coins;
         return 0;
     }
 
@@ -79,6 +82,12 @@ public class GameManager : MonoBehaviour
             score += add;
         if (operation == "Counter")
             counter++;
+        if (operation == "Coins")
+        {
+            coins += (score * 5) + (counter * 2);
+            PlayerPrefs.SetInt("Coins", coins);
+            PlayerPrefs.Save();
+        }
     }
     #endregion
 
@@ -124,10 +133,6 @@ public class GameManager : MonoBehaviour
                 S1_ButtonsController = FindObjectOfType<S1_ButtonsController>();
                 List<GameObject> startElements = S1_ButtonsController.GetStartMenus();
                 startElements[0].GetComponent<Button>().Select();
-
-                volumes[0].value = PlayerPrefs.GetFloat("MasterVolume");
-                volumes[1].value = PlayerPrefs.GetFloat("MusicVolume");
-                volumes[2].value = PlayerPrefs.GetFloat("SFXVolume");
             }
             if (load == 3)
             {
@@ -138,7 +143,7 @@ public class GameManager : MonoBehaviour
             if(load == 4)
             {
                 music_ButtonController = FindObjectOfType<Music_ButtonController>();
-                Button musicMain = music_ButtonController.GetMainMenuButton();
+                Button musicMain = music_ButtonController.GetFirstPlayButton();
                 musicMain.Select();
             }
         }

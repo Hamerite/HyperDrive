@@ -67,6 +67,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: eac4f276d71b0aa4c8d8c6485262840f, type: 3}
   - {fileID: 8300000, guid: bd7f682db98e6c64c92a1c3823d49b7c, type: 3}
   - {fileID: 8300000, guid: ffecf098cdbe5af438ab9bea799db090, type: 3}
+  - {fileID: 8300000, guid: c2859b10577356f4993d65a33821faba, type: 3}
+  - {fileID: 8300000, guid: 190d77fc5d965e04f90d4786d00415d4, type: 3}
+  - {fileID: 8300000, guid: 83b92e489f35e2547a7d0047262be525, type: 3}
   playerDeathParticles: {fileID: 3124038253959315864, guid: c5fc38a63a69c74479fdf7718edf4761,
     type: 3}
 --- !u!65 &4619151840774833364

@@ -88,11 +88,20 @@ public class S2_PlayerController : MonoBehaviour
                             gameManager.TraverseScenes(2, 3);
                     }
                     if (item == 10)
+                    {
                         gameManager.SetNumbers("Score", 1);
+                        audioSource.PlayOneShot(s2PlayerClips[3]);
+                    }
                     if (item == 11)
+                    {
                         gameManager.SetNumbers("Score", 2);
+                        audioSource.PlayOneShot(s2PlayerClips[4]);
+                    }
                     if (item == 12)
+                    {
                         gameManager.SetNumbers("Score", 3);
+                        audioSource.PlayOneShot(s2PlayerClips[5]);
+                    }
 
                     canScore = false;
                     StartCoroutine(ScoreLimiter());

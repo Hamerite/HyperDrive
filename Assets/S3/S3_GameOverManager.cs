@@ -13,14 +13,21 @@ public class S3_GameOverManager : MonoBehaviour
 
     Button[] buttons;
 
+    Text coinsGain;
     GameManager gameManager;
     AudioSource audioSource;
 
-    readonly WaitForSeconds timer = new WaitForSeconds(0.15f);
+    readonly WaitForSeconds addCoinsTimer = new WaitForSeconds(0.7f);
+    readonly WaitForSeconds flashingLettersTimer = new WaitForSeconds(0.15f);
     readonly List<GameObject> textElements = new List<GameObject>();
 
+    bool startAdd;
     bool usingKeys;
     string champName;
+    float preAddedCoins;
+    float addedCoins;
+    float gameTime;
+    float addRate = 100.0f;
 
     Vector3 mousePos;
 
@@ -29,6 +36,7 @@ public class S3_GameOverManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         gameManager = FindObjectOfType<GameManager>();
         buttons = FindObjectsOfType<Button>();
+        coinsGain = GameObject.FindGameObjectWithTag("Score1").GetComponent<Text>();
 
         audioSource.clip = clips[0];
         audioSource.loop = false;
@@ -48,6 +56,9 @@ public class S3_GameOverManager : MonoBehaviour
         else
             champName = PlayerPrefs.GetString("ChampName");
 
+        textElements[0].GetComponent<Text>().text = "Score: " + gameManager.GetNumbers("Score").ToString();
+        textElements[2].GetComponent<Text>().text = "High Score: " + champName + "  " + PlayerPrefs.GetInt("HighScore").ToString();
+
         if (PlayerPrefs.GetInt("HighScore") < gameManager.GetNumbers("Score"))
         {
             PlayerPrefs.SetInt("HighScore", gameManager.GetNumbers("Score"));
@@ -57,14 +68,65 @@ public class S3_GameOverManager : MonoBehaviour
             ButtonsInteractability();
         }
 
-        textElements[0].GetComponent<Text>().text = "Score: " + gameManager.GetNumbers("Score").ToString();
-        textElements[2].GetComponent<Text>().text = "High Score: " + champName + "  " + PlayerPrefs.GetInt("HighScore").ToString();
+        preAddedCoins = gameManager.GetNumbers("Coins");
+        coinsGain.text = "Coins: " + preAddedCoins;
+        gameManager.SetNumbers("Coins", 0);
+        addedCoins = gameManager.GetNumbers("Coins") - preAddedCoins;
+
+        gameTime = Time.time;
     }
 
     private void Update()
     {
-        MouseToKeys();
-        KeysToMouse();
+        if(!nameInput.isFocused)
+        {
+            MouseToKeys();
+            KeysToMouse();
+        }
+
+        StartCoroutine(AddCoins());
+
+        if (startAdd)
+        {
+            if (Time.time > gameTime + 1.0f)
+            {
+                gameTime = Time.time;
+                addRate += 25.0f;
+            }
+
+            if (preAddedCoins < gameManager.GetNumbers("Coins"))
+                preAddedCoins += Mathf.Floor(addRate * Time.deltaTime);      
+
+            if (addedCoins > 0)
+            {
+                addedCoins -= Mathf.Floor(addRate * Time.deltaTime);
+                coinsGain.text = "Coins: " + preAddedCoins + " + " + addedCoins;
+
+                audioSource.clip = clips[2];
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+            else
+            {
+                coinsGain.text = "Coins: " + preAddedCoins;
+
+                audioSource.Stop();
+                audioSource.loop = false;
+
+                startAdd = false;
+            }
+        }
+    }
+
+    IEnumerator AddCoins()
+    {
+        if (addedCoins > 0)
+            coinsGain.text = "Coins: " + preAddedCoins + " + " + addedCoins;
+        else
+            coinsGain.text = "Coins: " + preAddedCoins;
+
+        yield return addCoinsTimer;
+        startAdd = true;
     }
 
     #region Button Fuctions
@@ -87,8 +149,11 @@ public class S3_GameOverManager : MonoBehaviour
 
     public void ButtonSelected()
     {
-        audioSource.clip = clips[1];
-        audioSource.Play();
+        if(buttons[0].interactable && buttons[1].interactable)
+        {
+            audioSource.clip = clips[1];
+            audioSource.Play();
+        }
     }
     #endregion
 
@@ -111,9 +176,9 @@ public class S3_GameOverManager : MonoBehaviour
 
     IEnumerator FlashingLetters()
     {
-        yield return timer;
+        yield return flashingLettersTimer;
         textElements[1].GetComponent<Text>().color = Color.red;
-        yield return timer;
+        yield return flashingLettersTimer;
         textElements[1].GetComponent<Text>().color = Color.white;
 
         StartCoroutine(FlashingLetters());
@@ -128,7 +193,7 @@ public class S3_GameOverManager : MonoBehaviour
             if (!usingKeys)
                 mousePos = Input.mousePosition;
 
-            usingKeys = false;
+            usingKeys = true;
             Cursor.visible = false;
 
             buttons[0].Select();
@@ -137,7 +202,7 @@ public class S3_GameOverManager : MonoBehaviour
 
     void KeysToMouse()
     {
-        if (mousePos != Input.mousePosition)
+        if (usingKeys && mousePos != Input.mousePosition)
         {
             Cursor.visible = true;
             usingKeys = false;

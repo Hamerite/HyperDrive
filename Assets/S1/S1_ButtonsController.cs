@@ -14,9 +14,13 @@ public class S1_ButtonsController : MonoBehaviour
     GameManager gameManager;
 
     Button[] firstButton;
+    Slider[] volumeSliders;
 
     Text titleText;
+    Text price;
+    Text coinCount;
     Toggle firstToggle;
+    GameObject resetCheck;
 
     readonly List<GameObject> InstructionElements = new List<GameObject>();
     readonly List<GameObject> ships = new List<GameObject>();
@@ -25,7 +29,11 @@ public class S1_ButtonsController : MonoBehaviour
     Vector3 center;
     Vector3 mousePos;
     Vector3 rotaion = new Vector3(0, 70, 0);
+    
+    readonly bool[] wasPurchased = { true, false, false, false };
+    public int[] prices = { 0, 10000, 10000, 10000 };
 
+    bool afford;
     bool usingKeys;
     int index;
 
@@ -34,6 +42,9 @@ public class S1_ButtonsController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         gameManager = FindObjectOfType<GameManager>();
         titleText = GameObject.FindGameObjectWithTag("TitleText").GetComponent<Text>();
+        resetCheck = GameObject.FindGameObjectWithTag("ResetCheck");
+        coinCount = GameObject.FindGameObjectWithTag("Score1").GetComponent<Text>();
+        price = GameObject.FindGameObjectWithTag("Price").GetComponent<Text>();
 
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("ShipSelect"))
         {
@@ -58,6 +69,10 @@ public class S1_ButtonsController : MonoBehaviour
 
         InstructionElements[0].GetComponent<Button>().interactable = false;
         startMenus[0].SetActive(true);
+
+        wasPurchased[1] = (PlayerPrefs.GetInt("SharkPurchased") != 0);
+        wasPurchased[2] = (PlayerPrefs.GetInt("BattlePurchased") != 0);
+        wasPurchased[3] = (PlayerPrefs.GetInt("XPurchased") != 0);
     }
 
     void Update()
@@ -71,6 +86,8 @@ public class S1_ButtonsController : MonoBehaviour
 
         if (startMenus[0].activeInHierarchy)
             startMenus[4].SetActive(false);
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
+            BackButton();
 
         MouseToKeys();
         KeysToMouse();
@@ -79,19 +96,21 @@ public class S1_ButtonsController : MonoBehaviour
     public void BackButton()
     {
         gameManager.ButtonPressed();
+
+        titleText.text = "HyperDrive";
+        startMenus[0].SetActive(true);
+        ships[index].SetActive(false);
+        resetCheck.SetActive(false);
+        for (int i = 1; i < startMenus.Count - 1; i++)
+        {
+            startMenus[i].SetActive(false);
+        }
+
         if(Cursor.visible == false)
         {
             firstButton = startMenus[0].GetComponentsInChildren<Button>();
             firstButton[0].Select();
         }
-
-        titleText.text = "HyperDrive";
-        startMenus[0].SetActive(true);
-        for (int i = 1; i < startMenus.Count - 1; i++)
-        {
-            startMenus[i].SetActive(false);
-        }
-        ships[index].SetActive(false);
     }
 
     #region Title Elements
@@ -104,34 +123,40 @@ public class S1_ButtonsController : MonoBehaviour
     public void InstructionsButton()
     {
         gameManager.ButtonPressed();
-        if (Cursor.visible == false)
-            InstructionElements[1].GetComponent<Button>().Select();
 
         titleText.text = "Instructions";
         startMenus[1].SetActive(true);
         startMenus[4].SetActive(true);
         startMenus[0].SetActive(false);
-
         InstructionElements[3].SetActive(false);
+
+        if (Cursor.visible == false)
+            InstructionElements[1].GetComponent<Button>().Select();
     }
 
     public void ShipSelect()
     {
         gameManager.ButtonPressed();
-        if(Cursor.visible == false)
-        {
-            firstButton = startMenus[2].GetComponentsInChildren<Button>();
-            firstButton[0].Select();
-        }
 
         titleText.text = "Ship Selection";
         startMenus[2].SetActive(true);
         startMenus[4].SetActive(true);
         startMenus[0].SetActive(false);
 
+        firstButton = startMenus[2].GetComponentsInChildren<Button>();
+        if(Cursor.visible == false)
+        {
+            firstButton[0].Select();
+        }
+
         ships[PlayerPrefs.GetInt("Selection")].SetActive(true);
         ships[PlayerPrefs.GetInt("Selection")].transform.position = center;
         index = PlayerPrefs.GetInt("Selection");
+
+        if(index == 0)
+            price.text = "";
+
+        coinCount.text = "Coins: " + gameManager.GetNumbers("Coins");
     }
 
     public void SoundTrackButton()
@@ -143,16 +168,23 @@ public class S1_ButtonsController : MonoBehaviour
     public void OptionsButton()
     {
         gameManager.ButtonPressed();
-        if(Cursor.visible == false)
-        {
-            firstToggle = startMenus[3].GetComponentInChildren<Toggle>();
-            firstToggle.Select();
-        }
 
         titleText.text = "Options";
         startMenus[3].SetActive(true);
         startMenus[4].SetActive(true);
         startMenus[0].SetActive(false);
+        resetCheck.SetActive(false);
+
+        volumeSliders = startMenus[3].GetComponentsInChildren<Slider>();
+        volumeSliders[0].value = Mathf.Pow(10, PlayerPrefs.GetFloat("MasterVolume")) * 2;
+        volumeSliders[1].value = Mathf.Pow(10, PlayerPrefs.GetFloat("MusicVolume")) * 2;
+        volumeSliders[2].value = Mathf.Pow(10, PlayerPrefs.GetFloat("SFXVolume")) * 2;
+
+        if (Cursor.visible == false)
+        {
+            firstToggle = startMenus[3].GetComponentInChildren<Toggle>();
+            firstToggle.Select();
+        }
     }
 
     public void QuitGame()
@@ -168,14 +200,21 @@ public class S1_ButtonsController : MonoBehaviour
     {
         gameManager.ButtonPressed();
 
-        titleText.text = "HyperDrive";
-        ships[index].SetActive(false);
-        startMenus[0].SetActive(true);
-        startMenus[2].SetActive(false);
-        startMenus[4].SetActive(false);
+        if(!afford)
+            CheckPurchse();
+        else
+        {
+            titleText.text = "HyperDrive";
+            ships[index].SetActive(false);
+            startMenus[0].SetActive(true);
+            startMenus[2].SetActive(false);
+            startMenus[4].SetActive(false);
 
-        PlayerPrefs.SetInt("Selection", index);
-        PlayerPrefs.Save();
+            PlayerPrefs.SetInt("Selection", index);
+            PlayerPrefs.Save();
+
+            afford = false;
+        }
     }
 
     public void Previous()
@@ -187,6 +226,17 @@ public class S1_ButtonsController : MonoBehaviour
 
         if (index < 0)
             index = ships.Count - 1;
+
+        if (wasPurchased[index] == false)
+        {
+            firstButton[0].GetComponentInChildren<Text>().text = "BUY";
+            price.text = "Costs " + prices[index] + " Coins";
+        }
+        else
+        {
+            firstButton[0].GetComponentInChildren<Text>().text = "SELECT";
+            price.text = "";
+        }
 
         ships[index].SetActive(true);
         ships[index].transform.position = center;
@@ -202,8 +252,53 @@ public class S1_ButtonsController : MonoBehaviour
         if (index > ships.Count - 1)
             index = 0;
 
+        if (wasPurchased[index] == false)
+        {
+            firstButton[0].GetComponentInChildren<Text>().text = "BUY";
+            price.text = "Costs " + prices[index] + " Coins";
+        }
+        else
+        {
+            firstButton[0].GetComponentInChildren<Text>().text = "SELECT";
+            price.text = "";
+        }
+
         ships[index].SetActive(true);
         ships[index].transform.position = center;
+    }
+
+    void CheckPurchse()
+    {
+
+        if (wasPurchased[index] == true)
+        {
+            afford = true;
+            SelectButton();
+        }
+        else if (wasPurchased[index] == false && gameManager.GetNumbers("Coins") > prices[index])
+        {
+            wasPurchased[index] = true;
+
+            afford = true;
+            SavePurchase();
+        }
+        else
+        {
+
+        }
+    }
+
+    void SavePurchase()
+    {
+        if(index == 1)
+            PlayerPrefs.SetInt("SharkPurchased", (wasPurchased[index] ? 1 : 0));
+        if(index == 2)
+            PlayerPrefs.SetInt("BattlePurchased", (wasPurchased[index] ? 1 : 0));
+        if(index == 3)
+            PlayerPrefs.SetInt("XPurchased", (wasPurchased[index] ? 1 : 0));
+
+        PlayerPrefs.Save();
+        SelectButton();
     }
     #endregion
 
@@ -227,20 +322,40 @@ public class S1_ButtonsController : MonoBehaviour
     }
     #endregion
 
-    #region Helper Fuctions
-    public void ButtonSelected()
+    #region Delete Highscore Functions
+    public void ResetHighScores()
     {
-        audioSource.clip = s1Clips[0];
-        audioSource.Play();
+        resetCheck.SetActive(true);
+
+        if(Cursor.visible == false)
+        {
+            Button[] selectedButton = resetCheck.GetComponentsInChildren<Button>();
+            selectedButton[0].Select();
+        }
     }
 
-    public void ResetHighScores()
+    public void DeleteButton()
     {
         audioSource.clip = s1Clips[1];
         audioSource.Play();
 
         PlayerPrefs.DeleteKey("HighScore");
         PlayerPrefs.DeleteKey("ChampName");
+
+        resetCheck.SetActive(false);
+    }
+
+    public void CancelButton()
+    {
+        resetCheck.SetActive(false);
+    }
+    #endregion
+
+    #region Helper Fuctions
+    public void ButtonSelected()
+    {
+        audioSource.clip = s1Clips[0];
+        audioSource.Play();
     }
 
     public List<GameObject> GetStartMenus()
@@ -285,7 +400,7 @@ public class S1_ButtonsController : MonoBehaviour
 
     void KeysToMouse()
     {
-        if(mousePos != Input.mousePosition)
+        if(usingKeys && mousePos != Input.mousePosition)
         {
             Cursor.visible = true;
             usingKeys = false;

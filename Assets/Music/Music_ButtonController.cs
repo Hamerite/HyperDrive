@@ -12,38 +12,47 @@ public class Music_ButtonController : MonoBehaviour
     AudioSource audioSource;
     GameManager gameManager;
     MusicPlayer musicPlayer;
-
-    Button mainMenu;
+    ScrollRect scrollRect;
+    Button[] songPlayButtons;
 
     Vector3 mousePos;
 
     bool usingKeys;
+    int index;
+    float verticalPos;
 
-    private void Awake()
+    void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         gameManager = FindObjectOfType<GameManager>();
         musicPlayer = FindObjectOfType<MusicPlayer>();
-
-        mainMenu = GameObject.FindGameObjectWithTag("Main").GetComponent<Button>();
+        scrollRect = FindObjectOfType<ScrollRect>();
+        songPlayButtons = scrollRect.GetComponentsInChildren<Button>();
 
         audioSource.clip = mouseOverSound;
         audioSource.playOnAwake = false;
         audioSource.loop = false;
     }
 
-    private void Update()
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton17))
-            mainMenu.Select();
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
+            gameManager.TraverseScenes(4, 1);
+
+        if(Cursor.visible == false)
+        {
+            index = System.Array.IndexOf(songPlayButtons, EventSystem.current.currentSelectedGameObject);
+            verticalPos = 1.0f - ((float)index / (songPlayButtons.Length - 1));
+            scrollRect.verticalNormalizedPosition = Mathf.Lerp(scrollRect.verticalNormalizedPosition, verticalPos, Time.deltaTime / 2.0f);
+        }
 
         MouseToKeys();
         KeysToMouse();
     }
 
-    public Button GetMainMenuButton()
+    public Button GetFirstPlayButton()
     {
-        return mainMenu;
+        return songPlayButtons[0];
     }
 
     #region Song Choice
@@ -124,16 +133,16 @@ public class Music_ButtonController : MonoBehaviour
             if (!usingKeys)
                 mousePos = Input.mousePosition;
 
-            usingKeys = false;
+            usingKeys = true;
             Cursor.visible = false;
 
-            mainMenu.Select();
+            songPlayButtons[0].Select();
         }
     }
 
     void KeysToMouse()
     {
-        if (mousePos != Input.mousePosition)
+        if (usingKeys && mousePos != Input.mousePosition)
         {
             Cursor.visible = true;
             usingKeys = false;
