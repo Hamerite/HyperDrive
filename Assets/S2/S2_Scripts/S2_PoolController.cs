@@ -14,7 +14,7 @@ public class S2_PoolController : MonoBehaviour
 
     bool hasChanged;
     float speed = 75.0f;
-    float waitTime = 2.0f;
+    float waitTime = 1.8f;
 
     void Awake()
     {

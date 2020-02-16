@@ -17,7 +17,7 @@ public class IntroController : MonoBehaviour
     void Update()
     {
         if (Input.anyKeyDown)
-            gameManager.TraverseScenes(0, 1);
+        gameManager.TraverseScenes(0, 1);
     }
 
     IEnumerator MoveToMenu()

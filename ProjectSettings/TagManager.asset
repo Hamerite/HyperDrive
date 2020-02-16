@@ -16,6 +16,8 @@ TagManager:
   - StartMenus
   - Score1
   - Main
+  - ResetCheck
+  - Price
   layers:
   - Default
   - TransparentFX
