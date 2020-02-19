@@ -1,45 +1,49 @@
-﻿using System.Collections;
+﻿//Created by Dylan LeClair
+//Last revised 19-02-20 (Dylan LeClair)
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
 
 public class S1_ButtonsController : MonoBehaviour
 {
-    [SerializeField]
-    AudioClip[] s1Clips;
-
-    AudioSource audioSource;
     GameManager gameManager;
-
-    Button[] firstButton;
     Slider[] volumeSliders;
 
+    #region Panel Elements Variables
     Text titleText;
-    Text price;
-    Text coinCount;
-    Toggle firstToggle;
     GameObject resetCheck;
 
-    readonly List<GameObject> InstructionElements = new List<GameObject>();
-    readonly List<GameObject> ships = new List<GameObject>();
     readonly List<GameObject> startMenus =  new List<GameObject>();
+    readonly List<GameObject> InstructionElements = new List<GameObject>();
+    #endregion
+
+    #region Ship Selection Variables
+    Text price;
+    Text coinCount;
+
+    readonly List<GameObject> ships = new List<GameObject>();
 
     Vector3 center;
-    Vector3 mousePos;
     Vector3 rotaion = new Vector3(0, 70, 0);
-    
+
     readonly bool[] wasPurchased = { true, false, false, false };
-    public int[] prices = { 0, 10000, 10000, 10000 };
+    readonly int[] prices = { 0, 10000, 10000, 10000 };
 
     bool afford;
-    bool usingKeys;
     int index;
+    #endregion
+
+    #region Navigation Method Change Variables
+    Button[] firstButton;
+    Toggle firstToggle;
+
+    bool panelChange;
+    bool firstSelectedisToggle;
+    #endregion
 
     void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
         gameManager = FindObjectOfType<GameManager>();
         titleText = GameObject.FindGameObjectWithTag("TitleText").GetComponent<Text>();
         resetCheck = GameObject.FindGameObjectWithTag("ResetCheck");
@@ -64,9 +68,6 @@ public class S1_ButtonsController : MonoBehaviour
 
     void Start()
     {
-        audioSource.playOnAwake = false;
-        audioSource.loop = false;
-
         InstructionElements[0].GetComponent<Button>().interactable = false;
         startMenus[0].SetActive(true);
 
@@ -86,43 +87,25 @@ public class S1_ButtonsController : MonoBehaviour
 
         if (startMenus[0].activeInHierarchy)
             startMenus[4].SetActive(false);
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
-            BackButton();
+        else
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
+                BackButton();
 
-        MouseToKeys();
-        KeysToMouse();
+        PanelCheck();
     }
 
-    public void BackButton()
-    {
-        gameManager.ButtonPressed();
-
-        titleText.text = "HyperDrive";
-        startMenus[0].SetActive(true);
-        ships[index].SetActive(false);
-        resetCheck.SetActive(false);
-        for (int i = 1; i < startMenus.Count - 1; i++)
-        {
-            startMenus[i].SetActive(false);
-        }
-
-        if(Cursor.visible == false)
-        {
-            firstButton = startMenus[0].GetComponentsInChildren<Button>();
-            firstButton[0].Select();
-        }
-    }
 
     #region Title Elements
     public void StartButton()
     {
-        gameManager.ButtonPressed();
+        gameManager.PlayButtonSound(1);
         gameManager.TraverseScenes(1, 2);
     }
 
     public void InstructionsButton()
     {
-        gameManager.ButtonPressed();
+        gameManager.PlayButtonSound(1);
+        panelChange = true;
 
         titleText.text = "Instructions";
         startMenus[1].SetActive(true);
@@ -136,7 +119,8 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void ShipSelect()
     {
-        gameManager.ButtonPressed();
+        gameManager.PlayButtonSound(1);
+        panelChange = true;
 
         titleText.text = "Ship Selection";
         startMenus[2].SetActive(true);
@@ -161,13 +145,14 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void SoundTrackButton()
     {
-        gameManager.ButtonPressed();
+        gameManager.PlayButtonSound(1);
         gameManager.TraverseScenes(1, 4);
     }
 
     public void OptionsButton()
     {
-        gameManager.ButtonPressed();
+        gameManager.PlayButtonSound(1);
+        panelChange = true;
 
         titleText.text = "Options";
         startMenus[3].SetActive(true);
@@ -189,7 +174,7 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void QuitGame()
     {
-        gameManager.ButtonPressed();
+        gameManager.PlayButtonSound(1);
 
         Application.Quit();
     }
@@ -198,9 +183,9 @@ public class S1_ButtonsController : MonoBehaviour
     #region Ship Selection
     public void SelectButton()
     {
-        gameManager.ButtonPressed();
+        gameManager.PlayButtonSound(1);
 
-        if(!afford)
+        if (!afford)
             CheckPurchse();
         else
         {
@@ -219,7 +204,7 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void Previous()
     {
-        gameManager.ButtonPressed();
+        gameManager.PlayButtonSound(1);
 
         ships[index].SetActive(false);
         index--;
@@ -244,7 +229,7 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void Next()
     {
-        gameManager.ButtonPressed();
+        gameManager.PlayButtonSound(1);
 
         ships[index].SetActive(false);
         index++;
@@ -305,6 +290,7 @@ public class S1_ButtonsController : MonoBehaviour
     #region Instruction Elements
     public void ControlsButton()
     {
+        gameManager.PlayButtonSound(1);
         InstructionElements[1].GetComponent<Button>().interactable = true;
         InstructionElements[0].GetComponent<Button>().interactable = false;
 
@@ -314,6 +300,7 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void ScoringButton()
     {
+        gameManager.PlayButtonSound(1);
         InstructionElements[0].GetComponent<Button>().interactable = true;
         InstructionElements[1].GetComponent<Button>().interactable = false;
 
@@ -325,6 +312,7 @@ public class S1_ButtonsController : MonoBehaviour
     #region Delete Highscore Functions
     public void ResetHighScores()
     {
+        gameManager.PlayButtonSound(1);
         resetCheck.SetActive(true);
 
         if(Cursor.visible == false)
@@ -336,8 +324,7 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void DeleteButton()
     {
-        audioSource.clip = s1Clips[1];
-        audioSource.Play();
+        gameManager.PlayButtonSound(3);
 
         PlayerPrefs.DeleteKey("HighScore");
         PlayerPrefs.DeleteKey("ChampName");
@@ -351,61 +338,70 @@ public class S1_ButtonsController : MonoBehaviour
     }
     #endregion
 
-    #region Helper Fuctions
+    #region Shared Button Fuctions
     public void ButtonSelected()
     {
-        audioSource.clip = s1Clips[0];
-        audioSource.Play();
+        gameManager.PlayButtonSound(0);
     }
 
-    public List<GameObject> GetStartMenus()
+    public void BackButton()
     {
-        return startMenus;
-    }
+        gameManager.PlayButtonSound(1);
 
-    void MouseToKeys()
-    {
-        if (!usingKeys && Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        titleText.text = "HyperDrive";
+        startMenus[0].SetActive(true);
+        ships[index].SetActive(false);
+        resetCheck.SetActive(false);
+        for (int i = 1; i < startMenus.Count - 1; i++)
         {
-            if(!usingKeys)
-                mousePos = Input.mousePosition;
+            startMenus[i].SetActive(false);
+        }
 
-            usingKeys = true;
-            Cursor.visible = false;
+        if(Cursor.visible == false)
+        {
+            firstButton = startMenus[0].GetComponentsInChildren<Button>();
+            firstButton[0].Select();
+        }
+    }
+    #endregion
 
+    #region Panel Check For Navigation Method Change
+    void PanelCheck()
+    {
+        if(panelChange)
+        {
             if (startMenus[0].activeInHierarchy)
             {
+                firstSelectedisToggle = false;
                 firstButton = startMenus[0].GetComponentsInChildren<Button>();
-                firstButton[0].Select();
             }
             if (startMenus[1].activeInHierarchy)
             {
+                firstSelectedisToggle = false;
                 if (InstructionElements[0].GetComponent<Button>().interactable)
-                    InstructionElements[0].GetComponent<Button>().Select();
+                    firstButton[0] =  InstructionElements[0].GetComponent<Button>();
                 else
-                    InstructionElements[1].GetComponent<Button>().Select();
+                    firstButton[0] = InstructionElements[1].GetComponent<Button>();
             }
             if (startMenus[2].activeInHierarchy)
             {
+                firstSelectedisToggle = false;
                 firstButton = startMenus[2].GetComponentsInChildren<Button>();
-                firstButton[0].Select();
             }
             if (startMenus[3].activeInHierarchy)
             {
+                firstSelectedisToggle = true;
                 firstToggle = startMenus[3].GetComponentInChildren<Toggle>();
                 firstToggle.Select();
             }
-        }
-    }
 
-    void KeysToMouse()
-    {
-        if(usingKeys && mousePos != Input.mousePosition)
-        {
-            Cursor.visible = true;
-            usingKeys = false;
-            EventSystem.current.SetSelectedGameObject(null);
+            panelChange = false;
         }
+
+        if(firstSelectedisToggle)
+            gameManager.MouseToKeys(null, firstToggle);
+        else
+            gameManager.MouseToKeys(firstButton[0], null);
     }
     #endregion
 }

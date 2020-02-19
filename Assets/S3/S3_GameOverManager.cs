@@ -1,35 +1,44 @@
-﻿using System.Collections;
+﻿//Created by Dylan LeClair
+//Last revised 19-02-20 (Dylan LeClair)
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class S3_GameOverManager : MonoBehaviour
 {
+    GameManager gameManager;
+    Button[] buttons;
+
+    #region Audio Variabels
+    AudioSource audioSource;
+
     [SerializeField]
-    AudioClip[] clips;
+    AudioClip coinGainSound;
+    #endregion
+
+    #region HighScore Variables
     [SerializeField]
     InputField nameInput;
 
-    Button[] buttons;
-
-    Text coinsGain;
-    GameManager gameManager;
-    AudioSource audioSource;
-
-    readonly WaitForSeconds addCoinsTimer = new WaitForSeconds(0.7f);
     readonly WaitForSeconds flashingLettersTimer = new WaitForSeconds(0.15f);
     readonly List<GameObject> textElements = new List<GameObject>();
 
-    bool startAdd;
-    bool usingKeys;
     string champName;
+    #endregion
+
+    #region Coins Variables
+    Text coinsGain;
+
+    readonly WaitForSeconds addCoinsTimer = new WaitForSeconds(0.7f);
+
+    bool startAdd;
     float preAddedCoins;
     float addedCoins;
     float gameTime;
     float addRate = 100.0f;
-
-    Vector3 mousePos;
+    #endregion
 
     void Awake()
     {
@@ -38,8 +47,8 @@ public class S3_GameOverManager : MonoBehaviour
         buttons = FindObjectsOfType<Button>();
         coinsGain = GameObject.FindGameObjectWithTag("Score1").GetComponent<Text>();
 
-        audioSource.clip = clips[0];
-        audioSource.loop = false;
+        audioSource.clip = coinGainSound;
+        audioSource.loop = true;
         audioSource.playOnAwake = false;
 
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("ScoreText"))
@@ -80,8 +89,7 @@ public class S3_GameOverManager : MonoBehaviour
     {
         if(!nameInput.isFocused)
         {
-            MouseToKeys();
-            KeysToMouse();
+            gameManager.MouseToKeys(buttons[0], null);
         }
 
         StartCoroutine(AddCoins());
@@ -102,8 +110,6 @@ public class S3_GameOverManager : MonoBehaviour
                 addedCoins -= Mathf.Floor(addRate * Time.deltaTime);
                 coinsGain.text = "Coins: " + preAddedCoins + " + " + addedCoins;
 
-                audioSource.clip = clips[2];
-                audioSource.loop = true;
                 audioSource.Play();
             }
             else
@@ -111,7 +117,6 @@ public class S3_GameOverManager : MonoBehaviour
                 coinsGain.text = "Coins: " + preAddedCoins;
 
                 audioSource.Stop();
-                audioSource.loop = false;
 
                 startAdd = false;
             }
@@ -132,13 +137,13 @@ public class S3_GameOverManager : MonoBehaviour
     #region Button Fuctions
     public void PlayAgainButton()
     {
-        gameManager.ButtonPressed();
+        gameManager.PlayButtonSound(1);
         gameManager.TraverseScenes(3, 2);
     }
 
     public void MainMenuButton()
     {
-        gameManager.ButtonPressed();
+        gameManager.PlayButtonSound(1);
         gameManager.TraverseScenes(3, 1);
     }
     void ButtonsInteractability()
@@ -149,10 +154,9 @@ public class S3_GameOverManager : MonoBehaviour
 
     public void ButtonSelected()
     {
-        if(buttons[0].interactable && buttons[1].interactable)
+        if(buttons[0].interactable)
         {
-            audioSource.clip = clips[1];
-            audioSource.Play();
+            gameManager.PlayButtonSound(0);
         }
     }
     #endregion
@@ -160,8 +164,7 @@ public class S3_GameOverManager : MonoBehaviour
     #region HighScore Fuctions
     public void SetName()
     {
-        audioSource.clip = clips[0];
-        audioSource.Play();
+        gameManager.PlayButtonSound(2);
 
         champName = nameInput.text;
         PlayerPrefs.SetString("ChampName", champName);
@@ -182,37 +185,6 @@ public class S3_GameOverManager : MonoBehaviour
         textElements[1].GetComponent<Text>().color = Color.white;
 
         StartCoroutine(FlashingLetters());
-    }
-    #endregion
-
-    #region Navigation Functions
-    void MouseToKeys()
-    {
-        if (!usingKeys && Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
-        {
-            if (!usingKeys)
-                mousePos = Input.mousePosition;
-
-            usingKeys = true;
-            Cursor.visible = false;
-
-            buttons[0].Select();
-        }
-    }
-
-    void KeysToMouse()
-    {
-        if (usingKeys && mousePos != Input.mousePosition)
-        {
-            Cursor.visible = true;
-            usingKeys = false;
-            EventSystem.current.SetSelectedGameObject(null);
-        }
-    }
-
-    public Button GetPlayButton()
-    {
-        return buttons[0];
     }
     #endregion
 }

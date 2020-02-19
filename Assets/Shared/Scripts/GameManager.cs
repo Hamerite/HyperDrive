@@ -1,31 +1,42 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//Created by Dylan LeClair
+//Last revised 19-02-20 (Dylan LeClair)
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    AudioClip Pressed;
+    GameManager instance;
+
+    #region Audio Cache Variables
     [SerializeField]
     AudioMixer audioMixer;
-    [SerializeField]
-    Toggle mute;
 
     AudioSource audioSource;
-    GameManager instance;
-    S1_ButtonsController S1_ButtonsController;
-    Music_ButtonController music_ButtonController;
-    S3_GameOverManager S3_GameOverManager;
+    [SerializeField]
+    AudioClip[] buttonSoundClips; // { MousedOver, Pressed, saveHighScore, deleteHighScore }
+    
+    [SerializeField]
+    Toggle mute;
+    #endregion
 
+    #region Gameplay Variables
     Text scoreText;
-
-    bool s2Start;
     int score;
     int counter;
     int coins;
+
+    bool s2Start;
+    #endregion
+
+    #region Menu Navigation Variables
+    Vector3 mousePos;
+
+    bool usingKeys;
+    #endregion
 
     void Awake()
     {
@@ -38,13 +49,12 @@ public class GameManager : MonoBehaviour
         }
 
         audioSource = GetComponent<AudioSource>();
+        audioSource.loop = false;
+        audioSource.playOnAwake = false;
     }
 
     void Start()
     {
-        audioSource.loop = false;
-        audioSource.playOnAwake = false;
-
         mute.isOn = (PlayerPrefs.GetInt("Mute") != 0);
         audioMixer.SetFloat("MasterVolume", PlayerPrefs.GetFloat("MasterVolume"));
         audioMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicVolume"));
@@ -62,6 +72,8 @@ public class GameManager : MonoBehaviour
         }
         if (scoreText)
             scoreText.text = "Score: " + score.ToString();
+
+        KeysToMouse();
     }
 
     #region Gamplay Functions
@@ -120,7 +132,35 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region Helper Fuctions
+    #region Menu Navigation Functions
+    public void MouseToKeys(Button newFirstSelectedButton, Toggle newFirstSelectedToggle)
+    {
+        if (!usingKeys && Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        {
+            mousePos = Input.mousePosition;
+
+            usingKeys = true;
+            Cursor.visible = false;
+
+            if (newFirstSelectedToggle)
+                newFirstSelectedToggle.Select();
+            else
+                newFirstSelectedButton.Select();
+        }
+    }
+
+    void KeysToMouse()
+    {
+        if (usingKeys && mousePos != Input.mousePosition)
+        {
+            Cursor.visible = true;
+            usingKeys = false;
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+    }
+    #endregion
+
+    #region Scenes Shared Fuctions
     public void TraverseScenes(int unload, int load)
     {
         SceneManager.LoadScene(load);
@@ -128,23 +168,10 @@ public class GameManager : MonoBehaviour
 
         if(Cursor.visible == false)
         {
-            if (load == 1)
+            if(load == 1 || load == 3 || load == 4)
             {
-                S1_ButtonsController = FindObjectOfType<S1_ButtonsController>();
-                List<GameObject> startElements = S1_ButtonsController.GetStartMenus();
-                startElements[0].GetComponent<Button>().Select();
-            }
-            if (load == 3)
-            {
-                S3_GameOverManager = FindObjectOfType<S3_GameOverManager>();
-                Button overButton = S3_GameOverManager.GetPlayButton();
-                overButton.Select();
-            }
-            if(load == 4)
-            {
-                music_ButtonController = FindObjectOfType<Music_ButtonController>();
-                Button musicMain = music_ButtonController.GetFirstPlayButton();
-                musicMain.Select();
+                Button[] firstSelectedButton = FindObjectsOfType<Button>();
+                firstSelectedButton[0].Select();
             }
         }
 
@@ -156,10 +183,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ButtonPressed()
+    public void PlayButtonSound(int index)
     {
-        audioSource.clip = Pressed;
-        audioSource.Play();
+        audioSource.PlayOneShot(buttonSoundClips[index]);
     }
     #endregion
 }

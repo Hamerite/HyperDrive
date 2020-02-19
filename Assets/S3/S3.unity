@@ -1853,10 +1853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05074012f625aa04f957c3eb503120ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clips:
-  - {fileID: 8300000, guid: e04bf6362f5b9894eb01251a103d282d, type: 3}
-  - {fileID: 8300000, guid: c8f1b093ec725904aaaad7c302b14606, type: 3}
-  - {fileID: 8300000, guid: a680a34a725cae34bae3aa09640719a1, type: 3}
+  coinGainSound: {fileID: 8300000, guid: a680a34a725cae34bae3aa09640719a1, type: 3}
   nameInput: {fileID: 786763177}
 --- !u!82 &2028329336
 AudioSource:

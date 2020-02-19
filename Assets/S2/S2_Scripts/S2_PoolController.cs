@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿//Created by Dylan LeClair
+//Last revised 19-02-20 (Dylan LeClair)
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,15 +9,17 @@ public class S2_PoolController : MonoBehaviour
 {
     GameManager gameManager;
 
-    WaitForSeconds spawnTimer;
-
-    readonly WaitForSeconds LimitTimer = new WaitForSeconds(2.5f);
     readonly List<GameObject>[] asteroids = new List<GameObject>[3];
     readonly List<GameObject>[] asteroidsArray = new List<GameObject>[5];
+
+    #region Object Spawn Variables
+    WaitForSeconds spawnTimer;
+    readonly WaitForSeconds LimitTimer = new WaitForSeconds(2.5f);
 
     bool hasChanged;
     float speed = 75.0f;
     float waitTime = 1.8f;
+    #endregion
 
     void Awake()
     {
