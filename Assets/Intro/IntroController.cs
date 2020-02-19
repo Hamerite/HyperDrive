@@ -1,12 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//Created by Dylan LeClair
+//Last revised 19-02-20 (Dylan LeClair)
+
+using System.Collections;
 using UnityEngine;
 
 public class IntroController : MonoBehaviour
 {
     GameManager gameManager;
 
-    readonly WaitForSeconds timer = new WaitForSeconds(4.5f);
+    readonly WaitForSeconds timer = new WaitForSeconds(3.5f);
 
     void Awake()
     {

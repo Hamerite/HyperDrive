@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//Created by Dylan LeClair
+//Last revised 19-02-20 (Dylan LeClair)
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour
 {
-    public AudioClip[] clips;
+    public AudioClip[] SongClips;
 
     AudioSource audioSource;
 
@@ -20,14 +21,14 @@ public class MusicPlayer : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex != 4 && !audioSource.isPlaying)
         {
-            audioSource.clip = clips[Random.Range(0, clips.Length)];
+            audioSource.clip = SongClips[Random.Range(0, SongClips.Length)];
             audioSource.Play();
         }
     }
 
     public void PlaySong(int index)
     {
-        audioSource.clip = clips[index];
+        audioSource.clip = SongClips[index];
         audioSource.Play();
     }
 }

@@ -1,29 +1,41 @@
-﻿using System.Collections;
+﻿//Created by Dylan LeClair
+//Last revised 19-02-20 (Dylan LeClair)
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class S2_PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    AudioClip[] s2PlayerClips;
+    GameManager gameManager;
+
     [SerializeField]
     ParticleSystem playerDeathParticles;
 
-    GameManager gameManager;
+    #region Audio Variables
     AudioSource audioSource;
 
-    Transform shipModel;
-    new Collider collider;
+    [SerializeField]
+    AudioClip[] s2PlayerClips; // { Throttle, Explosion, PassingObstacle, ScoreSound (Easy, Medium, Hard) }
+    #endregion
 
-    readonly WaitForSeconds timer = new WaitForSeconds(0.25f);
+    #region Ship Model Variables;
+    Transform shipModel;
+
     readonly List<GameObject> shipChoice = new List<GameObject>();
+
+    int index;
+    #endregion
+
+    #region Collision Detection Variables
+    new Collider collider;
+    readonly WaitForSeconds timer = new WaitForSeconds(0.25f);
 
     readonly LayerMask[] layers = { 9, 10, 11, 12 };
     readonly Vector3[] dir = new Vector3[] { Vector3.up, Vector3.down, Vector3.right, Vector3.left };
 
-    bool isAlive;
     bool canScore = true;
-    int index;
+    #endregion
 
     void Awake()
     {
@@ -42,14 +54,11 @@ public class S2_PlayerController : MonoBehaviour
     {
         index = PlayerPrefs.GetInt("Selection");
         shipChoice[index].SetActive(true);
-        shipModel = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        shipModel = shipChoice[index].GetComponent<Transform>();
 
         audioSource.clip = s2PlayerClips[0];
         audioSource.loop = true;
         audioSource.playOnAwake = true;
-        audioSource.Play();
-
-        isAlive = true;
     }
 
     void Update()
@@ -73,7 +82,7 @@ public class S2_PlayerController : MonoBehaviour
         foreach (LayerMask item in layers)
         {
             if (Physics.BoxCast(collider.bounds.center, collider.bounds.extents / 2, Vector3.forward, transform.rotation, 2.1f, 1 << item))
-                if (isAlive && canScore)
+                if (canScore)
                 {
                     if (item == 9)
                     {
@@ -82,7 +91,6 @@ public class S2_PlayerController : MonoBehaviour
                         Instantiate(playerDeathParticles, transform);
 
                         shipChoice[index].SetActive(false);
-                        isAlive = false;
 
                         if (!playerDeathParticles.IsAlive())
                             gameManager.TraverseScenes(2, 3);

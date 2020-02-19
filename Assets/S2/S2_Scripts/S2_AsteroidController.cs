@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//Created by Dylan LeClair
+//Last revised 19-02-10 (Dylan LeClair)
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,12 +9,13 @@ public class S2_AsteroidController : MonoBehaviour
     GameManager gameManager;
     S2_PoolController s2_PoolController;
 
+    #region Asteroid Behaviour Variables
     Transform[] asteroids;
-
     GameObject destroyer;
 
     readonly List<Vector3> rotateDir =  new List<Vector3>();
     readonly List<float> rotateSpeed =  new List<float>();
+    #endregion
 
     void Awake()
     {
