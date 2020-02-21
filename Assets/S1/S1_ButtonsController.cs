@@ -1,6 +1,7 @@
 ﻿//Created by Dylan LeClair
 //Last revised 19-02-20 (Dylan LeClair)
 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,12 +17,15 @@ public class S1_ButtonsController : MonoBehaviour
 
     readonly List<GameObject> startMenus =  new List<GameObject>();
     readonly List<GameObject> InstructionElements = new List<GameObject>();
+
+    //Button[] instructionButtons;
     #endregion
 
     #region Ship Selection Variables
     Text price;
     Text coinCount;
 
+    readonly WaitForSeconds timer = new WaitForSeconds(0.8f);
     readonly List<GameObject> ships = new List<GameObject>();
 
     Vector3 center;
@@ -32,6 +36,7 @@ public class S1_ButtonsController : MonoBehaviour
 
     bool afford;
     int index;
+    int playerCoins;
     #endregion
 
     #region Navigation Method Change Variables
@@ -68,12 +73,18 @@ public class S1_ButtonsController : MonoBehaviour
 
     void Start()
     {
+        //for (int i = 0; i < 1; i++)
+        //{
+        //    instructionButtons[i] = InstructionElements[i].GetComponent<Button>();
+        //}
         InstructionElements[0].GetComponent<Button>().interactable = false;
         startMenus[0].SetActive(true);
 
         wasPurchased[1] = (PlayerPrefs.GetInt("SharkPurchased") != 0);
         wasPurchased[2] = (PlayerPrefs.GetInt("BattlePurchased") != 0);
         wasPurchased[3] = (PlayerPrefs.GetInt("XPurchased") != 0);
+
+        playerCoins = gameManager.GetNumbers("Coins");
     }
 
     void Update()
@@ -90,6 +101,13 @@ public class S1_ButtonsController : MonoBehaviour
         else
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
                 BackButton();
+
+        if(afford)
+        {
+            coinCount.text = "Coins: " + playerCoins + " - " + prices[index];
+
+            StartCoroutine(Purchused());
+        }
 
         PanelCheck();
     }
@@ -140,7 +158,7 @@ public class S1_ButtonsController : MonoBehaviour
         if(index == 0)
             price.text = "";
 
-        coinCount.text = "Coins: " + gameManager.GetNumbers("Coins");
+        coinCount.text = "Coins: " + playerCoins;
     }
 
     public void SoundTrackButton()
@@ -260,9 +278,12 @@ public class S1_ButtonsController : MonoBehaviour
             afford = true;
             SelectButton();
         }
-        else if (wasPurchased[index] == false && gameManager.GetNumbers("Coins") > prices[index])
+        else if (wasPurchased[index] == false && playerCoins >= prices[index])
         {
             wasPurchased[index] = true;
+
+            firstButton[0].GetComponentInChildren<Text>().text = "SELECT";
+            price.text = "";
 
             afford = true;
             SavePurchase();
@@ -282,8 +303,20 @@ public class S1_ButtonsController : MonoBehaviour
         if(index == 3)
             PlayerPrefs.SetInt("XPurchased", (wasPurchased[index] ? 1 : 0));
 
+        playerCoins -= prices[index];
+        gameManager.SetNumbers("Coins", playerCoins);
+        PlayerPrefs.SetInt("Coins", playerCoins);
+
         PlayerPrefs.Save();
-        SelectButton();
+    }
+
+    IEnumerator Purchused()
+    {
+        yield return timer;
+
+        coinCount.text = "Coins: " + playerCoins;
+
+        afford = false;
     }
     #endregion
 
@@ -395,13 +428,13 @@ public class S1_ButtonsController : MonoBehaviour
                 firstToggle.Select();
             }
 
+            if(firstSelectedisToggle)
+                gameManager.MouseToKeys(null, firstToggle);
+            else
+                gameManager.MouseToKeys(firstButton[0], null);
+
             panelChange = false;
         }
-
-        if(firstSelectedisToggle)
-            gameManager.MouseToKeys(null, firstToggle);
-        else
-            gameManager.MouseToKeys(firstButton[0], null);
     }
     #endregion
 }
