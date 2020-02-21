@@ -15029,7 +15029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b3df68fbba84814bb9d5dc9f22718b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clips:
+  SongClips:
   - {fileID: 8300000, guid: 32aa7f7c0fb1df349a5af950cecbdcdf, type: 3}
   - {fileID: 8300000, guid: 00f06e782de139d4e91684d856fd72d9, type: 3}
   - {fileID: 8300000, guid: 95567598a20020e4fb5e2485e0ad7736, type: 3}
