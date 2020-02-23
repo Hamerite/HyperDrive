@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     AudioSource audioSource;
     [SerializeField]
-    AudioClip[] buttonSoundClips; // { MousedOver, Pressed, saveHighScore, deleteHighScore }
+    AudioClip[] buttonSoundClips; // { MousedOver, Pressed, saveHighScore, deleteHighScore, DenySelection }
     
     [SerializeField]
     Toggle mute;
@@ -56,9 +56,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         mute.isOn = (PlayerPrefs.GetInt("Mute") != 0);
-        audioMixer.SetFloat("MasterVolume", PlayerPrefs.GetFloat("MasterVolume"));
-        audioMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicVolume"));
-        audioMixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("SFXVolume"));
+        audioMixer.SetFloat("MixerMaster", Mathf.Log10(PlayerPrefs.GetFloat("MasterVolume")) * 20);
+        audioMixer.SetFloat("MixerMusic", Mathf.Log10(PlayerPrefs.GetFloat("MusicVolume")) * 20);
+        audioMixer.SetFloat("MixerSFX", Mathf.Log10(PlayerPrefs.GetFloat("SFXVolume")) * 20);
 
         coins = PlayerPrefs.GetInt("Coins");
     }
@@ -109,33 +109,45 @@ public class GameManager : MonoBehaviour
         AudioListener.pause = value;
         PlayerPrefs.SetInt("Mute", (value ? 1 : 0));
         PlayerPrefs.Save();
+
+        if(Cursor.visible)
+            EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void SetMasterVolume(float value)
     {
-        audioMixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20);
-        PlayerPrefs.SetFloat("MasterVolume", Mathf.Log10(value) * 20);
+        audioMixer.SetFloat("MixerMaster", Mathf.Log10(value) * 20);
+        PlayerPrefs.SetFloat("MasterVolume", value);
         PlayerPrefs.Save();
+
+        if (Cursor.visible)
+            EventSystem.current.SetSelectedGameObject(null);
     }
     public void SetMusicVolume(float value)
     {
-        audioMixer.SetFloat("MusicVolume", Mathf.Log10(value) * 20);
-        PlayerPrefs.SetFloat("MusicVolume", Mathf.Log10(value) * 20);
+        audioMixer.SetFloat("MixerMusic", Mathf.Log10(value) * 20);
+        PlayerPrefs.SetFloat("MusicVolume", value);
         PlayerPrefs.Save();
+
+        if (Cursor.visible)
+            EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void SetSFXVolume(float value)
     {
-        audioMixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20);
-        PlayerPrefs.SetFloat("SFXVolume", Mathf.Log10(value) * 20);
+        audioMixer.SetFloat("MixerSFX", Mathf.Log10(value) * 20);
+        PlayerPrefs.SetFloat("SFXVolume", value);
         PlayerPrefs.Save();
+
+        if (Cursor.visible)
+            EventSystem.current.SetSelectedGameObject(null);
     }
     #endregion
 
     #region Menu Navigation Functions
     public void MouseToKeys(Button newFirstSelectedButton, Toggle newFirstSelectedToggle)
     {
-        if (!usingKeys && Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        if (Input.GetAxis("Vertical") != 0 && !usingKeys || Input.GetAxis("Horizontal") != 0 && !usingKeys)
         {
             mousePos = Input.mousePosition;
 
