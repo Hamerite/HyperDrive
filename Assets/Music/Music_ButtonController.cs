@@ -34,6 +34,9 @@ public class Music_ButtonController : MonoBehaviour
     private void Start()
     {
         eventSystem = EventSystem.current;
+
+        if (gameManager.GetUsingKeys())
+            songPlayButtons[0].Select();
     }
 
     void Update()
@@ -113,6 +116,12 @@ public class Music_ButtonController : MonoBehaviour
     public void ButtonSelected()
     {
         gameManager.PlayButtonSound(0);
+    }
+
+    public void SelectedWithKeys()
+    {
+        if (gameManager.GetUsingKeys())
+            gameManager.PlayButtonSound(0);
     }
 
     public void MainMenuButton()

@@ -79,6 +79,8 @@ public class S1_ButtonsController : MonoBehaviour
 
         startMenus[0].SetActive(true);
         firstButton = startMenus[0].GetComponentsInChildren<Button>();
+        if (gameManager.GetUsingKeys())
+            firstButton[0].Select();
 
         wasPurchased[1] = (PlayerPrefs.GetInt("SharkPurchased") != 0);
         wasPurchased[2] = (PlayerPrefs.GetInt("BattlePurchased") != 0);
@@ -203,7 +205,8 @@ public class S1_ButtonsController : MonoBehaviour
     #region Ship Selection
     public void SelectButton()
     {
-        gameManager.PlayButtonSound(1);
+        if(afford)
+            gameManager.PlayButtonSound(1);
 
         if (!afford)
             CheckPurchse();
@@ -400,6 +403,12 @@ public class S1_ButtonsController : MonoBehaviour
     public void ButtonSelected()
     {
         gameManager.PlayButtonSound(0);
+    }
+
+    public void SelectedWithKeys()
+    {
+        if(gameManager.GetUsingKeys() && !panelChange)
+            gameManager.PlayButtonSound(0);
     }
 
     public void BackButton()
