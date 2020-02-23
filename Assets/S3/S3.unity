@@ -1883,7 +1883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05074012f625aa04f957c3eb503120ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinGainSound: {fileID: 8300000, guid: a680a34a725cae34bae3aa09640719a1, type: 3}
+  coinGainSound: {fileID: 8300000, guid: ecdcecf402c04494f9101f146e397fcf, type: 3}
   nameInput: {fileID: 786763177}
 --- !u!82 &2028329336
 AudioSource:
@@ -1899,7 +1899,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 3
   Loop: 0
   Mute: 0
   Spatialize: 0
