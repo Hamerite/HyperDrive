@@ -83,6 +83,9 @@ public class S3_GameOverManager : MonoBehaviour
         addedCoins = gameManager.GetNumbers("Coins") - preAddedCoins;
 
         gameTime = Time.time;
+
+        if (gameManager.GetUsingKeys())
+            buttons[0].Select();
     }
 
     private void Update()
@@ -96,6 +99,8 @@ public class S3_GameOverManager : MonoBehaviour
 
         if (startAdd)
         {
+            audioSource.Play();
+
             if (Time.time > gameTime + 1.0f)
             {
                 gameTime = Time.time;
@@ -109,8 +114,6 @@ public class S3_GameOverManager : MonoBehaviour
             {
                 addedCoins -= Mathf.Floor(addRate * Time.deltaTime);
                 coinsGain.text = "Coins: " + preAddedCoins + " + " + addedCoins;
-
-                audioSource.Play();
             }
             else
             {
@@ -159,6 +162,12 @@ public class S3_GameOverManager : MonoBehaviour
             gameManager.PlayButtonSound(0);
         }
     }
+    public void SelectedWithKeys()
+    {
+        if (gameManager.GetUsingKeys())
+            gameManager.PlayButtonSound(0);
+    }
+
     #endregion
 
     #region HighScore Fuctions

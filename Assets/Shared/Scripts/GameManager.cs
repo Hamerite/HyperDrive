@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
         if (scoreText)
             scoreText.text = "Score: " + score.ToString();
 
+        MouseToKeys(null, null);
         KeysToMouse();
     }
 
@@ -154,10 +155,13 @@ public class GameManager : MonoBehaviour
             usingKeys = true;
             Cursor.visible = false;
 
-            if (newFirstSelectedToggle)
-                newFirstSelectedToggle.Select();
-            else
-                newFirstSelectedButton.Select();
+            if(SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                if (newFirstSelectedToggle)
+                    newFirstSelectedToggle.Select();
+                else
+                    newFirstSelectedButton.Select();
+            }
         }
     }
 
@@ -178,15 +182,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(load);
         SceneManager.UnloadSceneAsync(unload);
 
-        if(Cursor.visible == false)
-        {
-            if(load == 1 || load == 3 || load == 4)
-            {
-                Button[] firstSelectedButton = FindObjectsOfType<Button>();
-                firstSelectedButton[0].Select();
-            }
-        }
-
         if (load == 2)
         {
             s2Start = true;
@@ -198,6 +193,11 @@ public class GameManager : MonoBehaviour
     public void PlayButtonSound(int index)
     {
         audioSource.PlayOneShot(buttonSoundClips[index]);
+    }
+
+    public bool GetUsingKeys()
+    {
+        return usingKeys;
     }
     #endregion
 }
