@@ -73,7 +73,8 @@ public class GameManager : MonoBehaviour
         if (scoreText)
             scoreText.text = "Score: " + score.ToString();
 
-        MouseToKeys(null, null);
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+            MouseToKeys(null, null);
         KeysToMouse();
     }
 

@@ -49,7 +49,7 @@ public class S3_GameOverManager : MonoBehaviour
 
         audioSource.clip = coinGainSound;
         audioSource.loop = true;
-        audioSource.playOnAwake = false;
+        audioSource.playOnAwake = true;
 
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("ScoreText"))
         {
@@ -66,7 +66,7 @@ public class S3_GameOverManager : MonoBehaviour
             champName = PlayerPrefs.GetString("ChampName");
 
         textElements[0].GetComponent<Text>().text = "Score: " + gameManager.GetNumbers("Score").ToString();
-        textElements[2].GetComponent<Text>().text = "High Score: " + champName + "  " + PlayerPrefs.GetInt("HighScore").ToString();
+        textElements[2].GetComponent<Text>().text = "High Score: " + champName + " : " + PlayerPrefs.GetInt("HighScore").ToString();
 
         if (PlayerPrefs.GetInt("HighScore") < gameManager.GetNumbers("Score"))
         {
@@ -75,6 +75,9 @@ public class S3_GameOverManager : MonoBehaviour
             textElements[1].SetActive(true);
             StartCoroutine(FlashingLetters());
             ButtonsInteractability();
+
+            nameInput.Select();
+            nameInput.ActivateInputField();
         }
 
         preAddedCoins = gameManager.GetNumbers("Coins");

@@ -75,45 +75,40 @@ public class S2_PlayerController : MonoBehaviour
         {
             if (Physics.Raycast(transform.position, item, out RaycastHit hit, 0.5f, 1 << 8))
                 transform.Translate(hit.normal / 4.5f);
-            if (Physics.Raycast(transform.position, item, 10.0f, 1 << 9))
+            if (Physics.Raycast(transform.position, item, 10.0f, 1 << 9) && canScore)
                 audioSource.PlayOneShot(s2PlayerClips[2]);
         }
 
         foreach (LayerMask item in layers)
         {
-            if (Physics.BoxCast(collider.bounds.center, collider.bounds.extents / 2, Vector3.forward, transform.rotation, 2.1f, 1 << item))
-                if (canScore)
+            if (Physics.BoxCast(collider.bounds.center, collider.bounds.extents / 2, Vector3.forward, transform.rotation, 2.1f, 1 << item) && canScore)
+            { 
+                canScore = false;
+
+                if (item == 9)
                 {
-                    if (item == 9)
-                    {
-                        audioSource.clip = s2PlayerClips[1];
-                        audioSource.Play();
-                        Instantiate(playerDeathParticles, transform);
-
-                        shipChoice[index].SetActive(false);
-
-                        if (!playerDeathParticles.IsAlive())
-                            gameManager.TraverseScenes(2, 3);
-                    }
-                    if (item == 10)
-                    {
-                        gameManager.SetNumbers("Score", 1);
-                        audioSource.PlayOneShot(s2PlayerClips[3]);
-                    }
-                    if (item == 11)
-                    {
-                        gameManager.SetNumbers("Score", 2);
-                        audioSource.PlayOneShot(s2PlayerClips[4]);
-                    }
-                    if (item == 12)
-                    {
-                        gameManager.SetNumbers("Score", 3);
-                        audioSource.PlayOneShot(s2PlayerClips[5]);
-                    }
-
-                    canScore = false;
-                    StartCoroutine(ScoreLimiter());
+                    shipModel.gameObject.SetActive(false);
+                    audioSource.PlayOneShot(s2PlayerClips[1]);
+                    Instantiate(playerDeathParticles, transform.position, Quaternion.identity);
                 }
+                if (item == 10)
+                {
+                    gameManager.SetNumbers("Score", 1);
+                    audioSource.PlayOneShot(s2PlayerClips[3]);
+                }
+                if (item == 11)
+                {
+                    gameManager.SetNumbers("Score", 2);
+                    audioSource.PlayOneShot(s2PlayerClips[4]);
+                }
+                if (item == 12)
+                {
+                    gameManager.SetNumbers("Score", 3);
+                    audioSource.PlayOneShot(s2PlayerClips[5]);
+                }
+
+                StartCoroutine(ScoreLimiter());
+            }
         }
 
         IEnumerator ScoreLimiter()

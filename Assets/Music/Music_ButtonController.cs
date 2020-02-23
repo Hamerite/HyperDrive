@@ -1,14 +1,13 @@
 ﻿//Created by Dylan LeClair
 //Last revised 19-02-20 (Dylan LeClair)
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class Music_ButtonController : MonoBehaviour
 {
-    EventSystem eventSystem;
-
     #region Script Cache Variables
     GameManager gameManager;
     MusicPlayer musicPlayer;
@@ -17,10 +16,14 @@ public class Music_ButtonController : MonoBehaviour
     #region Scroll Veiw Variables
     ScrollRect scrollRect;
 
+    readonly WaitForSeconds timer = new WaitForSeconds(0.35f);
+
+    bool canScroll = true;
     int index;
     float verticalPos;
     #endregion
 
+    Button mainMenuButton;
     Button[] songPlayButtons;
 
     void Awake()
@@ -28,15 +31,17 @@ public class Music_ButtonController : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         musicPlayer = FindObjectOfType<MusicPlayer>();
         scrollRect = FindObjectOfType<ScrollRect>();
+
+        mainMenuButton = GameObject.FindGameObjectWithTag("Main").GetComponent<Button>();
         songPlayButtons = scrollRect.GetComponentsInChildren<Button>();
     }
 
     private void Start()
     {
-        eventSystem = EventSystem.current;
-
         if (gameManager.GetUsingKeys())
-            songPlayButtons[0].Select();
+        {
+            songPlayButtons[index].Select();
+        }
     }
 
     void Update()
@@ -46,14 +51,41 @@ public class Music_ButtonController : MonoBehaviour
 
         if(Cursor.visible == false)
         {
-            index = System.Array.IndexOf(songPlayButtons, eventSystem.currentSelectedGameObject);
-            verticalPos = 1.0f - ((float)index / (songPlayButtons.Length - 1));
-            scrollRect.verticalNormalizedPosition = Mathf.Lerp(scrollRect.verticalNormalizedPosition, verticalPos, Time.deltaTime / 2.0f);
+            if(Input.GetAxis("Vertical") > 0.0f ^ Input.GetAxis("Vertical") < 0.0f)
+            {
+                if(canScroll)
+                {
+                    if (Input.GetAxis("Vertical") > 0.0f)
+                        index = Mathf.Clamp(index - 1, 0, songPlayButtons.Length - 1);
+                    else
+                        index = Mathf.Clamp(index + 1, 0, songPlayButtons.Length);
+
+                    if (index == 9)
+                        mainMenuButton.Select();
+                    else
+                        songPlayButtons[index].Select();
+
+                    verticalPos = 1.0f - ((float)index / (songPlayButtons.Length - 1));
+
+                    canScroll = false;
+                    StartCoroutine(DelayScroll());
+                }
+            }
+            scrollRect.verticalNormalizedPosition = Mathf.Lerp(scrollRect.verticalNormalizedPosition, verticalPos, Time.deltaTime * 10.0f);
         }
 
-        gameManager.MouseToKeys(songPlayButtons[0], null);
+        if (index == 9)
+            gameManager.MouseToKeys(mainMenuButton, null);
+        else
+            gameManager.MouseToKeys(songPlayButtons[index], null);
     }
 
+    IEnumerator DelayScroll()
+    {
+        yield return timer;
+
+        canScroll = true;
+    }
 
     #region Song Choice
     public void PlayActionable()
