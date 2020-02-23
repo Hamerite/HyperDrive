@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 
 public class Music_ButtonController : MonoBehaviour
 {
+    EventSystem eventSystem;
+
     #region Script Cache Variables
     GameManager gameManager;
     MusicPlayer musicPlayer;
@@ -27,7 +29,11 @@ public class Music_ButtonController : MonoBehaviour
         musicPlayer = FindObjectOfType<MusicPlayer>();
         scrollRect = FindObjectOfType<ScrollRect>();
         songPlayButtons = scrollRect.GetComponentsInChildren<Button>();
+    }
 
+    private void Start()
+    {
+        eventSystem = EventSystem.current;
     }
 
     void Update()
@@ -37,7 +43,7 @@ public class Music_ButtonController : MonoBehaviour
 
         if(Cursor.visible == false)
         {
-            index = System.Array.IndexOf(songPlayButtons, EventSystem.current.currentSelectedGameObject);
+            index = System.Array.IndexOf(songPlayButtons, eventSystem.currentSelectedGameObject);
             verticalPos = 1.0f - ((float)index / (songPlayButtons.Length - 1));
             scrollRect.verticalNormalizedPosition = Mathf.Lerp(scrollRect.verticalNormalizedPosition, verticalPos, Time.deltaTime / 2.0f);
         }

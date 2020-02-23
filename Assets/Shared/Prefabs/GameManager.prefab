@@ -44,12 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f59eccbc622cf4947b9c839177ca0d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 30374345278782d4db0e75ff59ec312a, type: 2}
   buttonSoundClips:
   - {fileID: 8300000, guid: c8f1b093ec725904aaaad7c302b14606, type: 3}
   - {fileID: 8300000, guid: 84fd3aea7a3f1a1439e4107de2bbff38, type: 3}
   - {fileID: 8300000, guid: e04bf6362f5b9894eb01251a103d282d, type: 3}
   - {fileID: 8300000, guid: d5d36d2a28e367c4f8fca1a62b9d5370, type: 3}
-  audioMixer: {fileID: 24100000, guid: 30374345278782d4db0e75ff59ec312a, type: 2}
+  - {fileID: 8300000, guid: 6341a8fbe424e8840818fdce6b7a2ecf, type: 3}
   mute: {fileID: 6650654828901198801, guid: 536f31073d050a74b9b6bfaca59ea37d, type: 3}
 --- !u!82 &6618464736259449610
 AudioSource:

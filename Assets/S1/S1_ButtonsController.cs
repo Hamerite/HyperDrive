@@ -5,10 +5,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class S1_ButtonsController : MonoBehaviour
 {
     GameManager gameManager;
+    EventSystem eventSystem;
     Slider[] volumeSliders;
 
     #region Panel Elements Variables
@@ -17,8 +19,6 @@ public class S1_ButtonsController : MonoBehaviour
 
     readonly List<GameObject> startMenus =  new List<GameObject>();
     readonly List<GameObject> InstructionElements = new List<GameObject>();
-
-    //Button[] instructionButtons;
     #endregion
 
     #region Ship Selection Variables
@@ -61,24 +61,24 @@ public class S1_ButtonsController : MonoBehaviour
             item.SetActive(false);
         }
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("Instructions"))
-        {
             InstructionElements.Add(item);
-        }
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("StartMenus"))
         {
             startMenus.Add(item);
             item.SetActive(false);
         }
+
+        eventSystem = EventSystem.current;
     }
 
     void Start()
     {
-        //for (int i = 0; i < 1; i++)
-        //{
-        //    instructionButtons[i] = InstructionElements[i].GetComponent<Button>();
-        //}
         InstructionElements[0].GetComponent<Button>().interactable = false;
+        InstructionElements[0].GetComponent<CanvasGroup>().interactable = false;
+        InstructionElements[0].GetComponent<CanvasGroup>().blocksRaycasts = false;
+
         startMenus[0].SetActive(true);
+        firstButton = startMenus[0].GetComponentsInChildren<Button>();
 
         wasPurchased[1] = (PlayerPrefs.GetInt("SharkPurchased") != 0);
         wasPurchased[2] = (PlayerPrefs.GetInt("BattlePurchased") != 0);
@@ -92,26 +92,30 @@ public class S1_ButtonsController : MonoBehaviour
         center = new Vector3(Camera.main.pixelWidth / 100, Camera.main.pixelHeight / 100, 700);
 
         foreach (GameObject item in ships)
-        {
             item.transform.Rotate(rotaion * Time.deltaTime);
-        }
 
         if (startMenus[0].activeInHierarchy)
             startMenus[4].SetActive(false);
-        else
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
+
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
+        {
+            if (resetCheck.activeInHierarchy)
+            {
+                resetCheck.SetActive(false);
+                panelChange = true;
+            }
+            else
                 BackButton();
+        }
 
         if(afford)
         {
             coinCount.text = "Coins: " + playerCoins + " - " + prices[index];
-
             StartCoroutine(Purchused());
         }
 
         PanelCheck();
     }
-
 
     #region Title Elements
     public void StartButton()
@@ -147,9 +151,7 @@ public class S1_ButtonsController : MonoBehaviour
 
         firstButton = startMenus[2].GetComponentsInChildren<Button>();
         if(Cursor.visible == false)
-        {
             firstButton[0].Select();
-        }
 
         ships[PlayerPrefs.GetInt("Selection")].SetActive(true);
         ships[PlayerPrefs.GetInt("Selection")].transform.position = center;
@@ -179,9 +181,9 @@ public class S1_ButtonsController : MonoBehaviour
         resetCheck.SetActive(false);
 
         volumeSliders = startMenus[3].GetComponentsInChildren<Slider>();
-        volumeSliders[0].value = Mathf.Pow(10, PlayerPrefs.GetFloat("MasterVolume")) * 2;
-        volumeSliders[1].value = Mathf.Pow(10, PlayerPrefs.GetFloat("MusicVolume")) * 2;
-        volumeSliders[2].value = Mathf.Pow(10, PlayerPrefs.GetFloat("SFXVolume")) * 2;
+        volumeSliders[0].value = PlayerPrefs.GetFloat("MasterVolume", 1.0f);
+        volumeSliders[1].value = PlayerPrefs.GetFloat("MusicVolume", 1.0f);
+        volumeSliders[2].value = PlayerPrefs.GetFloat("SFXVolume", 1.0f);
 
         if (Cursor.visible == false)
         {
@@ -217,6 +219,7 @@ public class S1_ButtonsController : MonoBehaviour
             PlayerPrefs.Save();
 
             afford = false;
+            panelChange = true;
         }
     }
 
@@ -243,6 +246,9 @@ public class S1_ButtonsController : MonoBehaviour
 
         ships[index].SetActive(true);
         ships[index].transform.position = center;
+
+        if(Cursor.visible)
+            eventSystem.SetSelectedGameObject(null);
     }
 
     public void Next()
@@ -268,6 +274,9 @@ public class S1_ButtonsController : MonoBehaviour
 
         ships[index].SetActive(true);
         ships[index].transform.position = center;
+
+        if (Cursor.visible)
+            eventSystem.SetSelectedGameObject(null);
     }
 
     void CheckPurchse()
@@ -280,17 +289,19 @@ public class S1_ButtonsController : MonoBehaviour
         }
         else if (wasPurchased[index] == false && playerCoins >= prices[index])
         {
-            wasPurchased[index] = true;
-
             firstButton[0].GetComponentInChildren<Text>().text = "SELECT";
             price.text = "";
 
+            wasPurchased[index] = true;
             afford = true;
             SavePurchase();
         }
         else
         {
+            gameManager.PlayButtonSound(4);
 
+            if (Cursor.visible)
+                eventSystem.SetSelectedGameObject(null);
         }
     }
 
@@ -306,16 +317,13 @@ public class S1_ButtonsController : MonoBehaviour
         playerCoins -= prices[index];
         gameManager.SetNumbers("Coins", playerCoins);
         PlayerPrefs.SetInt("Coins", playerCoins);
-
         PlayerPrefs.Save();
     }
 
     IEnumerator Purchused()
     {
         yield return timer;
-
         coinCount.text = "Coins: " + playerCoins;
-
         afford = false;
     }
     #endregion
@@ -325,20 +333,34 @@ public class S1_ButtonsController : MonoBehaviour
     {
         gameManager.PlayButtonSound(1);
         InstructionElements[1].GetComponent<Button>().interactable = true;
+        InstructionElements[1].GetComponent<CanvasGroup>().interactable = true;
+        InstructionElements[1].GetComponent<CanvasGroup>().blocksRaycasts = true;
+
         InstructionElements[0].GetComponent<Button>().interactable = false;
+        InstructionElements[0].GetComponent<CanvasGroup>().interactable = false;
+        InstructionElements[0].GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         InstructionElements[2].SetActive(true);
         InstructionElements[3].SetActive(false);
+
+        panelChange = true;
     }
 
     public void ScoringButton()
     {
         gameManager.PlayButtonSound(1);
         InstructionElements[0].GetComponent<Button>().interactable = true;
+        InstructionElements[0].GetComponent<CanvasGroup>().interactable = true;
+        InstructionElements[0].GetComponent<CanvasGroup>().blocksRaycasts = true;
+
         InstructionElements[1].GetComponent<Button>().interactable = false;
+        InstructionElements[1].GetComponent<CanvasGroup>().interactable = false;
+        InstructionElements[1].GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         InstructionElements[3].SetActive(true);
         InstructionElements[2].SetActive(false);
+
+        panelChange = true;
     }
     #endregion
 
@@ -347,6 +369,7 @@ public class S1_ButtonsController : MonoBehaviour
     {
         gameManager.PlayButtonSound(1);
         resetCheck.SetActive(true);
+        panelChange = true;
 
         if(Cursor.visible == false)
         {
@@ -363,11 +386,13 @@ public class S1_ButtonsController : MonoBehaviour
         PlayerPrefs.DeleteKey("ChampName");
 
         resetCheck.SetActive(false);
+        panelChange = true;
     }
 
     public void CancelButton()
     {
         resetCheck.SetActive(false);
+        panelChange = true;
     }
     #endregion
 
@@ -395,46 +420,60 @@ public class S1_ButtonsController : MonoBehaviour
             firstButton = startMenus[0].GetComponentsInChildren<Button>();
             firstButton[0].Select();
         }
+
+        panelChange = true;
     }
     #endregion
 
-    #region Panel Check For Navigation Method Change
+    #region Navigation Method Change
     void PanelCheck()
     {
         if(panelChange)
         {
-            if (startMenus[0].activeInHierarchy)
-            {
-                firstSelectedisToggle = false;
-                firstButton = startMenus[0].GetComponentsInChildren<Button>();
-            }
-            if (startMenus[1].activeInHierarchy)
-            {
-                firstSelectedisToggle = false;
-                if (InstructionElements[0].GetComponent<Button>().interactable)
-                    firstButton[0] =  InstructionElements[0].GetComponent<Button>();
-                else
-                    firstButton[0] = InstructionElements[1].GetComponent<Button>();
-            }
-            if (startMenus[2].activeInHierarchy)
-            {
-                firstSelectedisToggle = false;
-                firstButton = startMenus[2].GetComponentsInChildren<Button>();
-            }
             if (startMenus[3].activeInHierarchy)
             {
-                firstSelectedisToggle = true;
-                firstToggle = startMenus[3].GetComponentInChildren<Toggle>();
-                firstToggle.Select();
+                if(resetCheck.activeInHierarchy)
+                {
+                    firstSelectedisToggle = false;
+                    firstButton = resetCheck.GetComponentsInChildren<Button>();
+                }
+                else
+                {
+                    firstSelectedisToggle = true;
+                    firstToggle = startMenus[3].GetComponentInChildren<Toggle>();
+                }
+            }
+            else
+            {
+                firstSelectedisToggle = false;
+
+                if (startMenus[0].activeInHierarchy)
+                    firstButton = startMenus[0].GetComponentsInChildren<Button>();
+                if (startMenus[1].activeInHierarchy)
+                {
+                    if (InstructionElements[0].GetComponent<Button>().interactable)
+                        firstButton[0] = InstructionElements[0].GetComponent<Button>();
+                    else
+                        firstButton[0] = InstructionElements[1].GetComponent<Button>();
+                }
+                if (startMenus[2].activeInHierarchy)
+                    firstButton = startMenus[2].GetComponentsInChildren<Button>();
             }
 
-            if(firstSelectedisToggle)
-                gameManager.MouseToKeys(null, firstToggle);
+            if (Cursor.visible)
+                eventSystem.SetSelectedGameObject(null);
+            else if (startMenus[3].activeInHierarchy && !resetCheck.activeInHierarchy)
+                firstToggle.Select();
             else
-                gameManager.MouseToKeys(firstButton[0], null);
+                firstButton[0].Select();
 
             panelChange = false;
         }
+
+        if(firstSelectedisToggle)
+            gameManager.MouseToKeys(null, firstToggle);
+        else
+            gameManager.MouseToKeys(firstButton[0], null);
     }
     #endregion
 }
