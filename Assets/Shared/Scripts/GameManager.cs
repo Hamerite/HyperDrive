@@ -1,5 +1,5 @@
 ﻿//Created by Dylan LeClair
-//Last revised 19-02-20 (Dylan LeClair)
+//Last revised 25-02-20 (Dylan LeClair)
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -61,6 +61,8 @@ public class GameManager : MonoBehaviour
         audioMixer.SetFloat("MixerSFX", Mathf.Log10(PlayerPrefs.GetFloat("SFXVolume")) * 20);
 
         coins = PlayerPrefs.GetInt("Coins");
+
+        mousePos = Input.mousePosition;
     }
 
     void Update()
@@ -73,7 +75,7 @@ public class GameManager : MonoBehaviour
         if (scoreText)
             scoreText.text = "Score: " + score.ToString();
 
-        if(SceneManager.GetActiveScene().buildIndex == 0)
+        if (SceneManager.GetActiveScene().buildIndex == 0)
             MouseToKeys(null, null);
         KeysToMouse();
     }
@@ -149,7 +151,7 @@ public class GameManager : MonoBehaviour
     #region Menu Navigation Functions
     public void MouseToKeys(Button newFirstSelectedButton, Toggle newFirstSelectedToggle)
     {
-        if (Input.GetAxis("Vertical") != 0 && !usingKeys || Input.GetAxis("Horizontal") != 0 && !usingKeys)
+        if (!usingKeys && Input.GetAxis("Vertical") != 0 || !usingKeys && Input.GetAxis("Horizontal") != 0)
         {
             mousePos = Input.mousePosition;
 

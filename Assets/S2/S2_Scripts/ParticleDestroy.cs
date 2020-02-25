@@ -1,5 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//Created by Dylan LeClair
+//Last revised 24-02-20 (Dylan LeClair)
+
+using System.Collections;
 using UnityEngine;
 
 public class ParticleDestroy : MonoBehaviour
