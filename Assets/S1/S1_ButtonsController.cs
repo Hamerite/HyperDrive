@@ -1,5 +1,5 @@
 ﻿//Created by Dylan LeClair
-//Last revised 19-02-20 (Dylan LeClair)
+//Last revised 27-02-20 (Dylan LeClair)
 
 using System.Collections;
 using System.Collections.Generic;
@@ -67,6 +67,10 @@ public class S1_ButtonsController : MonoBehaviour
             startMenus.Add(item);
             item.SetActive(false);
         }
+
+        startMenus.TrimExcess();
+        InstructionElements.TrimExcess();
+        ships.TrimExcess();
 
         eventSystem = EventSystem.current;
     }

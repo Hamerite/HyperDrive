@@ -1,5 +1,5 @@
 ﻿//Created by Dylan LeClair
-//Last revised 19-02-20 (Dylan LeClair)
+//Last revised 27-02-20 (Dylan LeClair)
 
 using System.Collections;
 using System.Collections.Generic;
@@ -56,6 +56,7 @@ public class S3_GameOverManager : MonoBehaviour
             textElements.Add(item);
         }
         textElements[1].SetActive(false);
+        textElements.TrimExcess();
     }
 
     void Start()

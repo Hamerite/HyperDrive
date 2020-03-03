@@ -13,12 +13,20 @@ public class S2_PoolController : MonoBehaviour
     readonly List<GameObject>[] asteroidsArray = new List<GameObject>[5];
 
     #region Object Spawn Variables
+    Coroutine spawnRoutine;
+
     WaitForSeconds spawnTimer;
+    WaitForSeconds benchedTimer;
     readonly WaitForSeconds LimitTimer = new WaitForSeconds(2.5f);
 
+    readonly List<int> benched = new List<int>();
+
     bool hasChanged;
+    bool needsRestart;
+    int RNG;
     float speed = 75.0f;
     float waitTime = 1.8f;
+    float benchedTime = 5.4f;
     #endregion
 
     void Awake()
@@ -47,18 +55,19 @@ public class S2_PoolController : MonoBehaviour
         }
 
         spawnTimer = new WaitForSeconds(waitTime);
+        benchedTimer = new WaitForSeconds(benchedTime);
     }
 
     void Start()
     {
-        for (int i = 0; i < asteroids[0].Count - 1; i++)
+        for (int i = 0; i < asteroids[0].Count; i++)
         {
             asteroidsArray[i] = new List<GameObject>()
             {
                 asteroids[0][i]
             };
         }
-        StartCoroutine(ChooseObstacle());
+        spawnRoutine = StartCoroutine(ChooseObstacle());
     }
 
     void Update()
@@ -74,6 +83,7 @@ public class S2_PoolController : MonoBehaviour
                     gameManager.GetNumbers("Counter") < 286)
                  {
                      waitTime -= 0.1f;
+                     benchedTime -= 0.3f;
                  }
             if (gameManager.GetNumbers("Counter") == 90)
             {
@@ -95,20 +105,36 @@ public class S2_PoolController : MonoBehaviour
             hasChanged = true;
             StartCoroutine(LimitChange());
         }
+
+        if(needsRestart)
+        {
+            needsRestart = false;
+            spawnRoutine = StartCoroutine(ChooseObstacle());
+        }
     }
 
     #region Object Pooler
     IEnumerator ChooseObstacle()
     {
-        int RNG = Random.Range(0, asteroidsArray.Length - 1);
-        GameObject newObstacle = GetObstacle(RNG);
+        RNG = Random.Range(0, asteroidsArray.Length);
+        if(benched.Contains(RNG))
+        {
+            needsRestart = true;
+            StopCoroutine(spawnRoutine);
+        }
+        else
+        {
+            benched.Add(RNG);
+            GameObject newObstacle = GetObstacle(RNG);
 
-        newObstacle.transform.position = transform.position;
-        newObstacle.SetActive(true);
+            newObstacle.transform.position = transform.position;
+            newObstacle.SetActive(true);
 
-        yield return spawnTimer;
+            yield return spawnTimer;
 
-        StartCoroutine(ChooseObstacle());
+            spawnRoutine = StartCoroutine(ChooseObstacle());
+            StartCoroutine(BringBackBenched());
+        }
     }
 
     GameObject GetObstacle(int index)
@@ -121,6 +147,16 @@ public class S2_PoolController : MonoBehaviour
         obstacle.SetActive(false);
         asteroidsArray[index].Add(obstacle);
         return obstacle;
+    }
+
+    IEnumerator BringBackBenched()
+    {
+        yield return benchedTimer;
+
+        if(benched.Count != 0)
+            benched.RemoveAt(0);
+
+        StartCoroutine(BringBackBenched());
     }
     #endregion
 

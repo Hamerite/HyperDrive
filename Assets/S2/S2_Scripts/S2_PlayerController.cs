@@ -1,5 +1,5 @@
 ﻿//Created by Dylan LeClair
-//Last revised 20-02-20 (Dylan LeClair)
+//Last revised 27-02-20 (Dylan LeClair)
 
 using System.Collections;
 using System.Collections.Generic;
@@ -48,6 +48,7 @@ public class S2_PlayerController : MonoBehaviour
             shipChoice.Add(item);
             item.SetActive(false);
         }
+        shipChoice.TrimExcess();
     }
 
     void Start()
