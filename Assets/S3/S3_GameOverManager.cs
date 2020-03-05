@@ -45,7 +45,7 @@ public class S3_GameOverManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         gameManager = FindObjectOfType<GameManager>();
         buttons = FindObjectsOfType<Button>();
-        coinsGain = GameObject.FindGameObjectWithTag("Score1").GetComponent<Text>();
+        coinsGain = GameObject.FindGameObjectWithTag("Coins").GetComponent<Text>();
 
         audioSource.clip = coinGainSound;
         audioSource.loop = true;

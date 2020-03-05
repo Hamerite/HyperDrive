@@ -56,6 +56,11 @@ public class S2_PoolController : MonoBehaviour
 
         spawnTimer = new WaitForSeconds(waitTime);
         benchedTimer = new WaitForSeconds(benchedTime);
+
+        for (int i = 0; i < 2; i++)
+        {
+            asteroids[i].TrimExcess();
+        }
     }
 
     void Start()
@@ -66,6 +71,8 @@ public class S2_PoolController : MonoBehaviour
             {
                 asteroids[0][i]
             };
+
+            asteroidsArray[i].TrimExcess();
         }
         spawnRoutine = StartCoroutine(ChooseObstacle());
     }
@@ -91,7 +98,9 @@ public class S2_PoolController : MonoBehaviour
                 {
                     asteroidsArray[i].Clear();
                     asteroidsArray[i].Add(asteroids[1][i]);
+                    asteroidsArray[i].TrimExcess();
                 }
+
             }
             if (gameManager.GetNumbers("Counter") == 180)
             {
@@ -99,6 +108,7 @@ public class S2_PoolController : MonoBehaviour
                 {
                     asteroidsArray[i].Clear();
                     asteroidsArray[i].Add(asteroids[2][i]);
+                    asteroidsArray[i].TrimExcess();
                 }
             }
 
@@ -120,7 +130,8 @@ public class S2_PoolController : MonoBehaviour
         if(benched.Contains(RNG))
         {
             needsRestart = true;
-            StopCoroutine(spawnRoutine);
+            if(spawnRoutine != null)
+                StopCoroutine(spawnRoutine);
         }
         else
         {

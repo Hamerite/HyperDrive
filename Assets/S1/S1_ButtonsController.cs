@@ -52,7 +52,7 @@ public class S1_ButtonsController : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         titleText = GameObject.FindGameObjectWithTag("TitleText").GetComponent<Text>();
         resetCheck = GameObject.FindGameObjectWithTag("ResetCheck");
-        coinCount = GameObject.FindGameObjectWithTag("Score1").GetComponent<Text>();
+        coinCount = GameObject.FindGameObjectWithTag("Coins").GetComponent<Text>();
         price = GameObject.FindGameObjectWithTag("Price").GetComponent<Text>();
 
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("ShipSelect"))

@@ -25327,7 +25327,7 @@ PrefabInstance:
     - target: {fileID: 1351101668481428981, guid: 63a030f946ea5ec409b4b0643f65e018,
         type: 3}
       propertyPath: m_TagString
-      value: Score1
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3025109101362427889, guid: 63a030f946ea5ec409b4b0643f65e018,
         type: 3}
@@ -25407,7 +25407,7 @@ PrefabInstance:
     - target: {fileID: 1075979576075745936, guid: 9624192ee2baeee4cbc52351b969c287,
         type: 3}
       propertyPath: m_TagString
-      value: Score1
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2042276034132831282, guid: 9624192ee2baeee4cbc52351b969c287,
         type: 3}
@@ -25629,7 +25629,7 @@ PrefabInstance:
     - target: {fileID: 3557671670144492828, guid: 264e34cf20e606742ba90d44396016b9,
         type: 3}
       propertyPath: m_TagString
-      value: Score1
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7248442056828269149, guid: 264e34cf20e606742ba90d44396016b9,
         type: 3}
@@ -25830,7 +25830,7 @@ PrefabInstance:
     - target: {fileID: 7079428404472095846, guid: 56cf1747cb5ad1b47aca40f6ce5db591,
         type: 3}
       propertyPath: m_TagString
-      value: Score1
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8309171664722493517, guid: 56cf1747cb5ad1b47aca40f6ce5db591,
         type: 3}
@@ -26262,7 +26262,7 @@ PrefabInstance:
     - target: {fileID: 8510365539411405321, guid: 6dd7e1abf40dade4988d21b5765ea119,
         type: 3}
       propertyPath: m_TagString
-      value: Score1
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dd7e1abf40dade4988d21b5765ea119, type: 3}

@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
 
             usingKeys = true;
             Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
 
             if(SceneManager.GetActiveScene().buildIndex == 1)
             {
@@ -173,6 +174,7 @@ public class GameManager : MonoBehaviour
         if (usingKeys && mousePos != Input.mousePosition)
         {
             Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             usingKeys = false;
             EventSystem.current.SetSelectedGameObject(null);
         }
