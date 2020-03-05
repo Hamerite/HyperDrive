@@ -14,10 +14,10 @@ TagManager:
   - NameInput
   - Instructions
   - StartMenus
-  - Score1
   - Main
   - ResetCheck
   - Price
+  - Coins
   layers:
   - Default
   - TransparentFX

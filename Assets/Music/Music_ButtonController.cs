@@ -19,6 +19,7 @@ public class Music_ButtonController : MonoBehaviour
     readonly WaitForSeconds timer = new WaitForSeconds(0.35f);
 
     bool canScroll = true;
+    bool isUsingKeys;
     int index;
     float verticalPos;
     #endregion
@@ -42,6 +43,9 @@ public class Music_ButtonController : MonoBehaviour
         {
             songPlayButtons[index].Select();
         }
+
+        verticalPos = 1.0f;
+        isUsingKeys = gameManager.GetUsingKeys();
     }
 
     void Update()
@@ -60,6 +64,11 @@ public class Music_ButtonController : MonoBehaviour
                     else
                         index = Mathf.Clamp(index + 1, 0, songPlayButtons.Length);
 
+                    if (isUsingKeys != gameManager.GetUsingKeys())
+                    {
+                        index = 0;
+                        isUsingKeys = gameManager.GetUsingKeys();
+                    }
                     if (index == 9)
                         mainMenuButton.Select();
                     else
@@ -71,7 +80,7 @@ public class Music_ButtonController : MonoBehaviour
                     StartCoroutine(DelayScroll());
                 }
             }
-            scrollRect.verticalNormalizedPosition = Mathf.Lerp(scrollRect.verticalNormalizedPosition, verticalPos, Time.deltaTime * 10.0f);
+            scrollRect.verticalNormalizedPosition = Mathf.Lerp(scrollRect.verticalNormalizedPosition, verticalPos, Time.deltaTime * 20.0f);
         }
 
         if (index == 9)
