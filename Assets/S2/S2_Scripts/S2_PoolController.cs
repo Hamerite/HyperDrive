@@ -1,5 +1,5 @@
 ﻿//Created by Dylan LeClair
-//Last revised 19-02-20 (Dylan LeClair)
+//Last revised 07-03-20 (Dylan LeClair)
 
 using System.Collections;
 using System.Collections.Generic;
@@ -75,6 +75,7 @@ public class S2_PoolController : MonoBehaviour
             asteroidsArray[i].TrimExcess();
         }
         spawnRoutine = StartCoroutine(ChooseObstacle());
+        benched.TrimExcess();
     }
 
     void Update()
@@ -97,6 +98,8 @@ public class S2_PoolController : MonoBehaviour
                 for (int i = 0; i < asteroids[1].Count - 1; i++)
                 {
                     asteroidsArray[i].Clear();
+                    benched.Clear();
+
                     asteroidsArray[i].Add(asteroids[1][i]);
                     asteroidsArray[i].TrimExcess();
                 }
@@ -107,6 +110,8 @@ public class S2_PoolController : MonoBehaviour
                 for (int i = 0; i < asteroids[1].Count - 1; i++)
                 {
                     asteroidsArray[i].Clear();
+                    benched.Clear();
+
                     asteroidsArray[i].Add(asteroids[2][i]);
                     asteroidsArray[i].TrimExcess();
                 }
@@ -138,7 +143,15 @@ public class S2_PoolController : MonoBehaviour
             benched.Add(RNG);
             GameObject newObstacle = GetObstacle(RNG);
 
+            bool flipVertical = Random.value > 0.5f;
+            bool flipHorizontal = Random.value > 0.5f;
+
             newObstacle.transform.position = transform.position;
+            Quaternion rotation = newObstacle.transform.rotation;
+            if (flipVertical)
+                rotation.x = 180;
+            if (flipHorizontal)
+                rotation.y = 180;
             newObstacle.SetActive(true);
 
             yield return spawnTimer;
@@ -184,11 +197,6 @@ public class S2_PoolController : MonoBehaviour
     public float GetSpeed()
     {
         return speed;
-    }
-
-    public void SetDifficultyPerameters()
-    {
-        waitTime = 2.0f;
     }
 
     IEnumerator LimitChange()

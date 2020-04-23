@@ -18,6 +18,7 @@ TagManager:
   - ResetCheck
   - Price
   - Coins
+  - VEAsteroid
   layers:
   - Default
   - TransparentFX

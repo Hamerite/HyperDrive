@@ -35,6 +35,7 @@ public class S2_PlayerController : MonoBehaviour
     readonly Vector3[] dir = new Vector3[] { Vector3.up, Vector3.down, Vector3.right, Vector3.left };
 
     bool canScore = true;
+    bool isAlive = true;
     #endregion
 
     void Awake()
@@ -82,7 +83,7 @@ public class S2_PlayerController : MonoBehaviour
 
         foreach (LayerMask item in layers)
         {
-            if (Physics.BoxCast(collider.bounds.center, collider.bounds.extents / 2, Vector3.forward, transform.rotation, 2.1f, 1 << item) && canScore)
+            if (canScore && isAlive && Physics.BoxCast(collider.bounds.center, collider.bounds.extents / 2, Vector3.forward, transform.rotation, 2.1f, 1 << item))
             { 
                 canScore = false;
 
@@ -91,6 +92,8 @@ public class S2_PlayerController : MonoBehaviour
                     shipModel.gameObject.SetActive(false);
                     audioSource.PlayOneShot(s2PlayerClips[1]);
                     Instantiate(playerDeathParticles, transform.position, Quaternion.identity);
+
+                    isAlive = false;
                 }
                 if (item == 10)
                 {
