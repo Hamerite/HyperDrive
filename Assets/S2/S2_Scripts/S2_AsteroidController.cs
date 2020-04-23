@@ -1,5 +1,5 @@
 ﻿//Created by Dylan LeClair
-//Last revised 27-02-10 (Dylan LeClair)
+//Last revised 07-03-10 (Dylan LeClair)
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,7 +30,7 @@ public class S2_AsteroidController : MonoBehaviour
     {
         for (int i = 0; i < asteroids.Length - 4; i++)
         {
-            rotateDir.Add(new Vector3(Random.Range(-360, 360), Random.Range(-360, 360), Random.Range(-360, 360)));
+            rotateDir.Add(new Vector3(Random.Range(-360, 360), Random.Range(-360, 360), 0));
             rotateSpeed.Add(Random.Range(0.01f, 0.03f));
         }
 
