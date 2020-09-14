@@ -1,14 +1,12 @@
 ﻿//Created by Dylan LeClair
-//Last revised 27-02-20 (Dylan LeClair)
+//Last revised 13-09-20 (Dylan LeClair)
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class S3_GameOverManager : MonoBehaviour
 {
-    GameManager gameManager;
     Button[] buttons;
 
     #region Audio Variabels
@@ -22,7 +20,6 @@ public class S3_GameOverManager : MonoBehaviour
     [SerializeField]
     InputField nameInput;
 
-    readonly WaitForSeconds flashingLettersTimer = new WaitForSeconds(0.15f);
     readonly List<GameObject> textElements = new List<GameObject>();
 
     string champName;
@@ -30,8 +27,6 @@ public class S3_GameOverManager : MonoBehaviour
 
     #region Coins Variables
     Text coinsGain;
-
-    readonly WaitForSeconds addCoinsTimer = new WaitForSeconds(0.7f);
 
     bool startAdd;
     float preAddedCoins;
@@ -43,7 +38,6 @@ public class S3_GameOverManager : MonoBehaviour
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        gameManager = FindObjectOfType<GameManager>();
         buttons = FindObjectsOfType<Button>();
         coinsGain = GameObject.FindGameObjectWithTag("Coins").GetComponent<Text>();
 
@@ -66,29 +60,29 @@ public class S3_GameOverManager : MonoBehaviour
         else
             champName = PlayerPrefs.GetString("ChampName");
 
-        textElements[0].GetComponent<Text>().text = "Score: " + gameManager.GetNumbers("Score").ToString();
+        textElements[0].GetComponent<Text>().text = "Score: " + GameManager.Instance.GetNumbers("Score").ToString();
         textElements[2].GetComponent<Text>().text = "High Score: " + champName + " : " + PlayerPrefs.GetInt("HighScore").ToString();
 
-        if (PlayerPrefs.GetInt("HighScore") < gameManager.GetNumbers("Score"))
+        if (PlayerPrefs.GetInt("HighScore") < GameManager.Instance.GetNumbers("Score"))
         {
-            PlayerPrefs.SetInt("HighScore", gameManager.GetNumbers("Score"));
+            PlayerPrefs.SetInt("HighScore", GameManager.Instance.GetNumbers("Score"));
 
             textElements[1].SetActive(true);
-            StartCoroutine(FlashingLetters());
+            InvokeRepeating(nameof(FlashingLetters), 0.15f, 0.15f);
             ButtonsInteractability();
 
             nameInput.Select();
             nameInput.ActivateInputField();
         }
 
-        preAddedCoins = gameManager.GetNumbers("Coins");
+        preAddedCoins = GameManager.Instance.GetNumbers("Coins");
         coinsGain.text = "Coins: " + preAddedCoins;
-        gameManager.SetNumbers("Coins", 0);
-        addedCoins = gameManager.GetNumbers("Coins") - preAddedCoins;
+        GameManager.Instance.SetNumbers("Coins", 0);
+        addedCoins = GameManager.Instance.GetNumbers("Coins") - preAddedCoins;
 
         gameTime = Time.time;
 
-        if (gameManager.GetUsingKeys())
+        if (GameManager.Instance.GetUsingKeys())
             buttons[0].Select();
     }
 
@@ -96,10 +90,10 @@ public class S3_GameOverManager : MonoBehaviour
     {
         if(!nameInput.isFocused)
         {
-            gameManager.MouseToKeys(buttons[0], null);
+            GameManager.Instance.MouseToKeys(buttons[0], null);
         }
 
-        StartCoroutine(AddCoins());
+        Invoke(nameof(AddCoins), 0.7f);
 
         if (startAdd)
         {
@@ -111,7 +105,7 @@ public class S3_GameOverManager : MonoBehaviour
                 addRate += 25.0f;
             }
 
-            if (preAddedCoins < gameManager.GetNumbers("Coins"))
+            if (preAddedCoins < GameManager.Instance.GetNumbers("Coins"))
                 preAddedCoins += Mathf.Floor(addRate * Time.deltaTime);      
 
             if (addedCoins > 0)
@@ -130,29 +124,29 @@ public class S3_GameOverManager : MonoBehaviour
         }
     }
 
-    IEnumerator AddCoins()
+    void AddCoins()
     {
         if (addedCoins > 0)
             coinsGain.text = "Coins: " + preAddedCoins + " + " + addedCoins;
         else
             coinsGain.text = "Coins: " + preAddedCoins;
 
-        yield return addCoinsTimer;
         startAdd = true;
     }
 
     #region Button Fuctions
     public void PlayAgainButton()
     {
-        gameManager.PlayButtonSound(1);
-        gameManager.TraverseScenes(3, 2);
+        GameManager.Instance.PlayButtonSound(1);
+        GameManager.Instance.TraverseScenes(3, 2);
     }
 
     public void MainMenuButton()
     {
-        gameManager.PlayButtonSound(1);
-        gameManager.TraverseScenes(3, 1);
+        GameManager.Instance.PlayButtonSound(1);
+        GameManager.Instance.TraverseScenes(3, 1);
     }
+
     void ButtonsInteractability()
     {
         foreach (Button item in buttons)
@@ -163,21 +157,15 @@ public class S3_GameOverManager : MonoBehaviour
     {
         if(buttons[0].interactable)
         {
-            gameManager.PlayButtonSound(0);
+            GameManager.Instance.PlayButtonSound(0);
         }
     }
-    public void SelectedWithKeys()
-    {
-        if (gameManager.GetUsingKeys())
-            gameManager.PlayButtonSound(0);
-    }
-
     #endregion
 
     #region HighScore Fuctions
     public void SetName()
     {
-        gameManager.PlayButtonSound(2);
+        GameManager.Instance.PlayButtonSound(2);
 
         champName = nameInput.text;
         PlayerPrefs.SetString("ChampName", champName);
@@ -190,14 +178,12 @@ public class S3_GameOverManager : MonoBehaviour
         ButtonsInteractability();
     }
 
-    IEnumerator FlashingLetters()
+    void FlashingLetters()
     {
-        yield return flashingLettersTimer;
-        textElements[1].GetComponent<Text>().color = Color.red;
-        yield return flashingLettersTimer;
-        textElements[1].GetComponent<Text>().color = Color.white;
-
-        StartCoroutine(FlashingLetters());
+        if(textElements[1].GetComponent<Text>().color == Color.red)
+            textElements[1].GetComponent<Text>().color = Color.white;
+        else
+            textElements[1].GetComponent<Text>().color = Color.red;
     }
     #endregion
 }

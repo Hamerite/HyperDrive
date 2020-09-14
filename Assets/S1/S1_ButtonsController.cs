@@ -1,5 +1,5 @@
 ﻿//Created by Dylan LeClair
-//Last revised 27-02-20 (Dylan LeClair)
+//Last revised 13-09-20 (Dylan LeClair)
 
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,6 @@ using UnityEngine.EventSystems;
 
 public class S1_ButtonsController : MonoBehaviour
 {
-    GameManager gameManager;
     EventSystem eventSystem;
     Slider[] volumeSliders;
 
@@ -49,7 +48,6 @@ public class S1_ButtonsController : MonoBehaviour
 
     void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();
         titleText = GameObject.FindGameObjectWithTag("TitleText").GetComponent<Text>();
         resetCheck = GameObject.FindGameObjectWithTag("ResetCheck");
         coinCount = GameObject.FindGameObjectWithTag("Coins").GetComponent<Text>();
@@ -83,14 +81,14 @@ public class S1_ButtonsController : MonoBehaviour
 
         startMenus[0].SetActive(true);
         firstButton = startMenus[0].GetComponentsInChildren<Button>();
-        if (gameManager.GetUsingKeys())
+        if (GameManager.Instance.GetUsingKeys())
             firstButton[0].Select();
 
         wasPurchased[1] = (PlayerPrefs.GetInt("SharkPurchased") != 0);
         wasPurchased[2] = (PlayerPrefs.GetInt("BattlePurchased") != 0);
         wasPurchased[3] = (PlayerPrefs.GetInt("XPurchased") != 0);
 
-        playerCoins = gameManager.GetNumbers("Coins");
+        playerCoins = GameManager.Instance.GetNumbers("Coins");
     }
 
     void Update()
@@ -123,16 +121,34 @@ public class S1_ButtonsController : MonoBehaviour
         PanelCheck();
     }
 
+    public void ToggleInstructionsTab()
+    {
+        GameManager.Instance.PlayButtonSound(1);
+
+        InstructionElements[1].GetComponent<Button>().interactable = !InstructionElements[1].GetComponent<Button>().interactable;
+        InstructionElements[1].GetComponent<CanvasGroup>().interactable = !InstructionElements[1].GetComponent<CanvasGroup>().interactable;
+        InstructionElements[1].GetComponent<CanvasGroup>().blocksRaycasts = !InstructionElements[1].GetComponent<CanvasGroup>().blocksRaycasts;
+
+        InstructionElements[0].GetComponent<Button>().interactable = !InstructionElements[0].GetComponent<Button>().interactable;
+        InstructionElements[0].GetComponent<CanvasGroup>().interactable = !InstructionElements[0].GetComponent<CanvasGroup>().interactable;
+        InstructionElements[0].GetComponent<CanvasGroup>().blocksRaycasts = !InstructionElements[0].GetComponent<CanvasGroup>().blocksRaycasts;
+
+        InstructionElements[2].SetActive(!InstructionElements[2].activeSelf);
+        InstructionElements[3].SetActive(!InstructionElements[3].activeSelf);
+
+        panelChange = true;
+    }
+
     #region Title Elements
     public void StartButton()
     {
-        gameManager.PlayButtonSound(1);
-        gameManager.TraverseScenes(1, 2);
+        GameManager.Instance.PlayButtonSound(1);
+        GameManager.Instance.TraverseScenes(1, 2);
     }
 
     public void InstructionsButton()
     {
-        gameManager.PlayButtonSound(1);
+        GameManager.Instance.PlayButtonSound(1);
         panelChange = true;
 
         titleText.text = "Instructions";
@@ -147,7 +163,7 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void ShipSelect()
     {
-        gameManager.PlayButtonSound(1);
+        GameManager.Instance.PlayButtonSound(1);
         panelChange = true;
 
         titleText.text = "Ship Selection";
@@ -171,13 +187,13 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void SoundTrackButton()
     {
-        gameManager.PlayButtonSound(1);
-        gameManager.TraverseScenes(1, 4);
+        GameManager.Instance.PlayButtonSound(1);
+        GameManager.Instance.TraverseScenes(1, 4);
     }
 
     public void OptionsButton()
     {
-        gameManager.PlayButtonSound(1);
+        GameManager.Instance.PlayButtonSound(1);
         panelChange = true;
 
         titleText.text = "Options";
@@ -200,7 +216,7 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void QuitGame()
     {
-        gameManager.PlayButtonSound(1);
+        GameManager.Instance.PlayButtonSound(1);
 
         Application.Quit();
     }
@@ -210,7 +226,7 @@ public class S1_ButtonsController : MonoBehaviour
     public void SelectButton()
     {
         if(afford)
-            gameManager.PlayButtonSound(1);
+            GameManager.Instance.PlayButtonSound(1);
 
         if (!afford)
             CheckPurchse();
@@ -232,7 +248,7 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void Previous()
     {
-        gameManager.PlayButtonSound(1);
+        GameManager.Instance.PlayButtonSound(1);
 
         ships[index].SetActive(false);
         index--;
@@ -260,7 +276,7 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void Next()
     {
-        gameManager.PlayButtonSound(1);
+        GameManager.Instance.PlayButtonSound(1);
 
         ships[index].SetActive(false);
         index++;
@@ -305,7 +321,7 @@ public class S1_ButtonsController : MonoBehaviour
         }
         else
         {
-            gameManager.PlayButtonSound(4);
+            GameManager.Instance.PlayButtonSound(4);
 
             if (Cursor.visible)
                 eventSystem.SetSelectedGameObject(null);
@@ -322,7 +338,7 @@ public class S1_ButtonsController : MonoBehaviour
             PlayerPrefs.SetInt("XPurchased", (wasPurchased[index] ? 1 : 0));
 
         playerCoins -= prices[index];
-        gameManager.SetNumbers("Coins", playerCoins);
+        GameManager.Instance.SetNumbers("Coins", playerCoins);
         PlayerPrefs.SetInt("Coins", playerCoins);
         PlayerPrefs.Save();
     }
@@ -335,46 +351,10 @@ public class S1_ButtonsController : MonoBehaviour
     }
     #endregion
 
-    #region Instruction Elements
-    public void ControlsButton()
-    {
-        gameManager.PlayButtonSound(1);
-        InstructionElements[1].GetComponent<Button>().interactable = true;
-        InstructionElements[1].GetComponent<CanvasGroup>().interactable = true;
-        InstructionElements[1].GetComponent<CanvasGroup>().blocksRaycasts = true;
-
-        InstructionElements[0].GetComponent<Button>().interactable = false;
-        InstructionElements[0].GetComponent<CanvasGroup>().interactable = false;
-        InstructionElements[0].GetComponent<CanvasGroup>().blocksRaycasts = false;
-
-        InstructionElements[2].SetActive(true);
-        InstructionElements[3].SetActive(false);
-
-        panelChange = true;
-    }
-
-    public void ScoringButton()
-    {
-        gameManager.PlayButtonSound(1);
-        InstructionElements[0].GetComponent<Button>().interactable = true;
-        InstructionElements[0].GetComponent<CanvasGroup>().interactable = true;
-        InstructionElements[0].GetComponent<CanvasGroup>().blocksRaycasts = true;
-
-        InstructionElements[1].GetComponent<Button>().interactable = false;
-        InstructionElements[1].GetComponent<CanvasGroup>().interactable = false;
-        InstructionElements[1].GetComponent<CanvasGroup>().blocksRaycasts = false;
-
-        InstructionElements[3].SetActive(true);
-        InstructionElements[2].SetActive(false);
-
-        panelChange = true;
-    }
-    #endregion
-
     #region Delete Highscore Functions
     public void ResetHighScores()
     {
-        gameManager.PlayButtonSound(1);
+        GameManager.Instance.PlayButtonSound(1);
         resetCheck.SetActive(true);
         panelChange = true;
 
@@ -387,7 +367,7 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void DeleteButton()
     {
-        gameManager.PlayButtonSound(3);
+        GameManager.Instance.PlayButtonSound(3);
 
         PlayerPrefs.DeleteKey("HighScore");
         PlayerPrefs.DeleteKey("ChampName");
@@ -398,6 +378,8 @@ public class S1_ButtonsController : MonoBehaviour
 
     public void CancelButton()
     {
+        GameManager.Instance.PlayButtonSound(1);
+
         resetCheck.SetActive(false);
         panelChange = true;
     }
@@ -406,18 +388,13 @@ public class S1_ButtonsController : MonoBehaviour
     #region Shared Button Fuctions
     public void ButtonSelected()
     {
-        gameManager.PlayButtonSound(0);
-    }
-
-    public void SelectedWithKeys()
-    {
-        if(gameManager.GetUsingKeys() && !panelChange)
-            gameManager.PlayButtonSound(0);
+        if(!panelChange)
+            GameManager.Instance.PlayButtonSound(0);
     }
 
     public void BackButton()
     {
-        gameManager.PlayButtonSound(1);
+        GameManager.Instance.PlayButtonSound(1);
 
         titleText.text = "HyperDrive";
         startMenus[0].SetActive(true);
@@ -484,9 +461,9 @@ public class S1_ButtonsController : MonoBehaviour
         }
 
         if(firstSelectedisToggle)
-            gameManager.MouseToKeys(null, firstToggle);
+            GameManager.Instance.MouseToKeys(null, firstToggle);
         else
-            gameManager.MouseToKeys(firstButton[0], null);
+            GameManager.Instance.MouseToKeys(firstButton[0], null);
     }
     #endregion
 }

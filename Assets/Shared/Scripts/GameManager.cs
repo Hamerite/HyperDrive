@@ -1,5 +1,5 @@
 ﻿//Created by Dylan LeClair
-//Last revised 25-02-20 (Dylan LeClair)
+//Last revised 13-09-20 (Dylan LeClair)
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
-    GameManager instance;
+    public static GameManager Instance { get; private set; }
 
     #region Audio Cache Variables
     [SerializeField]
@@ -40,11 +40,11 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
             DestroyImmediate(gameObject);
         else
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
 
