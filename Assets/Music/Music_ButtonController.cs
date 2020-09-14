@@ -1,22 +1,17 @@
 ﻿//Created by Dylan LeClair
-//Last revised 23-02-20 (Dylan LeClair)
+//Last revised 13-09-20 (Dylan LeClair)
 
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class Music_ButtonController : MonoBehaviour
 {
-    #region Script Cache Variables
-    GameManager gameManager;
     MusicPlayer musicPlayer;
-    #endregion
+    Button mainMenuButton;
+    Button[] songPlayButtons;
 
     #region Scroll Veiw Variables
     ScrollRect scrollRect;
-
-    readonly WaitForSeconds timer = new WaitForSeconds(0.35f);
 
     bool canScroll = true;
     bool isUsingKeys;
@@ -24,12 +19,8 @@ public class Music_ButtonController : MonoBehaviour
     float verticalPos;
     #endregion
 
-    Button mainMenuButton;
-    Button[] songPlayButtons;
-
     void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();
         musicPlayer = FindObjectOfType<MusicPlayer>();
         scrollRect = FindObjectOfType<ScrollRect>();
 
@@ -39,19 +30,24 @@ public class Music_ButtonController : MonoBehaviour
 
     private void Start()
     {
-        if (gameManager.GetUsingKeys())
+        if (GameManager.Instance.GetUsingKeys())
         {
             songPlayButtons[index].Select();
         }
 
         verticalPos = 1.0f;
-        isUsingKeys = gameManager.GetUsingKeys();
+        isUsingKeys = GameManager.Instance.GetUsingKeys();
+
+        foreach (Button item in songPlayButtons)
+        {
+            item.onClick.AddListener(() => PlayTrack(System.Array.IndexOf(songPlayButtons, item)));
+        }
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
-            gameManager.TraverseScenes(4, 1);
+            GameManager.Instance.TraverseScenes(4, 1);
 
         if(Cursor.visible == false)
         {
@@ -64,10 +60,10 @@ public class Music_ButtonController : MonoBehaviour
                     else
                         index = Mathf.Clamp(index + 1, 0, songPlayButtons.Length);
 
-                    if (isUsingKeys != gameManager.GetUsingKeys())
+                    if (isUsingKeys != GameManager.Instance.GetUsingKeys())
                     {
                         index = 0;
-                        isUsingKeys = gameManager.GetUsingKeys();
+                        isUsingKeys = GameManager.Instance.GetUsingKeys();
                     }
                     if (index == 9)
                         mainMenuButton.Select();
@@ -77,98 +73,37 @@ public class Music_ButtonController : MonoBehaviour
                     verticalPos = 1.0f - ((float)index / (songPlayButtons.Length - 1));
 
                     canScroll = false;
-                    StartCoroutine(DelayScroll());
+                    Invoke(nameof(DelayScroll), 0.35f);
                 }
             }
             scrollRect.verticalNormalizedPosition = Mathf.Lerp(scrollRect.verticalNormalizedPosition, verticalPos, Time.deltaTime * 20.0f);
         }
 
         if (index == 9)
-            gameManager.MouseToKeys(mainMenuButton, null);
+            GameManager.Instance.MouseToKeys(mainMenuButton, null);
         else
-            gameManager.MouseToKeys(songPlayButtons[index], null);
+            GameManager.Instance.MouseToKeys(songPlayButtons[index], null);
     }
 
-    IEnumerator DelayScroll()
+    void DelayScroll()
     {
-        yield return timer;
-
         canScroll = true;
     }
 
-    #region Song Choice
-    public void PlayActionable()
+    public void PlayTrack(int index)
     {
-        gameManager.PlayButtonSound(1);
-        musicPlayer.PlaySong(0);
+        GameManager.Instance.PlayButtonSound(1);
+        musicPlayer.PlaySong(index);
     }
 
-    public void PlayBirthOfAHero()
-    {
-        gameManager.PlayButtonSound(1);
-        musicPlayer.PlaySong(1);
-    }
-
-    public void PlayDubStep()
-    {
-        gameManager.PlayButtonSound(1);
-        musicPlayer.PlaySong(2);
-    }
-
-    public void PlayEndlessMotion()
-    {
-        gameManager.PlayButtonSound(1);
-        musicPlayer.PlaySong(3);
-    }
-
-    public void PlayEvolution()
-    {
-        gameManager.PlayButtonSound(1);
-        musicPlayer.PlaySong(4);
-    }
-
-    public void PlayExtremeAction()
-    {
-        gameManager.PlayButtonSound(1);
-        musicPlayer.PlaySong(5);
-    }
-
-    public void PlayHighOctane()
-    {
-        gameManager.PlayButtonSound(1);
-        musicPlayer.PlaySong(6);
-    }
-
-    public void PlayNewDawn()
-    {
-        gameManager.PlayButtonSound(1);
-        musicPlayer.PlaySong(7);
-    }
-
-    public void PlaySlowMotion()
-    {
-        gameManager.PlayButtonSound(1);
-        musicPlayer.PlaySong(8);
-    }
-
-    #endregion
-
-    #region Button Fuctions
     public void ButtonSelected()
     {
-        gameManager.PlayButtonSound(0);
-    }
-
-    public void SelectedWithKeys()
-    {
-        if (gameManager.GetUsingKeys())
-            gameManager.PlayButtonSound(0);
+        GameManager.Instance.PlayButtonSound(0);
     }
 
     public void MainMenuButton()
     {
-        gameManager.PlayButtonSound(1);
-        gameManager.TraverseScenes(4, 1);
+        GameManager.Instance.PlayButtonSound(1);
+        GameManager.Instance.TraverseScenes(4, 1);
     }
-    #endregion
 }

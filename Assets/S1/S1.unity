@@ -283,7 +283,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -603,7 +603,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1523,7 +1523,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2310,7 +2310,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3006,7 +3006,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3498,7 +3498,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1747953621}
-        m_MethodName: ScoringButton
+        m_MethodName: ToggleInstructionsTab
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3577,7 +3577,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3762,7 +3762,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4142,7 +4142,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4392,7 +4392,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4871,7 +4871,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1747953621}
-        m_MethodName: ControlsButton
+        m_MethodName: ToggleInstructionsTab
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4950,7 +4950,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5260,7 +5260,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5799,7 +5799,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -6292,7 +6292,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -6465,7 +6465,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7487,7 +7487,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7785,7 +7785,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1747953621}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7880,6 +7880,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1923012905836066872, guid: 2efe3a67c598b7c4295a6f14c26e2b97,
         type: 3}
+      propertyPath: m_Delegates.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1923012905836066872, guid: 2efe3a67c598b7c4295a6f14c26e2b97,
+        type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1747953621}
@@ -7891,7 +7896,7 @@ PrefabInstance:
     - target: {fileID: 1923012905836066872, guid: 2efe3a67c598b7c4295a6f14c26e2b97,
         type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SelectedWithKeys
+      value: ButtonSelected
       objectReference: {fileID: 0}
     - target: {fileID: 1923012906328351070, guid: 2efe3a67c598b7c4295a6f14c26e2b97,
         type: 3}
@@ -8296,6 +8301,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3704364243739388356, guid: 1c370f6bb8f068e418b5864d259927fa,
         type: 3}
+      propertyPath: m_Delegates.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3704364243739388356, guid: 1c370f6bb8f068e418b5864d259927fa,
+        type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1747953621}
@@ -8307,7 +8317,7 @@ PrefabInstance:
     - target: {fileID: 3704364243739388356, guid: 1c370f6bb8f068e418b5864d259927fa,
         type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SelectedWithKeys
+      value: ButtonSelected
       objectReference: {fileID: 0}
     - target: {fileID: 3704364243743435287, guid: 1c370f6bb8f068e418b5864d259927fa,
         type: 3}
@@ -8541,6 +8551,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6650654830269642361, guid: 536f31073d050a74b9b6bfaca59ea37d,
         type: 3}
+      propertyPath: m_Delegates.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6650654830269642361, guid: 536f31073d050a74b9b6bfaca59ea37d,
+        type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1747953621}
@@ -8552,7 +8567,7 @@ PrefabInstance:
     - target: {fileID: 6650654830269642361, guid: 536f31073d050a74b9b6bfaca59ea37d,
         type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SelectedWithKeys
+      value: ButtonSelected
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 536f31073d050a74b9b6bfaca59ea37d, type: 3}

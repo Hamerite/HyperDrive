@@ -1,5 +1,5 @@
 ﻿//Created by Dylan LeClair
-//Last revised 07-03-20 (Dylan LeClair)
+//Last revised 13-09-20 (Dylan LeClair)
 
 using System.Collections;
 using System.Collections.Generic;
@@ -7,18 +7,10 @@ using UnityEngine;
 
 public class S2_PoolController : MonoBehaviour
 {
-    GameManager gameManager;
-
     readonly List<GameObject>[] asteroids = new List<GameObject>[3];
     readonly List<GameObject>[] asteroidsArray = new List<GameObject>[5];
 
     #region Object Spawn Variables
-    Coroutine spawnRoutine;
-
-    WaitForSeconds spawnTimer;
-    WaitForSeconds benchedTimer;
-    readonly WaitForSeconds LimitTimer = new WaitForSeconds(2.5f);
-
     readonly List<int> benched = new List<int>();
 
     bool hasChanged;
@@ -31,8 +23,6 @@ public class S2_PoolController : MonoBehaviour
 
     void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();
-
         for (int i = 0; i < asteroids.Length; i++)
         {
             asteroids[i] = new List<GameObject>();
@@ -54,9 +44,6 @@ public class S2_PoolController : MonoBehaviour
             item.SetActive(false);
         }
 
-        spawnTimer = new WaitForSeconds(waitTime);
-        benchedTimer = new WaitForSeconds(benchedTime);
-
         for (int i = 0; i < 2; i++)
         {
             asteroids[i].TrimExcess();
@@ -74,26 +61,31 @@ public class S2_PoolController : MonoBehaviour
 
             asteroidsArray[i].TrimExcess();
         }
-        spawnRoutine = StartCoroutine(ChooseObstacle());
+        InvokeRepeating(nameof(ChooseObstacle), 0.5f, waitTime);
         benched.TrimExcess();
     }
 
     void Update()
     {
-        if (gameManager.GetNumbers("Counter") % 15 == 0 && gameManager.GetNumbers("Counter") != 0 && !hasChanged)
+        if (GameManager.Instance.GetNumbers("Counter") % 15 == 0 && GameManager.Instance.GetNumbers("Counter") != 0 && !hasChanged)
         {
-            if (gameManager.GetNumbers("Counter") % 30 == 0 && gameManager.GetNumbers("Counter") != 90 && 
-                gameManager.GetNumbers("Counter") != 180 && gameManager.GetNumbers("Counter") < 301)
+            if (GameManager.Instance.GetNumbers("Counter") % 30 == 0 && GameManager.Instance.GetNumbers("Counter") != 90 &&
+                GameManager.Instance.GetNumbers("Counter") != 180 && GameManager.Instance.GetNumbers("Counter") < 301)
             {
                 speed += 5.0f;
             }
-            else if (gameManager.GetNumbers("Counter") != 90 && gameManager.GetNumbers("Counter") != 180 &&
-                    gameManager.GetNumbers("Counter") < 286)
+            else if (GameManager.Instance.GetNumbers("Counter") != 90 && GameManager.Instance.GetNumbers("Counter") != 180 &&
+                    GameManager.Instance.GetNumbers("Counter") < 286)
                  {
+                     CancelInvoke(nameof(ChooseObstacle));
+                     CancelInvoke(nameof(BringBackBenched));
+
                      waitTime -= 0.1f;
                      benchedTime -= 0.3f;
+
+                     InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime);
                  }
-            if (gameManager.GetNumbers("Counter") == 90)
+            if (GameManager.Instance.GetNumbers("Counter") == 90)
             {
                 for (int i = 0; i < asteroids[1].Count - 1; i++)
                 {
@@ -105,7 +97,7 @@ public class S2_PoolController : MonoBehaviour
                 }
 
             }
-            if (gameManager.GetNumbers("Counter") == 180)
+            if (GameManager.Instance.GetNumbers("Counter") == 180)
             {
                 for (int i = 0; i < asteroids[1].Count - 1; i++)
                 {
@@ -118,33 +110,32 @@ public class S2_PoolController : MonoBehaviour
             }
 
             hasChanged = true;
-            StartCoroutine(LimitChange());
+            Invoke(nameof(LimitChange), 2.5f);
         }
 
         if(needsRestart)
         {
             needsRestart = false;
-            spawnRoutine = StartCoroutine(ChooseObstacle());
+            InvokeRepeating(nameof(ChooseObstacle), 0.0f, waitTime);
         }
     }
 
     #region Object Pooler
-    IEnumerator ChooseObstacle()
+    void ChooseObstacle()
     {
         RNG = Random.Range(0, asteroidsArray.Length);
         if(benched.Contains(RNG))
         {
             needsRestart = true;
-            if(spawnRoutine != null)
-                StopCoroutine(spawnRoutine);
+            CancelInvoke(nameof(ChooseObstacle));
         }
         else
         {
             benched.Add(RNG);
             GameObject newObstacle = GetObstacle(RNG);
 
-            bool flipVertical = Random.value > 0.5f;
-            bool flipHorizontal = Random.value > 0.5f;
+            bool flipVertical = Random.value > 0.485f;
+            bool flipHorizontal = Random.value > 0.485f;
 
             newObstacle.transform.position = transform.position;
             Quaternion rotation = newObstacle.transform.rotation;
@@ -154,10 +145,7 @@ public class S2_PoolController : MonoBehaviour
                 rotation.y = 180;
             newObstacle.SetActive(true);
 
-            yield return spawnTimer;
-
-            spawnRoutine = StartCoroutine(ChooseObstacle());
-            StartCoroutine(BringBackBenched());
+            InvokeRepeating(nameof(BringBackBenched), benchedTime, benchedTime);
         }
     }
 
@@ -173,14 +161,10 @@ public class S2_PoolController : MonoBehaviour
         return obstacle;
     }
 
-    IEnumerator BringBackBenched()
+    void BringBackBenched()
     {
-        yield return benchedTimer;
-
         if(benched.Count != 0)
             benched.RemoveAt(0);
-
-        StartCoroutine(BringBackBenched());
     }
     #endregion
 
@@ -199,9 +183,8 @@ public class S2_PoolController : MonoBehaviour
         return speed;
     }
 
-    IEnumerator LimitChange()
+    void LimitChange()
     {
-        yield return LimitTimer;
         hasChanged = false;
     }
     #endregion

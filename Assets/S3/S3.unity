@@ -537,7 +537,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2028329335}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1677,7 +1677,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2028329335}
-          m_MethodName: SelectedWithKeys
+          m_MethodName: ButtonSelected
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

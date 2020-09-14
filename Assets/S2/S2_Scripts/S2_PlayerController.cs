@@ -1,14 +1,11 @@
 ﻿//Created by Dylan LeClair
-//Last revised 27-02-20 (Dylan LeClair)
+//Last revised 13-09-20 (Dylan LeClair)
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class S2_PlayerController : MonoBehaviour
 {
-    GameManager gameManager;
-
     [SerializeField]
     ParticleSystem playerDeathParticles;
 
@@ -29,7 +26,6 @@ public class S2_PlayerController : MonoBehaviour
 
     #region Collision Detection Variables
     new Collider collider;
-    readonly WaitForSeconds timer = new WaitForSeconds(0.25f);
 
     readonly LayerMask[] layers = { 9, 10, 11, 12 };
     readonly Vector3[] dir = new Vector3[] { Vector3.up, Vector3.down, Vector3.right, Vector3.left };
@@ -41,7 +37,6 @@ public class S2_PlayerController : MonoBehaviour
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        gameManager = FindObjectOfType<GameManager>();
         collider = GetComponent<Collider>();
 
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("Player"))
@@ -97,29 +92,27 @@ public class S2_PlayerController : MonoBehaviour
                 }
                 if (item == 10)
                 {
-                    gameManager.SetNumbers("Score", 1);
+                    GameManager.Instance.SetNumbers("Score", 1);
                     audioSource.PlayOneShot(s2PlayerClips[3]);
                 }
                 if (item == 11)
                 {
-                    gameManager.SetNumbers("Score", 2);
+                    GameManager.Instance.SetNumbers("Score", 2);
                     audioSource.PlayOneShot(s2PlayerClips[4]);
                 }
                 if (item == 12)
                 {
-                    gameManager.SetNumbers("Score", 3);
+                    GameManager.Instance.SetNumbers("Score", 3);
                     audioSource.PlayOneShot(s2PlayerClips[5]);
                 }
 
-                StartCoroutine(ScoreLimiter());
+                Invoke(nameof(ScoreLimiter), 0.25f);
             }
         }
 
-        IEnumerator ScoreLimiter()
-        {
-            yield return timer;
-
-            canScore = true;
-        }
+    }
+    void ScoreLimiter()
+    {
+        canScore = true;
     }
 }
