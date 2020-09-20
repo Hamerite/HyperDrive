@@ -1,5 +1,5 @@
 ﻿//Created by Dylan LeClair
-//Last revised 13-09-20 (Dylan LeClair)
+//Last revised 19-09-20 (Dylan LeClair)
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,9 +25,13 @@ public class GameManager : MonoBehaviour
 
     #region Gameplay Variables
     Text scoreText;
+    Text obstaclesPassed;
+    Text levelReached;
     int score;
     int counter;
     int coins;
+
+    string levelText;
 
     bool s2Start;
     #endregion
@@ -70,10 +74,16 @@ public class GameManager : MonoBehaviour
         if(s2Start && SceneManager.GetActiveScene().buildIndex == 2)
         {
             scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<Text>();
+            obstaclesPassed = GameObject.FindGameObjectWithTag("ObstaclesPassed").GetComponent<Text>();
+            levelReached = GameObject.FindGameObjectWithTag("LevelReached").GetComponent<Text>();
             s2Start = false;
         }
         if (scoreText)
             scoreText.text = "Score: " + score.ToString();
+        if (obstaclesPassed)
+            obstaclesPassed.text = "Obstacle: " + counter.ToString();
+        if (levelReached)
+            levelReached.text = "Level: " + levelText;
 
         if (SceneManager.GetActiveScene().buildIndex == 0)
             MouseToKeys(null, null);
@@ -104,6 +114,11 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("Coins", coins);
             PlayerPrefs.Save();
         }
+    }
+
+    public void SetLevel(string level)
+    {
+        levelText = level;
     }
     #endregion
 

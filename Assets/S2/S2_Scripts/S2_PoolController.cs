@@ -1,12 +1,14 @@
 ﻿//Created by Dylan LeClair
-//Last revised 13-09-20 (Dylan LeClair)
+//Last revised 19-09-20 (Dylan LeClair)
 
-using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class S2_PoolController : MonoBehaviour
 {
+    public static S2_PoolController Instance { get; private set; }
+
     readonly List<GameObject>[] asteroids = new List<GameObject>[3];
     readonly List<GameObject>[] asteroidsArray = new List<GameObject>[5];
 
@@ -16,13 +18,18 @@ public class S2_PoolController : MonoBehaviour
     bool hasChanged;
     bool needsRestart;
     int RNG;
+    int arrayIndex = 0;
     float speed = 75.0f;
     float waitTime = 1.8f;
     float benchedTime = 5.4f;
+
+    readonly string[] obstacleDifficulty = { "Very Easy", "Easy", "Medium", "Hard", "Very Hard" };
     #endregion
 
     void Awake()
     {
+        Instance = this;
+
         for (int i = 0; i < asteroids.Length; i++)
         {
             asteroids[i] = new List<GameObject>();
@@ -48,10 +55,14 @@ public class S2_PoolController : MonoBehaviour
         {
             asteroids[i].TrimExcess();
         }
+
     }
 
     void Start()
     {
+        GameManager.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
+        arrayIndex++;
+
         for (int i = 0; i < asteroids[0].Count; i++)
         {
             asteroidsArray[i] = new List<GameObject>()
@@ -61,58 +72,13 @@ public class S2_PoolController : MonoBehaviour
 
             asteroidsArray[i].TrimExcess();
         }
+
         InvokeRepeating(nameof(ChooseObstacle), 0.5f, waitTime);
         benched.TrimExcess();
     }
 
     void Update()
     {
-        if (GameManager.Instance.GetNumbers("Counter") % 15 == 0 && GameManager.Instance.GetNumbers("Counter") != 0 && !hasChanged)
-        {
-            if (GameManager.Instance.GetNumbers("Counter") % 30 == 0 && GameManager.Instance.GetNumbers("Counter") != 90 &&
-                GameManager.Instance.GetNumbers("Counter") != 180 && GameManager.Instance.GetNumbers("Counter") < 301)
-            {
-                speed += 5.0f;
-            }
-            else if (GameManager.Instance.GetNumbers("Counter") != 90 && GameManager.Instance.GetNumbers("Counter") != 180 &&
-                    GameManager.Instance.GetNumbers("Counter") < 286)
-                 {
-                     CancelInvoke(nameof(ChooseObstacle));
-                     CancelInvoke(nameof(BringBackBenched));
-
-                     waitTime -= 0.1f;
-                     benchedTime -= 0.3f;
-
-                     InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime);
-                 }
-            if (GameManager.Instance.GetNumbers("Counter") == 90)
-            {
-                for (int i = 0; i < asteroids[1].Count - 1; i++)
-                {
-                    asteroidsArray[i].Clear();
-                    benched.Clear();
-
-                    asteroidsArray[i].Add(asteroids[1][i]);
-                    asteroidsArray[i].TrimExcess();
-                }
-
-            }
-            if (GameManager.Instance.GetNumbers("Counter") == 180)
-            {
-                for (int i = 0; i < asteroids[1].Count - 1; i++)
-                {
-                    asteroidsArray[i].Clear();
-                    benched.Clear();
-
-                    asteroidsArray[i].Add(asteroids[2][i]);
-                    asteroidsArray[i].TrimExcess();
-                }
-            }
-
-            hasChanged = true;
-            Invoke(nameof(LimitChange), 2.5f);
-        }
-
         if(needsRestart)
         {
             needsRestart = false;
@@ -169,13 +135,41 @@ public class S2_PoolController : MonoBehaviour
     #endregion
 
     #region Gameplay Functions
-    public void ResetArrays()
+    public void CheckForBehaviourChange()
     {
-        for (int i = 0; i < asteroids[2].Count - 1; i++)
+        int counterValue = GameManager.Instance.GetNumbers("Counter");
+
+        if(counterValue % 90 == 0)
         {
-            asteroidsArray[i].Clear();
-            asteroidsArray[i].Add(asteroids[0][i]);
+            benched.Clear();
+            for (int i = 0; i < asteroids[1].Count - 1; i++)
+                asteroidsArray[i].Clear();
+
+            GameManager.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
+
+            for (int i = 0; i < asteroids[1].Count - 1; i++)
+            {
+                asteroidsArray[i].Add(asteroids[arrayIndex][i]);
+                asteroidsArray[i].TrimExcess();
+            }
+
+            arrayIndex++;
         }
+        else if(counterValue % 30 == 0)
+            speed += 5.0f;
+        else if(counterValue % 15 == 0)
+        {
+            CancelInvoke(nameof(ChooseObstacle));
+            CancelInvoke(nameof(BringBackBenched));
+
+            waitTime -= 0.1f;
+            benchedTime -= 0.3f;
+
+            InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime);
+        }
+
+        hasChanged = true;
+        Invoke(nameof(LimitChange), 2.5f);
     }
 
     public float GetSpeed()

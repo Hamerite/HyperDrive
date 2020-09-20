@@ -12,11 +12,19 @@ public class IntroController : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
+    private void Start()
+    {
+        LogoFadeIn();
+    }
+
     void Update()
     {
-        canvasGroup.LeanAlpha(1.0f, 7.0f).setOnComplete(() => GameManager.Instance.TraverseScenes(0, 1));
-
         if (Input.anyKeyDown)
             GameManager.Instance.TraverseScenes(0, 1);
+    }
+
+    void LogoFadeIn()
+    {
+        canvasGroup.LeanAlpha(1.0f, 7.0f).setOnComplete(() => GameManager.Instance.TraverseScenes(0, 1));
     }
 }
