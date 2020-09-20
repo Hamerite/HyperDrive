@@ -1,14 +1,11 @@
 ﻿//Created by Dylan LeClair
-//Last revised 07-03-10 (Dylan LeClair)
+//Last revised 19-09-20 (Dylan LeClair)
 
 using System.Collections.Generic;
 using UnityEngine;
 
 public class S2_AsteroidController : MonoBehaviour
 {
-    GameManager gameManager;
-    S2_PoolController s2_PoolController;
-
     #region Asteroid Behaviour Variables
     Transform[] asteroids;
     GameObject destroyer;
@@ -19,9 +16,6 @@ public class S2_AsteroidController : MonoBehaviour
 
     void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();
-        s2_PoolController = FindObjectOfType<S2_PoolController>();
-
         asteroids = GetComponentsInChildren<Transform>();
         destroyer = GameObject.FindGameObjectWithTag("Destroyer");
     }
@@ -41,7 +35,7 @@ public class S2_AsteroidController : MonoBehaviour
     void Update()
     {
         if (isActiveAndEnabled)
-            transform.position = Vector3.MoveTowards(transform.position, destroyer.transform.position, 1.0f * s2_PoolController.GetSpeed() * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, destroyer.transform.position, 1.0f * S2_PoolController.Instance.GetSpeed() * Time.deltaTime);
 
         for (int i = 1; i < asteroids.Length - 4; i++)
              asteroids[i].Rotate(rotateDir[i] * rotateSpeed[i]);
@@ -49,7 +43,8 @@ public class S2_AsteroidController : MonoBehaviour
         if (transform.position == destroyer.transform.position)
         {
             gameObject.SetActive(false);
-            gameManager.SetNumbers("Counter", 0);
+            GameManager.Instance.SetNumbers("Counter", 0);
+            S2_PoolController.Instance.CheckForBehaviourChange();
         }
     }
 }

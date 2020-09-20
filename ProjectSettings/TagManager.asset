@@ -19,6 +19,9 @@ TagManager:
   - Price
   - Coins
   - VEAsteroid
+  - ObstaclesPassed
+  - LevelReached
+  - VHAsteroid
   layers:
   - Default
   - TransparentFX
