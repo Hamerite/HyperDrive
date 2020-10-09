@@ -8,9 +8,6 @@ TagManager:
   - ScoreText
   - TitleText
   - ShipSelect
-  - EAsteroid
-  - MAsteroid
-  - HAsteroid
   - NameInput
   - Instructions
   - StartMenus
@@ -18,10 +15,16 @@ TagManager:
   - ResetCheck
   - Price
   - Coins
-  - VEAsteroid
   - ObstaclesPassed
   - LevelReached
-  - VHAsteroid
+  - Select
+  - Start
+  - Delete
+  - Very Easy
+  - Easy
+  - Medium
+  - Hard
+  - Very Hard
   layers:
   - Default
   - TransparentFX
