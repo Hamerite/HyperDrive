@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5272163781698097541}
   m_Layer: 0
   m_Name: VeryEasy4
-  m_TagString: EAsteroid
+  m_TagString: Very Easy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,6 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59daddd7401c4904cbbdf3619df94c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointsPlanesOffset: 3
 --- !u!1001 &645065141692200574
 PrefabInstance:
   m_ObjectHideFlags: 0
