@@ -6,18 +6,10 @@ using UnityEngine.UI;
 
 public class S1_Options : MonoBehaviour
 {
-    GameObject resetCheck;
-    Button selectedButton;
-    Toggle selectedToggle;
-    Slider[] volumeSliders;
-
-    void Awake()
-    {
-        resetCheck = GameObject.FindGameObjectWithTag("ResetCheck");
-        selectedButton = GameObject.FindGameObjectWithTag("Delete").GetComponent<Button>();
-        selectedToggle = FindObjectOfType<Toggle>();
-        volumeSliders = GetComponentsInChildren<Slider>();
-    }
+    [SerializeField] GameObject resetCheck;
+    [SerializeField] Button selectedButton;
+    [SerializeField] Toggle selectedToggle;
+    [SerializeField] Slider[] volumeSliders;
 
     void Start()
     {

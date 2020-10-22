@@ -1,18 +1,17 @@
 ﻿//Created by Dylan LeClair
 //Last modified 20-09-20 (Dylan LeClair)
 
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class S1_ShipSelect : MonoBehaviour
 {
-    Button selectButton;
-    Text selectText;
-    Text price;
-    Text coinCount;
+    [SerializeField] Button selectButton;
+    [SerializeField] Text selectText;
+    [SerializeField] Text price;
+    [SerializeField] Text coinCount;
 
-    readonly List<GameObject> ships = new List<GameObject>();
+    [SerializeField] GameObject[] ships;
 
     Vector3 center;
     Vector3 rotaion = new Vector3(0, 70, 0);
@@ -23,27 +22,15 @@ public class S1_ShipSelect : MonoBehaviour
     bool afford;
     int index;
     int playerCoins;
-
-    void Awake()
-    {
-        selectButton = GameObject.FindGameObjectWithTag("Select").GetComponent<Button>();
-        selectText = selectButton.GetComponentInChildren<Text>();
-        coinCount = GameObject.FindGameObjectWithTag("Coins").GetComponent<Text>();
-        price = GameObject.FindGameObjectWithTag("Price").GetComponent<Text>();
-
-        foreach (GameObject item in GameObject.FindGameObjectsWithTag("ShipSelect"))
-        {
-            ships.Add(item);
-            item.SetActive(false);
-        }
-        ships.TrimExcess();
-    }
+    int shipsLength;
 
     void Start()
     {
         wasPurchased[1] = (PlayerPrefs.GetInt("SharkPurchased") != 0);
         wasPurchased[2] = (PlayerPrefs.GetInt("BattlePurchased") != 0);
         wasPurchased[3] = (PlayerPrefs.GetInt("XPurchased") != 0);
+
+        shipsLength = ships.Length - 1;
     }
 
     void OnEnable()
@@ -113,7 +100,7 @@ public class S1_ShipSelect : MonoBehaviour
 
         index--;
         if (index < 0)
-            index = ships.Count - 1;
+            index = shipsLength;
 
         GoToNextShip();
     }
@@ -123,7 +110,7 @@ public class S1_ShipSelect : MonoBehaviour
         ships[index].SetActive(false);
 
         index++;
-        if (index > ships.Count - 1)
+        if (index > shipsLength)
             index = 0;
 
         GoToNextShip();

@@ -6,23 +6,14 @@ using UnityEngine.UI;
 
 public class Music_ButtonController : MonoBehaviour
 {
-    MusicPlayer musicPlayer;
-    Button mainMenuButton;
-    Button[] songPlayButtons;
-    ScrollRect scrollRect;
+    [SerializeField] MusicPlayer musicPlayer;
+    [SerializeField] Button mainMenuButton;
+    [SerializeField] Button[] songPlayButtons;
+    [SerializeField] ScrollRect scrollRect;
 
     bool canScroll = true;
     int index;
     float verticalPos;
-
-    void Awake()
-    {
-        musicPlayer = FindObjectOfType<MusicPlayer>();
-        scrollRect = FindObjectOfType<ScrollRect>();
-
-        mainMenuButton = GameObject.FindGameObjectWithTag("Main").GetComponent<Button>();
-        songPlayButtons = scrollRect.GetComponentsInChildren<Button>();
-    }
 
     private void Start()
     {

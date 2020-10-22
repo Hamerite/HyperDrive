@@ -1,7 +1,6 @@
 ﻿//Created by Dylan LeClair
 //Last revised 20-09-20 (Dylan LeClair)
 
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -9,9 +8,10 @@ using UnityEngine.EventSystems;
 public class S1_ButtonsController : MonoBehaviour
 {
     public static S1_ButtonsController Instance { get; private set; }
-    readonly List<GameObject> startMenus =  new List<GameObject>();
 
-    Text titleText;
+    [SerializeField] Text titleText;
+    [SerializeField] GameObject[] startMenus;
+
     EventSystem eventSystem;
 
     bool panelChange;
@@ -19,16 +19,6 @@ public class S1_ButtonsController : MonoBehaviour
     void Awake()
     {
         Instance = this;
-
-        titleText = GameObject.FindGameObjectWithTag("TitleText").GetComponent<Text>();
-
-        foreach (GameObject item in GameObject.FindGameObjectsWithTag("StartMenus"))
-        {
-            startMenus.Add(item);
-            item.SetActive(false);
-        }
-
-        startMenus.TrimExcess();
         eventSystem = EventSystem.current;
     }
 

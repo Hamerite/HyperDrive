@@ -6,12 +6,7 @@ using UnityEngine.UI;
 
 public class S1_TitleElements : MonoBehaviour
 {
-    Button selectedButton;
-
-    void Awake()
-    {
-        selectedButton = GameObject.FindGameObjectWithTag("Start").GetComponent<Button>();
-    }
+    [SerializeField] Button selectedButton;
 
     void OnEnable()
     {

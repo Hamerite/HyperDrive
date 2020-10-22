@@ -6,16 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour
 {
-    public AudioClip[] SongClips;
-
-    AudioSource audioSource;
-
-    void Awake()
-    {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.playOnAwake = false;
-        audioSource.loop = false;
-    }
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip[] SongClips;
 
     void Update()
     {

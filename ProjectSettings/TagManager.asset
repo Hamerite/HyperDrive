@@ -5,21 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Destroyer
-  - ScoreText
-  - TitleText
-  - ShipSelect
-  - NameInput
-  - Instructions
-  - StartMenus
-  - Main
-  - ResetCheck
-  - Price
-  - Coins
   - ObstaclesPassed
   - LevelReached
-  - Select
-  - Start
-  - Delete
   - Very Easy
   - Easy
   - Medium

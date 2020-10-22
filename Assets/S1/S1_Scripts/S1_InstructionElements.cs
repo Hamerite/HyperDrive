@@ -1,32 +1,14 @@
 ﻿//Created by Dylan LeClair
 //Last modified 20-09-20 (Dylan LeClair)
 
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class S1_InstructionElements : MonoBehaviour
 {
-    readonly List<GameObject> InstructionElements = new List<GameObject>();
-    readonly List<Button> buttons = new List<Button>();
-    readonly List<CanvasGroup> canvasgroups = new List<CanvasGroup>();
-
-    void Awake()
-    {
-        foreach (GameObject item in GameObject.FindGameObjectsWithTag("Instructions"))
-        {
-            InstructionElements.Add(item);
-            buttons.Add(item.GetComponent<Button>());
-            canvasgroups.Add(item.GetComponent<CanvasGroup>());
-        }
-    }
-
-    void Start()
-    {
-        InstructionElements.TrimExcess();
-        buttons.TrimExcess();
-        canvasgroups.TrimExcess();
-    }
+    [SerializeField] GameObject[] InstructionElements;
+    [SerializeField] Button[] buttons;
+    [SerializeField] CanvasGroup[] canvasgroups;
 
     void OnEnable()
     {

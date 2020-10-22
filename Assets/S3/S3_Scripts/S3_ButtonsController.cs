@@ -8,19 +8,13 @@ public class S3_ButtonsController : MonoBehaviour
 {
     public static S3_ButtonsController Instance { get; private set; }
 
-    Button[] buttons;
-
-    [SerializeField]
-    InputField nameInput;
-
-    private void Awake()
-    {
-        Instance = this;
-        buttons = FindObjectsOfType<Button>();
-    }
+    [SerializeField] Button[] buttons;
+    [SerializeField] InputField nameInput;
 
     private void Start()
     {
+        Instance = this;
+
         if (!Cursor.visible)
             buttons[0].Select();
     }

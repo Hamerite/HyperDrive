@@ -13,13 +13,9 @@ public class MenusManager : MonoBehaviour
     Button newSelectedButton;
     Toggle newSelectedToggle;
 
-    void Awake()
-    {
-        Instance = this;
-    }
-
     void Start()
     {
+        Instance = this;
         mousePos = Input.mousePosition;
     }
 

@@ -5,15 +5,8 @@ using UnityEngine;
 
 public class S2_PlayerAudioController : MonoBehaviour
 {
-    AudioSource audioSource;
-
-    [SerializeField]
-    AudioClip[] clips; // { Explosion, PassingObstacle }
-
-    void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip[] clips; // { Explosion, PassingObstacle }
 
     public void PlayAudio(int index)
     {
