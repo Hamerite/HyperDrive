@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class ParticleDestroy : MonoBehaviour
 {
-    [SerializeField]
-    new ParticleSystem particleSystem;
+    [SerializeField] new ParticleSystem particleSystem;
 
     private void Update()
     {

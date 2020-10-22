@@ -12,8 +12,7 @@ public class S2_AsteroidController : MonoBehaviour
     readonly List<Vector3> rotateDir =  new List<Vector3>();
     readonly List<float> rotateSpeed =  new List<float>();
 
-    [SerializeField]
-    int pointsPlanesOffset;
+    [SerializeField] int pointsPlanesOffset;
 
     void Awake()
     {

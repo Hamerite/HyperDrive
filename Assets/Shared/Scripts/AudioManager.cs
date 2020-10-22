@@ -9,22 +9,14 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    AudioSource audioSource;
-
-    [SerializeField]
-    AudioMixer audioMixer;
-    [SerializeField]
-    AudioClip[] buttonSoundClips; // { MousedOver, Pressed, saveHighScore, deleteHighScore, DenySelection, Coins }
-
-    void Awake()
-    {
-        Instance = this;
-
-        audioSource = GetComponent<AudioSource>();
-    }
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioMixer audioMixer;
+    [SerializeField] AudioClip[] buttonSoundClips; // { MousedOver, Pressed, saveHighScore, deleteHighScore, DenySelection, Coins }
 
     void Start()
     {
+        Instance = this;
+
         if (PlayerPrefs.GetInt("Mute") != 0)
             AudioListener.pause = true;
         audioMixer.SetFloat("MixerMaster", Mathf.Log10(PlayerPrefs.GetFloat("MasterVolume")) * 20);

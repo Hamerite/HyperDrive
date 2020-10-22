@@ -1,7 +1,6 @@
 ﻿//Created by Dylan LeClair
 //Last revised 20-09-20 (Dylan LeClair)
 
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,9 +8,8 @@ public class S3_GameOverManager : MonoBehaviour
 {
     public static S3_GameOverManager Instance { get; private set; }
 
-    readonly List<GameObject> textElements = new List<GameObject>();
-
-    Text coinsGain;
+    [SerializeField] GameObject[] textElements;
+    [SerializeField] Text coinsGain;
 
     bool startAdd;
     float preAddedCoins;
@@ -23,13 +21,6 @@ public class S3_GameOverManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        coinsGain = GameObject.FindGameObjectWithTag("Coins").GetComponent<Text>();
-
-        foreach (GameObject item in GameObject.FindGameObjectsWithTag("ScoreText"))
-            textElements.Add(item);
-
-        textElements[1].SetActive(false);
-        textElements.TrimExcess();
     }
 
     void Start()

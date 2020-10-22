@@ -1,26 +1,15 @@
 ﻿//Created by Dylan LeClair
 //Last revised 13-09-20 (Dylan LeClair)
 
-using System.Collections.Generic;
 using UnityEngine;
 
 public class S2_PlayerController : MonoBehaviour
 {
     Transform shipModel;
 
-    readonly List<GameObject> shipChoice = new List<GameObject>();
+    [SerializeField] GameObject[] shipChoice;
 
     int index;
-
-    void Awake()
-    {
-        foreach (GameObject item in GameObject.FindGameObjectsWithTag("Player"))
-        {
-            shipChoice.Add(item);
-            item.SetActive(false);
-        }
-        shipChoice.TrimExcess();
-    }
 
     void Start()
     {

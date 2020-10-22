@@ -5,12 +5,7 @@ using UnityEngine;
 
 public class IntroController : MonoBehaviour
 {
-    CanvasGroup canvasGroup;
-
-    void Awake()
-    {
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
+    [SerializeField] CanvasGroup canvasGroup;
 
     private void Start()
     {

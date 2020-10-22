@@ -5,15 +5,9 @@ using UnityEngine;
 
 public class PointsPlaneController : MonoBehaviour
 {
-    AudioSource audioSource;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip clip;
 
-    [SerializeField]
-    AudioClip clip;
-
-    void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
     public void PointsScored()
     {
         audioSource.PlayOneShot(clip);
