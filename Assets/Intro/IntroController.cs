@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class IntroController : MonoBehaviour
 {
-    [SerializeField] CanvasGroup canvasGroup;
+    [SerializeField] CanvasGroup canvasGroup = null;
 
     private void Start()
     {
@@ -15,11 +15,11 @@ public class IntroController : MonoBehaviour
     void Update()
     {
         if (Input.anyKeyDown)
-            GameManager.Instance.TraverseScenes(0, 1);
+            GameManager.Instance.TraverseScenes(1);
     }
 
     void LogoFadeIn()
     {
-        canvasGroup.LeanAlpha(1.0f, 7.0f).setOnComplete(() => GameManager.Instance.TraverseScenes(0, 1));
+        canvasGroup.LeanAlpha(1.0f, 7.0f).setOnComplete(() => GameManager.Instance.TraverseScenes(1));
     }
 }

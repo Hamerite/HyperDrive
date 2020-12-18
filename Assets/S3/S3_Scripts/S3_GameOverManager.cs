@@ -8,8 +8,8 @@ public class S3_GameOverManager : MonoBehaviour
 {
     public static S3_GameOverManager Instance { get; private set; }
 
-    [SerializeField] GameObject[] textElements;
-    [SerializeField] Text coinsGain;
+    [SerializeField] GameObject[] textElements = null;
+    [SerializeField] Text coinsGain = null;
 
     bool startAdd;
     float preAddedCoins;

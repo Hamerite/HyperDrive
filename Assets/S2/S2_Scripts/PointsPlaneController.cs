@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PointsPlaneController : MonoBehaviour
 {
-    [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioClip clip;
+    [SerializeField] AudioSource audioSource = null;
+    [SerializeField] AudioClip clip = null;
 
     public void PointsScored()
     {

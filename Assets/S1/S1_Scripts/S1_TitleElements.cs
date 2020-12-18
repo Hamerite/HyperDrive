@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class S1_TitleElements : MonoBehaviour
 {
-    [SerializeField] Button selectedButton;
+    [SerializeField] Button selectedButton = null;
 
     void OnEnable()
     {
@@ -18,7 +18,7 @@ public class S1_TitleElements : MonoBehaviour
     public void StartButton()
     {
         AudioManager.Instance.PlayButtonSound(1);
-        GameManager.Instance.TraverseScenes(1, 2);
+        GameManager.Instance.TraverseScenes(2);
     }
 
     public void InstructionsButton()
@@ -34,7 +34,7 @@ public class S1_TitleElements : MonoBehaviour
     public void SoundTrackButton()
     {
         AudioManager.Instance.PlayButtonSound(1);
-        GameManager.Instance.TraverseScenes(1, 4);
+        GameManager.Instance.TraverseScenes(4);
     }
 
     public void OptionsButton()

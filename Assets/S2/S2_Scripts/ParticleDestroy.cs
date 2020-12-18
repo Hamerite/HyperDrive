@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ParticleDestroy : MonoBehaviour
 {
-    [SerializeField] new ParticleSystem particleSystem;
+    [SerializeField] new ParticleSystem particleSystem = null;
 
     private void Update()
     {
@@ -15,6 +15,6 @@ public class ParticleDestroy : MonoBehaviour
 
     void DelaySceneChange()
     {
-        GameManager.Instance.TraverseScenes(2, 3);
+        GameManager.Instance.TraverseScenes(3);
     }
 }

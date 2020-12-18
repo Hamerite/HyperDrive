@@ -83,10 +83,9 @@ public class GameManager : MonoBehaviour
         levelText = level;
     }
 
-    public void TraverseScenes(int unload, int load)
+    public void TraverseScenes(int load)
     {
-        SceneManager.LoadScene(load);
-        SceneManager.UnloadSceneAsync(unload);
+        SceneManager.LoadScene(load, LoadSceneMode.Single);
 
         if (load == 2)
         {

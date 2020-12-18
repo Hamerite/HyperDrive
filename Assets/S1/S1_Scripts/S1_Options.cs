@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class S1_Options : MonoBehaviour
 {
-    [SerializeField] GameObject resetCheck;
-    [SerializeField] Button selectedButton;
-    [SerializeField] Toggle selectedToggle;
-    [SerializeField] Slider[] volumeSliders;
+    [SerializeField] GameObject resetCheck = null;
+    [SerializeField] Button selectedButton = null;
+    [SerializeField] Toggle selectedToggle = null;
+    [SerializeField] Slider[] volumeSliders = null;
 
     void Start()
     {

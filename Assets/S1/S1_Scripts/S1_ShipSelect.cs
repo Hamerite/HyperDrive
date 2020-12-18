@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class S1_ShipSelect : MonoBehaviour
 {
-    [SerializeField] Button selectButton;
-    [SerializeField] Text selectText;
-    [SerializeField] Text price;
-    [SerializeField] Text coinCount;
+    [SerializeField] Button selectButton = null;
+    [SerializeField] Text selectText = null;
+    [SerializeField] Text price = null;
+    [SerializeField] Text coinCount = null;
 
-    [SerializeField] GameObject[] ships;
+    [SerializeField] GameObject[] ships = null;
 
     Vector3 center;
     Vector3 rotaion = new Vector3(0, 70, 0);
@@ -19,7 +19,6 @@ public class S1_ShipSelect : MonoBehaviour
     readonly bool[] wasPurchased = { true, false, false, false };
     readonly int[] prices = { 0, 10000, 10000, 10000 };
 
-    bool afford;
     int index;
     int playerCoins;
     int shipsLength;
@@ -153,6 +152,5 @@ public class S1_ShipSelect : MonoBehaviour
     {
         coinCount.color = Color.yellow;
         coinCount.text = "Coins: " + playerCoins;
-        afford = false;
     }
 }
