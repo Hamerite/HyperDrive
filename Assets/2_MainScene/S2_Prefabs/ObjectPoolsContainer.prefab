@@ -1,0 +1,237 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4523189223372204867
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4523189223372204893}
+  - component: {fileID: 4523189223372204894}
+  m_Layer: 0
+  m_Name: Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4523189223372204893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523189223372204867}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 150}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4523189223678135541}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4523189223372204894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523189223372204867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4479a1b96fa81d548aba2b1314faf225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asteroidLevels:
+  - name: Very Easy
+    asteroidArrays:
+    - name: VeryEasy1
+      asteroids: {fileID: 4605240607063077850, guid: 5e5016d8e3669df45af528b92737c8d8,
+        type: 3}
+    - name: VeryEasy2
+      asteroids: {fileID: 42943180785876091, guid: c86a9d2a1335cee4c850e55cb94efe6c,
+        type: 3}
+    - name: VeryEasy3
+      asteroids: {fileID: 7242740774939533511, guid: 5d552ed820973d54aa159126205fb0e4,
+        type: 3}
+    - name: VeryEasy4
+      asteroids: {fileID: 5272163781698097543, guid: ac1a70ff647afd448b2e309a019f0bd3,
+        type: 3}
+    - name: VeryEasy5
+      asteroids: {fileID: 2797886100009938005, guid: e867cd8de1cf319448dbea11058cd975,
+        type: 3}
+    - name: VeryEasy6
+      asteroids: {fileID: 1950653999589896763, guid: 6815c1158cfe4624fbe08101bdcf7f40,
+        type: 3}
+    - name: VeryEasy7
+      asteroids: {fileID: 2865301568928628391, guid: 3be94d109c8c9c248afe237ffacb1438,
+        type: 3}
+  - name: Easy
+    asteroidArrays:
+    - name: Easy1
+      asteroids: {fileID: 9168479059887413446, guid: 9a030f2d7d43617488f602eb4b6ff955,
+        type: 3}
+    - name: Easy2
+      asteroids: {fileID: 7611925524106063148, guid: 8b9a384f1fa113946a977cb59f0a4377,
+        type: 3}
+    - name: Easy3
+      asteroids: {fileID: 8128712543899636558, guid: f7a81c6c9fa22d541a8d5bb460f61b92,
+        type: 3}
+    - name: Easy4
+      asteroids: {fileID: 3902613062026714698, guid: e95b062c38714b8409f345776acb37b3,
+        type: 3}
+    - name: Easy5
+      asteroids: {fileID: 1278834388307754443, guid: 1577655ed62e324439f15ec9da64f8ac,
+        type: 3}
+    - name: Easy6
+      asteroids: {fileID: 4245016058339617249, guid: bd1edbecb06a8d0488507526f459a31a,
+        type: 3}
+    - name: Easy7
+      asteroids: {fileID: 4872749606912556541, guid: 991d6e7f24bc79a4e82ea20c8a7bfc66,
+        type: 3}
+  - name: Medium
+    asteroidArrays:
+    - name: Medium1
+      asteroids: {fileID: 5969753683074845131, guid: 427d24ad131095f41b2afbf65b346568,
+        type: 3}
+    - name: Medium2
+      asteroids: {fileID: 5974474916758493014, guid: 8b80a73ea5fd5cf479cd1b43748abbeb,
+        type: 3}
+    - name: Medium3
+      asteroids: {fileID: 3770707249512015007, guid: 438617f165b450545a320dc60a94aab5,
+        type: 3}
+    - name: Medium4
+      asteroids: {fileID: 2727817538721489715, guid: 7a77d27cbedf2564182e315b993835b6,
+        type: 3}
+    - name: Medium5
+      asteroids: {fileID: 6790967598001076275, guid: 482c9c170e8d3694bbab6c2f170ebc2e,
+        type: 3}
+    - name: Medium6
+      asteroids: {fileID: 7074927412353326585, guid: 78e7d2e78c856264f842b7e06d6db821,
+        type: 3}
+    - name: Medium7
+      asteroids: {fileID: 7031776845248686481, guid: 8a6861c42b54a7543bce91dccfbcfb33,
+        type: 3}
+  - name: Hard
+    asteroidArrays:
+    - name: Hard1
+      asteroids: {fileID: 2495171905133984138, guid: 586ce1f589ab68c4abb469b8e8de695c,
+        type: 3}
+    - name: Hard2
+      asteroids: {fileID: 8959546324210061399, guid: 9b6e9f2e784a7524b8747a805eaa4352,
+        type: 3}
+    - name: Hard3
+      asteroids: {fileID: 6457003791596942598, guid: b14f2d27a80a86f4f81a147fd9bf3e5f,
+        type: 3}
+    - name: Hard4
+      asteroids: {fileID: 9161127513541119815, guid: 57872dbff92bd8e4b8a415d976c92228,
+        type: 3}
+    - name: Hard5
+      asteroids: {fileID: 8391382744953323857, guid: 9622ed707728430419984247560fe2ee,
+        type: 3}
+    - name: Hard6
+      asteroids: {fileID: 3705094815188958432, guid: 3b8023c0b4b837046934a204c6428955,
+        type: 3}
+    - name: Hard7
+      asteroids: {fileID: 5462880858964295553, guid: a60a3382f8796424c931b006777f7352,
+        type: 3}
+  - name: Very Hard
+    asteroidArrays:
+    - name: VeryHard1
+      asteroids: {fileID: 4389573152213022030, guid: 93591d8c8cd643541bb11a7eed8f529e,
+        type: 3}
+    - name: VeryHard2
+      asteroids: {fileID: 2949309196669119680, guid: d407f2368f1230d4890e1d6f4f26310b,
+        type: 3}
+    - name: VeryHard3
+      asteroids: {fileID: 4000172388176001945, guid: a4571eab70d4bfb44bca614acf18c7e1,
+        type: 3}
+    - name: VeryHard4
+      asteroids: {fileID: 79390900929186550, guid: 10143266c7fcba844a71894c78b5393b,
+        type: 3}
+    - name: VeryHard5
+      asteroids: {fileID: 7275713911137982527, guid: 8ca63ac81e6eb14449aaf400015232e5,
+        type: 3}
+    - name: VeryHard6
+      asteroids: {fileID: 4966563562546313368, guid: 5760d4151f3f78a4b8f650ad534faf2f,
+        type: 3}
+    - name: VeryHard7
+      asteroids: {fileID: 1140954495978760918, guid: 6c2a3e1e3cf7abe4fb7798a789f8faf7,
+        type: 3}
+--- !u!1 &4523189223678135540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4523189223678135541}
+  m_Layer: 0
+  m_Name: ObjectPoolsContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4523189223678135541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523189223678135540}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4523189223372204893}
+  - {fileID: 4523189223935121720}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4523189223935121726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4523189223935121720}
+  - component: {fileID: 4523189223935121727}
+  m_Layer: 0
+  m_Name: Destroyer
+  m_TagString: Destroyer
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4523189223935121720
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523189223935121726}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4523189223678135541}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4523189223935121727
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523189223935121726}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
