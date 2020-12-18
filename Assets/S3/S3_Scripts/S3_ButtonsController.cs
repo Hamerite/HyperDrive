@@ -8,8 +8,8 @@ public class S3_ButtonsController : MonoBehaviour
 {
     public static S3_ButtonsController Instance { get; private set; }
 
-    [SerializeField] Button[] buttons;
-    [SerializeField] InputField nameInput;
+    [SerializeField] Button[] buttons = null;
+    [SerializeField] InputField nameInput = null;
 
     private void Start()
     {
@@ -30,13 +30,13 @@ public class S3_ButtonsController : MonoBehaviour
     public void PlayAgainButton()
     {
         AudioManager.Instance.PlayButtonSound(1);
-        GameManager.Instance.TraverseScenes(3, 2);
+        GameManager.Instance.TraverseScenes(2);
     }
 
     public void MainMenuButton()
     {
         AudioManager.Instance.PlayButtonSound(1);
-        GameManager.Instance.TraverseScenes(3, 1);
+        GameManager.Instance.TraverseScenes(1);
     }
 
     public void ButtonsInteractability()

@@ -7,7 +7,7 @@ public class S2_PlayerController : MonoBehaviour
 {
     Transform shipModel;
 
-    [SerializeField] GameObject[] shipChoice;
+    [SerializeField] GameObject[] shipChoice = null;
 
     int index;
 

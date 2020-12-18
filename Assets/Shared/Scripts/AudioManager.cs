@@ -9,9 +9,9 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioMixer audioMixer;
-    [SerializeField] AudioClip[] buttonSoundClips; // { MousedOver, Pressed, saveHighScore, deleteHighScore, DenySelection, Coins }
+    [SerializeField] AudioSource audioSource = null;
+    [SerializeField] AudioMixer audioMixer = null;
+    [SerializeField] AudioClip[] buttonSoundClips = null; // { MousedOver, Pressed, saveHighScore, deleteHighScore, DenySelection, Coins }
 
     void Start()
     {

@@ -4,45 +4,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class AsteroidLevels
+{
+    public string name = null;
+    public AsteroidArrays[] asteroidArrays;
+}
+[System.Serializable]
+public class AsteroidArrays
+{
+    public string name = null;
+    public GameObject asteroids;
+}
+
 public class S2_PoolController : MonoBehaviour
 {
     public static S2_PoolController Instance { get; private set; }
 
-    readonly List<GameObject>[] asteroids = new List<GameObject>[5];
-    readonly List<GameObject>[] asteroidsArray = new List<GameObject>[7];
+    [SerializeField] AsteroidLevels[] asteroidLevels = null;
+    readonly List<GameObject>[] inUse = new List<GameObject>[7];
     readonly List<int> benched = new List<int>();
 
     int RNG;
     int arrayIndex = 0;
-    int index = 0;
     float speed = 75.0f;
     float waitTime = 1.8f;
     float benchedTime = 5.4f;
 
     readonly string[] obstacleDifficulty = { "Very Easy", "Easy", "Medium", "Hard", "Very Hard" };
 
-    void Awake()
+    private void Awake()
     {
         Instance = this;
 
-        for (int i = 0; i < asteroids.Length; i++)
+        for (int i = 0; i < inUse.Length; i++)
         {
-            asteroids[i] = new List<GameObject>();
-        }
-
-        foreach (string tag in obstacleDifficulty)
-        {
-            foreach (GameObject item in GameObject.FindGameObjectsWithTag(tag))
-            {
-                asteroids[index].Add(item);
-                item.SetActive(false);
-            }
-            index++;
-        }
-
-        for (int i = 0; i < asteroids.Length; i++)
-        {
-            asteroids[i].TrimExcess();
+            inUse[i] = new List<GameObject>();
+            inUse[i].TrimExcess();
         }
     }
 
@@ -51,23 +49,13 @@ public class S2_PoolController : MonoBehaviour
         GameManager.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
         arrayIndex++;
 
-        for (int i = 0; i < asteroids[0].Count; i++)
-        {
-            asteroidsArray[i] = new List<GameObject>()
-            {
-                asteroids[0][i]
-            };
-
-            asteroidsArray[i].TrimExcess();
-        }
-
         InvokeRepeating(nameof(ChooseObstacle), 0.5f, waitTime);
         benched.TrimExcess();
     }
 
     void ChooseObstacle()
     {
-        RNG = Random.Range(0, asteroidsArray.Length);
+        RNG = Random.Range(0, asteroidLevels[arrayIndex].asteroidArrays.Length);
         if (benched.Contains(RNG))
         {
             CancelInvoke(nameof(ChooseObstacle));
@@ -96,19 +84,19 @@ public class S2_PoolController : MonoBehaviour
 
     GameObject GetObstacle(int index)
     {
-        for (int i = 0; i < asteroidsArray[index].Count; i++)
-            if (!asteroidsArray[index][i].activeInHierarchy)
-                return asteroidsArray[index][i];
+        for (int i = 0; i < inUse[index].Count; i++)
+            if (!inUse[index][i].activeInHierarchy)
+                return inUse[index][i];
 
-        GameObject obstacle = Instantiate(asteroidsArray[index][0]);
+        GameObject obstacle = Instantiate(asteroidLevels[arrayIndex - 1].asteroidArrays[index].asteroids);
         obstacle.SetActive(false);
-        asteroidsArray[index].Add(obstacle);
+        inUse[index].Add(obstacle);
         return obstacle;
     }
 
     void BringBackBenched()
     {
-        if(benched.Count != 0)
+        if (benched.Count != 0)
             benched.RemoveAt(0);
     }
 
@@ -118,17 +106,12 @@ public class S2_PoolController : MonoBehaviour
 
         if (counterValue % 90 == 0)
         {
+            for (int i = 0; i < inUse.Length; i++)
+                inUse[i].Clear();
+
             benched.Clear();
-            for (int i = 0; i < asteroids[1].Count - 1; i++)
-                asteroidsArray[i].Clear();
 
             GameManager.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
-
-            for (int i = 0; i < asteroids[1].Count - 1; i++)
-            {
-                asteroidsArray[i].Add(asteroids[arrayIndex][i]);
-                asteroidsArray[i].TrimExcess();
-            }
 
             arrayIndex++;
         }

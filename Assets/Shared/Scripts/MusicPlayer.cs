@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour
 {
-    [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioClip[] SongClips;
+    [SerializeField] AudioSource audioSource = null;
+    [SerializeField] AudioClip[] SongClips = null;
 
     void Update()
     {

@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class S1_InstructionElements : MonoBehaviour
 {
-    [SerializeField] GameObject[] InstructionElements;
-    [SerializeField] Button[] buttons;
-    [SerializeField] CanvasGroup[] canvasgroups;
+    [SerializeField] GameObject[] InstructionElements = null;
+    [SerializeField] Button[] buttons = null;
+    [SerializeField] CanvasGroup[] canvasgroups = null;
 
     void OnEnable()
     {
