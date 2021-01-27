@@ -25,7 +25,7 @@ public class S2_AsteroidController : MonoBehaviour
         for (int i = 0; i < asteroids.Length - pointsPlanesOffset; i++)
         {
             rotateDir.Add(new Vector3(Random.Range(-360, 360), Random.Range(-360, 360), 0));
-            rotateSpeed.Add(Random.Range(0.01f, 0.03f));
+            rotateSpeed.Add(Random.Range(0.001f, 0.003f));
         }
 
         rotateDir.TrimExcess();
