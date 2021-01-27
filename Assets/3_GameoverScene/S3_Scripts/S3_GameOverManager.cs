@@ -15,7 +15,7 @@ public class S3_GameOverManager : MonoBehaviour
     float preAddedCoins;
     float addedCoins;
     float gameTime;
-    float addRate = 100.0f;
+    float addRate = 300.0f;
     string champName;
 
     void Awake()
