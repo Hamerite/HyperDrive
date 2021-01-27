@@ -773,6 +773,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartScreen_Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7847116063458830912, guid: 5477e30f1bfd06243ac3b91eab9c41d6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 402
+      objectReference: {fileID: 0}
+    - target: {fileID: 7847116063458830912, guid: 5477e30f1bfd06243ac3b91eab9c41d6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 162
+      objectReference: {fileID: 0}
     - target: {fileID: 7847116063909548814, guid: 5477e30f1bfd06243ac3b91eab9c41d6,
         type: 3}
       propertyPath: ships.Array.data[0]

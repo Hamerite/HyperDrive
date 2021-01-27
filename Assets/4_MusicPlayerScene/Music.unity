@@ -943,6 +943,11 @@ PrefabInstance:
       propertyPath: musicPlayer
       value: 
       objectReference: {fileID: 703105677}
+    - target: {fileID: 1924853393697484242, guid: 5de46ba93ba1d3142a040204dd76d042,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1924853394915317354, guid: 5de46ba93ba1d3142a040204dd76d042,
         type: 3}
       propertyPath: m_AnchorMax.x
