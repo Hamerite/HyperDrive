@@ -23,9 +23,9 @@ public class S1_Options : MonoBehaviour
         MenusManager.Instance.SetSelectedButton(null, selectedToggle);
 
         selectedToggle.isOn = (PlayerPrefs.GetInt("Mute") != 0);
-        volumeSliders[0].value = PlayerPrefs.GetFloat("MasterVolume", 1.0f);
-        volumeSliders[1].value = PlayerPrefs.GetFloat("MusicVolume", 1.0f);
-        volumeSliders[2].value = PlayerPrefs.GetFloat("SFXVolume", 1.0f);
+        volumeSliders[0].value = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
+        volumeSliders[1].value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+        volumeSliders[2].value = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
     }
 
     void Update()

@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("Mute") != 0)
             AudioListener.pause = true;
+
         audioMixer.SetFloat("MixerMaster", Mathf.Log10(PlayerPrefs.GetFloat("MasterVolume")) * 20);
         audioMixer.SetFloat("MixerMusic", Mathf.Log10(PlayerPrefs.GetFloat("MusicVolume")) * 20);
         audioMixer.SetFloat("MixerSFX", Mathf.Log10(PlayerPrefs.GetFloat("SFXVolume")) * 20);
