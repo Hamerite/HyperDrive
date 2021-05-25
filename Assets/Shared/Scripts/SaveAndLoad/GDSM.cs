@@ -7,7 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public static class GDSM{
     public static void SaveData(GameManager gameManager) {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/ADS";
+        string path = Application.persistentDataPath + "/GDS";
 
         FileStream stream;
         if (File.Exists(path)) stream = new FileStream(path, FileMode.Append);
@@ -19,7 +19,7 @@ public static class GDSM{
     }
 
     public static SGD LoadData(){
-        string path = Application.persistentDataPath + "/ADS";
+        string path = Application.persistentDataPath + "/GDS";
 
         if (File.Exists(path))
         {
