@@ -1,80 +1,88 @@
 ﻿//Created by Dylan LeClair
 //Last modified 20-09-20 (Dylan LeClair)
-
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 
-public class AudioManager : MonoBehaviour
-{
+public class AudioManager : MonoBehaviour {
     public static AudioManager Instance { get; private set; }
 
-    [SerializeField] AudioSource audioSource = null;
+    [SerializeField] AudioSource[] audioSource = null; // { Music, SFX, MenuSounds }
     [SerializeField] AudioMixer audioMixer = null;
     [SerializeField] AudioClip[] buttonSoundClips = null; // { MousedOver, Pressed, saveHighScore, deleteHighScore, DenySelection, Coins }
 
-    void Start()
-    {
+    bool[] mutes = { false, false }; // { All, Menues }
+    float[] volumes = { 0, 0, 0 }; // { Master, Music, SFX }
+
+    void Awake() { 
         Instance = this;
 
-        if (PlayerPrefs.GetInt("Mute") != 0)
-            AudioListener.pause = true;
-
-        audioMixer.SetFloat("MixerMaster", Mathf.Log10(PlayerPrefs.GetFloat("MasterVolume")) * 20);
-        audioMixer.SetFloat("MixerMusic", Mathf.Log10(PlayerPrefs.GetFloat("MusicVolume")) * 20);
-        audioMixer.SetFloat("MixerSFX", Mathf.Log10(PlayerPrefs.GetFloat("SFXVolume")) * 20);
+        SAD data = ADSM.LoadData();
+        if (data != null)
+        {
+            mutes = data.mutes;
+            volumes = data.volumes;
+        }
     }
 
-    public void SetMute(bool value)
-    {
+    void Start() {
+        AudioListener.pause = mutes[0];
+        if (mutes[1]) audioMixer.SetFloat("MixerMenu", 0);
+
+        audioMixer.SetFloat("MixerMaster", Mathf.Log10(volumes[0]) * 20);
+        audioMixer.SetFloat("MixerMusic", Mathf.Log10(volumes[1]) * 20);
+        audioMixer.SetFloat("MixerSFX", Mathf.Log10(volumes[2]) * 20);
+    }
+
+    public void SetMute(bool value) {
         AudioListener.pause = value;
-        PlayerPrefs.SetInt("Mute", (value ? 1 : 0));
-        SaveSettings();
+        mutes[0] = value;
+        ADSM.SaveData(this);
     }
 
-    public void SetMasterVolume(float value)
-    {
+    public void SetMenuMute(bool value){
+        if(value) audioMixer.SetFloat("MixerMenu", 0);
+        else audioMixer.SetFloat("MixerMenu", 1);
+
+        mutes[1] = value;
+        ADSM.SaveData(this);
+    }
+
+    public void SetMasterVolume(float value) {
         audioMixer.SetFloat("MixerMaster", Mathf.Log10(value) * 20);
-        PlayerPrefs.SetFloat("MasterVolume", value);
-        SaveSettings();
+        volumes[0] = value;
+        ADSM.SaveData(this);
     }
-    public void SetMusicVolume(float value)
-    {
+
+    public void SetMusicVolume(float value) {
         audioMixer.SetFloat("MixerMusic", Mathf.Log10(value) * 20);
-        PlayerPrefs.SetFloat("MusicVolume", value);
-        SaveSettings();
+        volumes[1] = value;
+        ADSM.SaveData(this);
     }
 
-    public void SetSFXVolume(float value)
-    {
+    public void SetSFXVolume(float value) {
         audioMixer.SetFloat("MixerSFX", Mathf.Log10(value) * 20);
-        PlayerPrefs.SetFloat("SFXVolume", value);
-        SaveSettings();
+        volumes[2] = value;
+        ADSM.SaveData(this);
     }
 
-    void SaveSettings()
-    {
-        PlayerPrefs.Save();
-        if (Cursor.visible)
-            EventSystem.current.SetSelectedGameObject(null);
+    public void PlayButtonSound(int index) { audioSource[2].PlayOneShot(buttonSoundClips[index]); }
+
+    public void PlayLoopingAudio(int index) {
+        audioSource[1].loop = true;
+        audioSource[1].clip = buttonSoundClips[index];
+        audioSource[1].Play();
     }
 
-    public void PlayButtonSound(int index)
-    {
-        audioSource.PlayOneShot(buttonSoundClips[index]);
+    public void StopLoopingAudio() {
+        audioSource[1].loop = false;
+        audioSource[1].clip = null;
+        audioSource[1].Stop();
     }
 
-    public void PlayLoopingAudio(int index)
-    {
-        audioSource.loop = true;
-        audioSource.clip = buttonSoundClips[index];
-        audioSource.Play();
-    }
+    public AudioSource[] GetAudioSources() { return audioSource; }
 
-    public void StopLoopingAudio()
-    {
-        audioSource.loop = false;
-        audioSource.clip = null;
-        audioSource.Stop();
-    }
+    public bool[] GetMutes() { return mutes; }
+
+    public float[] GetVolumes() { return volumes; }
 }

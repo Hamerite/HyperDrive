@@ -1,11 +1,9 @@
 ﻿//Created by Dylan LeClair
 //Last revised 20-09-20 (Dylan LeClair)
-
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Music_ButtonController : MonoBehaviour
-{
+public class Music_ButtonController : MonoBehaviour {
     [SerializeField] MusicPlayer musicPlayer = null;
     [SerializeField] Button mainMenuButton = null;
     [SerializeField] Button[] songPlayButtons = null;
@@ -15,40 +13,28 @@ public class Music_ButtonController : MonoBehaviour
     int index;
     float verticalPos;
 
-    private void Start()
-    {
-        if (!Cursor.visible)
-            songPlayButtons[index].Select();
+    void Start() {
+        if (!Cursor.visible) songPlayButtons[index].Select();
 
         verticalPos = 1.0f;
-
-        foreach (Button item in songPlayButtons)
-            item.onClick.AddListener(() => PlayTrack(System.Array.IndexOf(songPlayButtons, item)));
+        foreach (Button item in songPlayButtons) item.onClick.AddListener(() => PlayTrack(System.Array.IndexOf(songPlayButtons, item)));
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
-            GameManager.Instance.TraverseScenes(1);
+    void Update(){
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1)) GameManager.Instance.TraverseScenes(1);
 
-        if(!Cursor.visible && Input.GetAxis("Vertical") > 0.0f ^ Input.GetAxis("Vertical") < 0.0f
-            && canScroll)
-        {
+        if(!Cursor.visible && Input.GetAxis("Vertical") > 0.0f ^ Input.GetAxis("Vertical") < 0.0f && canScroll) {
             canScroll = false;
             Invoke(nameof(DelayScroll), 0.35f);
 
-            if (Input.GetAxis("Vertical") > 0.0f)
-                index = Mathf.Clamp(index - 1, 0, songPlayButtons.Length - 1);
-            else
-                index = Mathf.Clamp(index + 1, 0, songPlayButtons.Length);
+            if (Input.GetAxis("Vertical") > 0.0f) index = Mathf.Clamp(index - 1, 0, songPlayButtons.Length - 1);
+            else index = Mathf.Clamp(index + 1, 0, songPlayButtons.Length);
 
-            if (index == 9)
-            {
+            if (index == 9) {
                 mainMenuButton.Select();
                 MenusManager.Instance.SetSelectedButton(mainMenuButton, null);
             }
-            else
-            {
+            else {
                 songPlayButtons[index].Select();
                 MenusManager.Instance.SetSelectedButton(songPlayButtons[index], null);
             }
@@ -58,24 +44,18 @@ public class Music_ButtonController : MonoBehaviour
         }
     }
 
-    void DelayScroll()
-    {
-        canScroll = true;
-    }
+    void DelayScroll() { canScroll = true; }
 
-    public void PlayTrack(int index)
-    {
+    public void PlayTrack(int index) {
         AudioManager.Instance.PlayButtonSound(1);
         musicPlayer.PlaySong(index);
     }
 
-    public void ButtonSelected()
-    {
+    public void ButtonSelected() {
         AudioManager.Instance.PlayButtonSound(0);
     }
 
-    public void MainMenuButton()
-    {
+    public void MainMenuButton() {
         AudioManager.Instance.PlayButtonSound(1);
         GameManager.Instance.TraverseScenes(1);
     }

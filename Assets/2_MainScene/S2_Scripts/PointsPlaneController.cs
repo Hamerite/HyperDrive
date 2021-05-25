@@ -1,15 +1,9 @@
 ﻿//Created by Dylan LeClair
 //Last modified 27-09-20 (Dylan LeClair)
-
 using UnityEngine;
 
-public class PointsPlaneController : MonoBehaviour
-{
-    [SerializeField] AudioSource audioSource = null;
+public class PointsPlaneController : MonoBehaviour {
     [SerializeField] AudioClip clip = null;
 
-    public void PointsScored()
-    {
-        audioSource.PlayOneShot(clip);
-    }
+    public void PointsScored() { AudioManager.Instance.GetAudioSources()[1].PlayOneShot(clip); }
 }

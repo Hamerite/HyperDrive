@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!244 &-8283864869320158308
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: c6f16dd887c26d64da9b07e0085318d9
+  m_EffectName: Attenuation
+  m_MixLevel: 8830009c5f3d12640a0f2aba68af41cd
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!243 &-6918389220099232460
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MenuSounds
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 7851731c3959d5345a1099aec1f745cd
+  m_Children: []
+  m_Volume: 6c949e6f94f66874d95a59239cd24a29
+  m_Pitch: cbc90eb3a887c8d42aac797440b661d3
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -8283864869320158308}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &-5860718244485476140
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -9,7 +42,8 @@ AudioMixerGroupController:
   m_Name: SFX
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: ca5afbde1a5e96743982530b216a5d4e
-  m_Children: []
+  m_Children:
+  - {fileID: -6918389220099232460}
   m_Volume: 036a7d7706afba942870b24c34c9b647
   m_Pitch: a3405de03ae02674ba267fe200b305a1
   m_Send: 00000000000000000000000000000000
@@ -37,6 +71,8 @@ AudioMixerController:
   m_ExposedParameters:
   - guid: 1547f14126fe65e489c555efadedd673
     name: MixerMaster
+  - guid: 6c949e6f94f66874d95a59239cd24a29
+    name: MixerMenu
   - guid: 5f36ec7c686f1274e8ba88b335819ce4
     name: MixerMusic
   - guid: 036a7d7706afba942870b24c34c9b647
@@ -46,6 +82,7 @@ AudioMixerController:
     - f3852515abe81e94691e2ad73ba8cf8d
     - f9dd320ef8fc9214b8bae05510fbffcb
     - ca5afbde1a5e96743982530b216a5d4e
+    - 7851731c3959d5345a1099aec1f745cd
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
