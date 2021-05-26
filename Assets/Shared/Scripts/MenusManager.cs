@@ -7,9 +7,9 @@ using UnityEngine.EventSystems;
 public class MenusManager : MonoBehaviour {
     public static MenusManager Instance { get; private set; }
 
-    Vector3 mousePos;
-    Button newSelectedButton;
-    Toggle newSelectedToggle;
+    protected Vector3 mousePos;
+    protected Button newSelectedButton;
+    protected Toggle newSelectedToggle;
 
     void Start() {
         Instance = this;
@@ -17,7 +17,7 @@ public class MenusManager : MonoBehaviour {
     }
 
     void Update() {
-        if (Cursor.visible && Input.GetAxis("Vertical") != 0 || Cursor.visible && Input.GetAxis("Horizontal") != 0) MouseToKeys();
+        if (Cursor.visible && (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)) MouseToKeys();
         else if (!Cursor.visible && mousePos != Input.mousePosition) KeysToMouse();
     }
 

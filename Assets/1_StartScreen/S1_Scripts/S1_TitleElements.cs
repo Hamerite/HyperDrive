@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class S1_TitleElements : MonoBehaviour {
-    [SerializeField] Button selectedButton = null;
+    [SerializeField] protected Button selectedButton = null;
 
     void OnEnable() {
         if (!Cursor.visible) selectedButton.Select();

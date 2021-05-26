@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class S2_AsteroidController : MonoBehaviour {
-    Transform[] asteroids;
-    GameObject destroyer;
+    [SerializeField] protected int pointsPlanesOffset = 0;
 
-    readonly List<Vector3> rotateDir =  new List<Vector3>();
-    readonly List<float> rotateSpeed =  new List<float>();
+    protected Transform[] asteroids;
+    protected GameObject destroyer;
 
-    [SerializeField] int pointsPlanesOffset = 0;
+    protected readonly List<Vector3> rotateDir =  new List<Vector3>();
+    protected readonly List<float> rotateSpeed =  new List<float>();
 
     void Awake() {
         asteroids = GetComponentsInChildren<Transform>();

@@ -6,27 +6,32 @@ using UnityEngine.UI;
 public class S3_GameOverManager : MonoBehaviour {
     public static S3_GameOverManager Instance { get; private set; }
 
-    [SerializeField] GameObject[] textElements = null;
-    [SerializeField] Text coinsGain = null;
+    [SerializeField] protected GameObject[] textElements = null;
+    [SerializeField] protected Text coinsGain = null;
 
-    bool startAdd;
-    float preAddedCoins;
-    float addedCoins;
-    float gameTime;
-    float addRate = 300.0f;
-    string champName;
+    protected bool startAdd;
+    protected int highScore;
+    protected float preAddedCoins;
+    protected float addedCoins;
+    protected float gameTime;
+    protected float addRate = 300.0f;
+    protected string champName;
 
     void Awake() { Instance = this; }
 
     void Start() {
-        if (PlayerPrefs.GetString("ChampName") == null) champName = "";
-        else champName = PlayerPrefs.GetString("ChampName");
+        SSD data = SDSM.LoadData();
+        if (data != null){
+            highScore = data.highScore;
+            champName = data.champName;
+        }
 
         textElements[0].GetComponent<Text>().text = "Score: " + GameManager.Instance.GetNumbers("Score").ToString();
-        textElements[2].GetComponent<Text>().text = "High Score: " + champName + " : " + PlayerPrefs.GetInt("HighScore").ToString();
+        textElements[2].GetComponent<Text>().text = "High Score: " + champName + " : " + highScore;
 
-        if (PlayerPrefs.GetInt("HighScore") < GameManager.Instance.GetNumbers("Score")) {
-            PlayerPrefs.SetInt("HighScore", GameManager.Instance.GetNumbers("Score"));
+        if (highScore < GameManager.Instance.GetNumbers("Score")) {
+            highScore = GameManager.Instance.GetNumbers("Score");
+            SDSM.SaveData(this);
 
             textElements[1].SetActive(true);
             InvokeRepeating(nameof(FlashingLetters), 0.15f, 0.15f);
@@ -81,6 +86,10 @@ public class S3_GameOverManager : MonoBehaviour {
 
     public void SetChampName(string name) {
         textElements[1].SetActive(false);
-        textElements[2].GetComponent<Text>().text = "High Score: " + name + "  " + PlayerPrefs.GetInt("HighScore").ToString();
+        textElements[2].GetComponent<Text>().text = "High Score: " + name + "  " + highScore;
     }
+
+    public int GetHighScore() { return highScore; }
+
+    public string GetChampName() { return champName; }
 }

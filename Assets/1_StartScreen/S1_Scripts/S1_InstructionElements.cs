@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class S1_InstructionElements : MonoBehaviour {
-    [SerializeField] GameObject[] InstructionElements = null;
-    [SerializeField] Button[] buttons = null;
-    [SerializeField] CanvasGroup[] canvasgroups = null;
+    [SerializeField] protected GameObject[] InstructionElements = null;
+    [SerializeField] protected Button[] buttons = null;
+    [SerializeField] protected CanvasGroup[] canvasgroups = null;
 
     void OnEnable() {
         InstructionElements[3].SetActive(false);

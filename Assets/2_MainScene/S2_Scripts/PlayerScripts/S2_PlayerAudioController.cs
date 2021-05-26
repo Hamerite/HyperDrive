@@ -3,7 +3,7 @@
 using UnityEngine;
 
 public class S2_PlayerAudioController : MonoBehaviour {
-    [SerializeField] AudioClip[] clips = null; // { Explosion, PassingObstacle }
+    [SerializeField] protected AudioClip[] clips = null; // { Explosion, PassingObstacle }
 
     public void PlayAudio(int index) { AudioManager.Instance.GetAudioSources()[1].PlayOneShot(clips[index]); }
 }

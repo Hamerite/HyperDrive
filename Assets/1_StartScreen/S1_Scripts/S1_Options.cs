@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class S1_Options : MonoBehaviour {
-    [SerializeField] GameObject resetCheck = null;
-    [SerializeField] Button selectedButton = null;
-    [SerializeField] Toggle selectedToggle = null;
-    [SerializeField] Toggle menuMuteToggle = null;
-    [SerializeField] Slider[] volumeSliders = null;
+    [SerializeField] protected GameObject resetCheck = null;
+    [SerializeField] protected Button selectedButton = null;
+    [SerializeField] protected Toggle selectedToggle = null;
+    [SerializeField] protected Toggle menuMuteToggle = null;
+    [SerializeField] protected Slider[] volumeSliders = null;
 
     void Start() { resetCheck.SetActive(false); }
 
@@ -24,7 +24,7 @@ public class S1_Options : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape) && resetCheck.activeInHierarchy || Input.GetKeyDown(KeyCode.JoystickButton1) && resetCheck.activeInHierarchy) {
+        if (resetCheck.activeInHierarchy && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))) {
             resetCheck.SetActive(false);
             if (!Cursor.visible) selectedToggle.Select();
             S1_ButtonsController.Instance.SetPanelChange();

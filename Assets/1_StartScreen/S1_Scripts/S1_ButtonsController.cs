@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 public class S1_ButtonsController : MonoBehaviour {
     public static S1_ButtonsController Instance { get; private set; }
 
-    [SerializeField] Text titleText = null;
-    [SerializeField] GameObject[] startMenus = null;
+    [SerializeField] protected Text titleText = null;
+    [SerializeField] protected GameObject[] startMenus = null;
 
     EventSystem eventSystem;
     bool panelChange;

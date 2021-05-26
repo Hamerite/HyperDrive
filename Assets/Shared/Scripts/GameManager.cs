@@ -5,18 +5,17 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
-    public static GameManager Instance { get; private set; } 
+    public static GameManager Instance { get; private set; }
 
-    Text scoreText;
-    Text obstaclesPassed;
-    Text levelReached;
-    int score;
-    int counter;
-    int coins;
+    protected Text scoreText;
+    protected Text obstaclesPassed;
+    protected Text levelReached;
 
-    string levelText;
-
-    bool s2Start;
+    protected bool s2Start;
+    protected int score;
+    protected int counter;
+    protected int coins;
+    protected string levelText;
 
     void Awake() {
         if (Instance != null && Instance != this) DestroyImmediate(gameObject);

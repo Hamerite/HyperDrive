@@ -5,15 +5,15 @@ using UnityEngine;
 public class S2_PlayerCollisionController : MonoBehaviour {
     public static S2_PlayerCollisionController Instance { get; private set; }
 
-    [SerializeField] S2_PlayerAudioController playerAudio = null;
-    [SerializeField] ParticleSystem playerDeathParticles = null;
-    [SerializeField] new Collider collider = null;
+    [SerializeField] protected S2_PlayerAudioController playerAudio = null;
+    [SerializeField] protected ParticleSystem playerDeathParticles = null;
+    [SerializeField] protected new Collider collider = null;
 
-    readonly LayerMask[] layers = { 9, 10, 11, 12 };
-    readonly Vector3[] dir = new Vector3[] { Vector3.up, Vector3.down, Vector3.right, Vector3.left };
+    protected readonly LayerMask[] layers = { 9, 10, 11, 12 };
+    protected readonly Vector3[] dir = new Vector3[] { Vector3.up, Vector3.down, Vector3.right, Vector3.left };
 
-    bool canScore = true;
-    bool isAlive = true;
+    protected bool canScore = true;
+    protected bool isAlive = true;
 
     void Start() { Instance = this; }
 
