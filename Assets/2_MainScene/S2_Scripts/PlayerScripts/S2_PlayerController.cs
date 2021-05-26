@@ -3,14 +3,16 @@
 using UnityEngine;
 
 public class S2_PlayerController : MonoBehaviour {
-    Transform shipModel;
-
     [SerializeField] GameObject[] shipChoice = null;
 
-    int index;
+    protected Transform shipModel;
+
+    protected int index;
 
     void Start() {
-        index = PlayerPrefs.GetInt("Selection");
+        SPD data = PDSM.LoadData();
+        if (data != null) index = data.shipSelected;
+
         shipChoice[index].SetActive(true);
         shipModel = shipChoice[index].transform;
     }

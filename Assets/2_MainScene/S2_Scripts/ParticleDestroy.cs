@@ -3,7 +3,7 @@
 using UnityEngine;
 
 public class ParticleDestroy : MonoBehaviour{
-    [SerializeField] new ParticleSystem particleSystem = null;
+    [SerializeField] protected new ParticleSystem particleSystem = null;
 
     void Update() { if (!particleSystem.IsAlive()) Invoke(nameof(DelaySceneChange), 1.0f); }
 

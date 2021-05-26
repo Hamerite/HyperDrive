@@ -3,7 +3,7 @@
 using UnityEngine;
 
 public class PointsPlaneController : MonoBehaviour {
-    [SerializeField] AudioClip clip = null;
+    [SerializeField] protected AudioClip clip = null;
 
     public void PointsScored() { AudioManager.Instance.GetAudioSources()[1].PlayOneShot(clip); }
 }

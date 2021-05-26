@@ -2,17 +2,16 @@
 //Last modified 20-09-20 (Dylan LeClair)
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.EventSystems;
 
 public class AudioManager : MonoBehaviour {
     public static AudioManager Instance { get; private set; }
 
-    [SerializeField] AudioSource[] audioSource = null; // { Music, SFX, MenuSounds }
-    [SerializeField] AudioMixer audioMixer = null;
-    [SerializeField] AudioClip[] buttonSoundClips = null; // { MousedOver, Pressed, saveHighScore, deleteHighScore, DenySelection, Coins }
+    [SerializeField] protected AudioSource[] audioSource = null; // { Music, SFX, MenuSounds }
+    [SerializeField] protected AudioMixer audioMixer = null;
+    [SerializeField] protected AudioClip[] buttonSoundClips = null; // { MousedOver, Pressed, saveHighScore, deleteHighScore, DenySelection, Coins }
 
-    bool[] mutes = { false, false }; // { All, Menues }
-    float[] volumes = { 0, 0, 0 }; // { Master, Music, SFX }
+    protected bool[] mutes = { false, false }; // { All, Menues }
+    protected float[] volumes = { 0, 0, 0 }; // { Master, Music, SFX }
 
     void Awake() { 
         Instance = this;

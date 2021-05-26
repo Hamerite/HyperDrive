@@ -18,17 +18,17 @@ public class AsteroidArrays {
 public class S2_PoolController : MonoBehaviour {
     public static S2_PoolController Instance { get; private set; }
 
-    [SerializeField] AsteroidLevels[] asteroidLevels = null;
-    readonly List<GameObject>[] inUse = new List<GameObject>[7];
-    readonly List<int> benched = new List<int>();
+    [SerializeField] protected AsteroidLevels[] asteroidLevels = null;
+    protected readonly List<GameObject>[] inUse = new List<GameObject>[7];
+    protected readonly List<int> benched = new List<int>();
 
-    int RNG;
-    int arrayIndex = 0;
-    float speed = 75.0f;
-    float waitTime = 1.8f;
-    float benchedTime = 5.4f;
+    protected int RNG;
+    protected int arrayIndex = 0;
+    protected float speed = 75.0f;
+    protected float waitTime = 1.8f;
+    protected float benchedTime = 5.4f;
 
-    readonly string[] obstacleDifficulty = { "Very Easy", "Easy", "Medium", "Hard", "Very Hard" };
+    protected readonly string[] obstacleDifficulty = { "Very Easy", "Easy", "Medium", "Hard", "Very Hard" };
 
     private void Awake() {
         Instance = this;

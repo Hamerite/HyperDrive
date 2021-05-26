@@ -4,28 +4,31 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class S1_ShipSelect : MonoBehaviour {
-    [SerializeField] Button selectButton = null;
-    [SerializeField] Text selectText = null;
-    [SerializeField] Text price = null;
-    [SerializeField] Text coinCount = null;
+    [SerializeField] protected Button selectButton = null;
+    [SerializeField] protected Text selectText = null;
+    [SerializeField] protected Text price = null;
+    [SerializeField] protected Text coinCount = null;
 
-    [SerializeField] GameObject[] ships = null;
+    [SerializeField] protected GameObject[] ships = null;
 
-    Vector3 center;
-    Vector3 rotaion = new Vector3(0, 70, 0);
+    protected Vector3 center;
+    protected Vector3 rotaion = new Vector3(0, 70, 0);
 
-    readonly bool[] wasPurchased = { true, false, false, false };
-    readonly int[] prices = { 0, 10000, 10000, 10000 };
+    protected readonly bool[] wasPurchased = { true, false, false, false };
+    protected readonly int[] prices = { 0, 10000, 10000, 10000 };
 
-    int index;
-    int playerCoins;
-    int shipsLength;
+    protected int index;
+    protected int playerCoins;
+    protected int shipsLength;
 
     void Start() {
-        wasPurchased[1] = (PlayerPrefs.GetInt("SharkPurchased") != 0);
-        wasPurchased[2] = (PlayerPrefs.GetInt("BattlePurchased") != 0);
-        wasPurchased[3] = (PlayerPrefs.GetInt("XPurchased") != 0);
+        SPD data = PDSM.LoadData();
+        if(data != null) {
+            for (int i = 1; i < wasPurchased.Length; i++) wasPurchased[i] = data.wasPurchased[i];
+            index = data.shipSelected;
+        }
 
+        playerCoins = GameManager.Instance.GetNumbers("Coins");
         shipsLength = ships.Length - 1;
     }
 
@@ -33,14 +36,11 @@ public class S1_ShipSelect : MonoBehaviour {
         if(!Cursor.visible) selectButton.Select();
         MenusManager.Instance.SetSelectedButton(selectButton, null);
 
-        ships[PlayerPrefs.GetInt("Selection")].SetActive(true);
+        ships[index].SetActive(true);
         center = new Vector3(Camera.main.pixelWidth / 100, Camera.main.pixelHeight / 100, 700);
-        ships[PlayerPrefs.GetInt("Selection")].transform.position = center;
-        index = PlayerPrefs.GetInt("Selection");
+        ships[index].transform.position = center;
 
         if (index == 0) price.text = "";
-
-        playerCoins = GameManager.Instance.GetNumbers("Coins");
         coinCount.text = "Coins: " + playerCoins;
     }
 
@@ -54,9 +54,7 @@ public class S1_ShipSelect : MonoBehaviour {
 
             S1_ButtonsController.Instance.ChangePanels("HyperDrive", new bool[] { true, false, false, false, false });
 
-            PlayerPrefs.SetInt("Selection", index);
-            PlayerPrefs.Save();
-
+            PDSM.SaveData(this);
             S1_ButtonsController.Instance.SetPanelChange();
         }
         else if (wasPurchased[index] == false && playerCoins >= prices[index]) {
@@ -64,10 +62,14 @@ public class S1_ShipSelect : MonoBehaviour {
             price.text = "";
 
             wasPurchased[index] = true;
+            PDSM.SaveData(this);
+
+            playerCoins -= prices[index];
+            GameManager.Instance.SetNumbers("Coins", playerCoins);
+
             coinCount.color = Color.red;
             coinCount.text = "Coins: " + playerCoins + " - " + prices[index];
             Invoke(nameof(Purchused), 0.8f);
-            SavePurchase();
         }
         else AudioManager.Instance.PlayButtonSound(4);
     }
@@ -106,19 +108,12 @@ public class S1_ShipSelect : MonoBehaviour {
         ships[index].transform.position = center;
     }
 
-    void SavePurchase() {
-        if (index == 1) PlayerPrefs.SetInt("SharkPurchased", (wasPurchased[index] ? 1 : 0));
-        if (index == 2) PlayerPrefs.SetInt("BattlePurchased", (wasPurchased[index] ? 1 : 0));
-        if (index == 3) PlayerPrefs.SetInt("XPurchased", (wasPurchased[index] ? 1 : 0));
-
-        playerCoins -= prices[index];
-        GameManager.Instance.SetNumbers("Coins", playerCoins);
-        PlayerPrefs.SetInt("Coins", playerCoins);
-        PlayerPrefs.Save();
-    }
-
     void Purchused() {
         coinCount.color = Color.yellow;
         coinCount.text = "Coins: " + playerCoins;
     }
+
+    public bool[] GetWasPurchsed() { return wasPurchased; }
+
+    public int GetIndex() { return index; }
 }

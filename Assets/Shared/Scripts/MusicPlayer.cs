@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour {
-    [SerializeField] AudioClip[] SongClips = null;
+    [SerializeField] protected AudioClip[] SongClips = null;
 
     void Update() {
         if (SceneManager.GetActiveScene().buildIndex != 4 && !AudioManager.Instance.GetAudioSources()[0].isPlaying) {

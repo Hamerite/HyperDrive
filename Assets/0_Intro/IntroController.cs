@@ -3,7 +3,7 @@
 using UnityEngine;
 
 public class IntroController : MonoBehaviour {
-    [SerializeField] CanvasGroup canvasGroup = null;
+    [SerializeField] protected CanvasGroup canvasGroup = null;
 
     void Start() { LogoFadeIn(); }
 
