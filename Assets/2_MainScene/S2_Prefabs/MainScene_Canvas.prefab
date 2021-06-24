@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2249459549207958489}
   - component: {fileID: 2249459549207958490}
   - component: {fileID: 2249459549207958491}
+  - component: {fileID: 3506552157333431528}
   m_Layer: 5
   m_Name: MainScene_Canvas
   m_TagString: Untagged
@@ -101,6 +102,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3506552157333431528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2249459549207958492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39d3281f85e0889408ca1657725d6f66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 2249459550197157445}
+  obstaclesPassed: {fileID: 2249459549699560964}
+  levelReached: {fileID: 2249459550008223583}
 --- !u!1 &2249459549699560966
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,8 +151,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 127, y: -35}
-  m_SizeDelta: {x: 200, y: 30}
+  m_AnchoredPosition: {x: 210.5, y: -35}
+  m_SizeDelta: {x: 366.91394, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2249459549699560963
 CanvasRenderer:
@@ -161,6 +177,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -177,7 +194,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: 'Obstacles Passed: 0'
 --- !u!1 &2249459550008223553
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,6 +255,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -254,7 +272,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: Very Easy
 --- !u!1 &2249459550197157447
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,6 +333,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -331,4 +350,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: 'Score: 0'

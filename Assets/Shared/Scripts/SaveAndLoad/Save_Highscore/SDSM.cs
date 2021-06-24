@@ -4,33 +4,37 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public static class GDSM{
-    public static void SaveData(GameManager gameManager) {
+public class SDSM : MonoBehaviour {
+    public static void SaveData(S3_GameOverManager s3_GameOverManager) {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/GDS";
+        string path = Application.persistentDataPath + "/SDS";
 
         FileStream stream;
         if (File.Exists(path)) stream = new FileStream(path, FileMode.Append);
         else stream = new FileStream(path, FileMode.Create);
 
-        SGD data = new SGD(gameManager);
+        SSD data = new SSD(s3_GameOverManager);
         formatter.Serialize(stream, data);
         stream.Close();
     }
 
-    public static SGD LoadData(){
-        string path = Application.persistentDataPath + "/GDS";
+    public static SSD LoadData() {
+        string path = Application.persistentDataPath + "/SDS";
 
-        if (File.Exists(path))
-        {
+        if (File.Exists(path)) {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
-            SGD data = formatter.Deserialize(stream) as SGD;
+            SSD data = formatter.Deserialize(stream) as SSD;
             stream.Close();
 
             return data;
         }
-        else { return null; }
+        else return null;
+    }
+
+    public static void DeleteData() {
+        string path = Application.persistentDataPath + "/SDS";
+        if (File.Exists(path)) File.Delete(path);
     }
 }

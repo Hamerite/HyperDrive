@@ -22,11 +22,8 @@ public class S2_PoolController : MonoBehaviour {
     protected readonly List<GameObject>[] inUse = new List<GameObject>[7];
     protected readonly List<int> benched = new List<int>();
 
-    protected int RNG;
-    protected int arrayIndex = 0;
-    protected float speed = 75.0f;
-    protected float waitTime = 1.8f;
-    protected float benchedTime = 5.4f;
+    protected int RNG, arrayIndex;
+    protected float speed = 75.0f, waitTime = 1.8f, benchedTime = 5.4f;
 
     protected readonly string[] obstacleDifficulty = { "Very Easy", "Easy", "Medium", "Hard", "Very Hard" };
 
@@ -40,7 +37,7 @@ public class S2_PoolController : MonoBehaviour {
     }
 
     void Start() {
-        GameManager.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
+        S2_HUDUI.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
         arrayIndex++;
 
         InvokeRepeating(nameof(ChooseObstacle), 0.5f, waitTime);
@@ -80,16 +77,19 @@ public class S2_PoolController : MonoBehaviour {
         return obstacle;
     }
 
-    void BringBackBenched() { if (benched.Count != 0) benched.RemoveAt(0); }
+    void BringBackBenched() {
+        if (benched.Count <= 0) return;
+        benched.RemoveAt(0); 
+    }
 
     public void CheckForBehaviourChange() {
-        int counterValue = GameManager.Instance.GetNumbers("Counter");
+        int counterValue = S2_HUDUI.Instance.GetObstacleCounter();
 
         if (counterValue % 90 == 0) {
             for (int i = 0; i < inUse.Length; i++) inUse[i].Clear();
 
             benched.Clear();
-            GameManager.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
+            S2_HUDUI.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
             arrayIndex++;
         }
         else if (counterValue % 30 == 0) speed += 5.0f;

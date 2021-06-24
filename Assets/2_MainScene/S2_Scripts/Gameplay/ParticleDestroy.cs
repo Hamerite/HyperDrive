@@ -5,7 +5,10 @@ using UnityEngine;
 public class ParticleDestroy : MonoBehaviour{
     [SerializeField] protected new ParticleSystem particleSystem = null;
 
-    void Update() { if (!particleSystem.IsAlive()) Invoke(nameof(DelaySceneChange), 1.0f); }
+    void Update() {
+        if (particleSystem.IsAlive()) return;
+        Invoke(nameof(DelaySceneChange), 1.0f); 
+    }
 
-    void DelaySceneChange() { GameManager.Instance.TraverseScenes(3); }
+    void DelaySceneChange() { GameManager.Instance.TraverseScenes("Gameover"); }
 }

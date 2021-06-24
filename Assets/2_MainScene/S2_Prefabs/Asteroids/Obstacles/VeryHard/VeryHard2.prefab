@@ -58,8 +58,6 @@ Transform:
   - {fileID: 2071560073874222008}
   - {fileID: 2071560074025308285}
   - {fileID: 6196148211102700076}
-  - {fileID: 7265419900640391024}
-  - {fileID: 4008690286498251256}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -75,67 +73,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59daddd7401c4904cbbdf3619df94c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsPlanesOffset: 1
---- !u!1 &5256502114983484205
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4008690286498251256}
-  m_Layer: 0
-  m_Name: BufferObject (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4008690286498251256
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5256502114983484205}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2949309196669119681}
-  m_RootOrder: 31
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7505294255612205667
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7265419900640391024}
-  m_Layer: 0
-  m_Name: BufferObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7265419900640391024
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7505294255612205667}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2949309196669119681}
-  m_RootOrder: 30
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  asteroids:
+  - {fileID: 3056615235808429949}
+  - {fileID: 3056615236555115617}
+  - {fileID: 3056615235422918272}
+  - {fileID: 3056615236548027891}
+  - {fileID: 3056615235812869635}
+  - {fileID: 3056615235634500903}
+  - {fileID: 3056615235227674823}
+  - {fileID: 7154963757513219646}
+  - {fileID: 7154963756562749634}
+  - {fileID: 7154963756973227930}
+  - {fileID: 7154963756372649159}
+  - {fileID: 7154963755616068540}
+  - {fileID: 445480773693788974}
+  - {fileID: 445480774412133082}
+  - {fileID: 445480773415433757}
+  - {fileID: 445480774626211447}
+  - {fileID: 445480773876230100}
+  - {fileID: 6253907669212475452}
+  - {fileID: 6253907668550175535}
+  - {fileID: 6253907667796446501}
+  - {fileID: 6253907668535361170}
+  - {fileID: 6253907668381371401}
+  - {fileID: 6253907668315722208}
+  - {fileID: 6253907668495992777}
+  - {fileID: 2071560072903028576}
+  - {fileID: 2071560072528203355}
+  - {fileID: 2071560073634540071}
+  - {fileID: 2071560073874222008}
+  - {fileID: 2071560074025308285}
 --- !u!1001 &2949309196318096815
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,10 +7,10 @@ public class MusicPlayer : MonoBehaviour {
     [SerializeField] protected AudioClip[] SongClips = null;
 
     void Update() {
-        if (SceneManager.GetActiveScene().buildIndex != 4 && !AudioManager.Instance.GetAudioSources()[0].isPlaying) {
-            AudioManager.Instance.GetAudioSources()[0].clip = SongClips[Random.Range(0, SongClips.Length)];
-            AudioManager.Instance.GetAudioSources()[0].Play();
-        }
+        if (SceneManager.GetActiveScene().name == "Music" || AudioManager.Instance.GetAudioSources()[0].isPlaying) return;
+
+        AudioManager.Instance.GetAudioSources()[0].clip = SongClips[Random.Range(0, SongClips.Length)];
+        AudioManager.Instance.GetAudioSources()[0].Play();
     }
 
     public void PlaySong(int index) {

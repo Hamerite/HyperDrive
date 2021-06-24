@@ -6,57 +6,53 @@ using UnityEngine.UI;
 public class S1_Options : MonoBehaviour {
     [SerializeField] protected GameObject resetCheck = null;
     [SerializeField] protected Button selectedButton = null;
-    [SerializeField] protected Toggle selectedToggle = null;
-    [SerializeField] protected Toggle menuMuteToggle = null;
-    [SerializeField] protected Slider[] volumeSliders = null;
+    [SerializeField] protected Toggle[] mutes = null; // { All, Menu }
+    [SerializeField] protected Slider[] volumeSliders = null; // { Master, Music, SFX }
 
     void Start() { resetCheck.SetActive(false); }
 
     void OnEnable() {
-        if(!Cursor.visible) selectedToggle.Select();
-        MenusManager.Instance.SetSelectedButton(null, selectedToggle);
+        if(!Cursor.visible) mutes[0].Select();
+        MenusManager.Instance.SetSelectedButton(null, mutes[0]);
 
-        selectedToggle.isOn = AudioManager.Instance.GetMutes()[0];
-        menuMuteToggle.isOn = AudioManager.Instance.GetMutes()[1];
-        volumeSliders[0].value = AudioManager.Instance.GetVolumes()[0];
-        volumeSliders[1].value = AudioManager.Instance.GetVolumes()[1];
-        volumeSliders[2].value = AudioManager.Instance.GetVolumes()[2];
+        for (int i = 0; i < 2; i++) mutes[i].isOn = AudioManager.Instance.GetMutes()[i];
+        for (int i = 0; i < 3; i++) volumeSliders[i].value = AudioManager.Instance.GetVolumes()[i];
     }
 
     void Update() {
-        if (resetCheck.activeInHierarchy && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))) {
+        if (!resetCheck.activeInHierarchy) return;
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1)) {
             resetCheck.SetActive(false);
-            if (!Cursor.visible) selectedToggle.Select();
             S1_ButtonsController.Instance.SetPanelChange();
+            if (!Cursor.visible) mutes[0].Select();
         }
     }
 
     public void ResetHighScores() {
-        AudioManager.Instance.PlayButtonSound(1);
+        AudioManager.Instance.PlayInteractionSound(1);
         resetCheck.SetActive(true);
         S1_ButtonsController.Instance.SetPanelChange();
 
-        if (!Cursor.visible) selectedButton.Select();
         MenusManager.Instance.SetSelectedButton(selectedButton, null);
+        if (!Cursor.visible) selectedButton.Select();
     }
 
     public void DeleteButton() {
-        AudioManager.Instance.PlayButtonSound(3);
+        AudioManager.Instance.PlayInteractionSound(3);
 
-        PlayerPrefs.DeleteKey("HighScore");
-        PlayerPrefs.DeleteKey("ChampName");
+        SDSM.DeleteData();
 
         resetCheck.SetActive(false);
-        if (!Cursor.visible) selectedToggle.Select();
-        MenusManager.Instance.SetSelectedButton(null, selectedToggle);
+        MenusManager.Instance.SetSelectedButton(null, mutes[0]);
+        if (!Cursor.visible) mutes[0].Select();
     }
 
     public void CancelButton() {
-        AudioManager.Instance.PlayButtonSound(1);
+        AudioManager.Instance.PlayInteractionSound(1);
 
         resetCheck.SetActive(false);
-        if (!Cursor.visible) selectedToggle.Select();
-        MenusManager.Instance.SetSelectedButton(null, selectedToggle);
+        MenusManager.Instance.SetSelectedButton(null, mutes[0]);
+        if (!Cursor.visible) mutes[0].Select();
     }
 
     #region On Value Change

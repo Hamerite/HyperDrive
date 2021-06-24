@@ -11,13 +11,17 @@ public class MenusManager : MonoBehaviour {
     protected Button newSelectedButton;
     protected Toggle newSelectedToggle;
 
+    protected bool inputingHighscore;
+
     void Start() {
         Instance = this;
         mousePos = Input.mousePosition;
     }
 
     void Update() {
-        if (Cursor.visible && (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)) MouseToKeys();
+        if (inputingHighscore) return;
+
+        if (Cursor.visible && ((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0))) MouseToKeys();
         else if (!Cursor.visible && mousePos != Input.mousePosition) KeysToMouse();
     }
 
@@ -45,4 +49,6 @@ public class MenusManager : MonoBehaviour {
     public Button GetSelectedButton() { return newSelectedButton; }
 
     public Toggle GetSelectedToggle() { return newSelectedToggle; }
+
+    public void ToggleInputingHighscore() { inputingHighscore = !inputingHighscore; }
 }

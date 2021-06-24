@@ -1,35 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1222847648150015297
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4322384401422610998}
-  m_Layer: 0
-  m_Name: BufferObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4322384401422610998
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1222847648150015297}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2495171905133984137}
-  m_RootOrder: 27
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2495171905133984138
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,7 +55,6 @@ Transform:
   - {fileID: 2712171115394573083}
   - {fileID: 7220802657229390915}
   - {fileID: 6896013021510920060}
-  - {fileID: 4322384401422610998}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -101,7 +70,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59daddd7401c4904cbbdf3619df94c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsPlanesOffset: 2
+  asteroids:
+  - {fileID: 4592926564798124846}
+  - {fileID: 8890531245926407440}
+  - {fileID: 7770470050474375103}
+  - {fileID: 8701345793151091631}
+  - {fileID: 2486082451366512750}
+  - {fileID: 4115442329501073767}
+  - {fileID: 2258114934004649923}
+  - {fileID: 6206971844539937789}
+  - {fileID: 1728776170349932041}
+  - {fileID: 6435082841094015620}
+  - {fileID: 1853160897732044841}
+  - {fileID: 4809971817194776074}
+  - {fileID: 2819528831261847240}
+  - {fileID: 8526811814323848688}
+  - {fileID: 9139436691069326416}
+  - {fileID: 7179319083689020857}
+  - {fileID: 5006326220953117972}
+  - {fileID: 8905594290045226447}
+  - {fileID: 2433677107703176542}
+  - {fileID: 6166695293299874786}
+  - {fileID: 6203920017268191998}
+  - {fileID: 2337208792775443339}
+  - {fileID: 2196735763177383894}
+  - {fileID: 7773942797486541705}
+  - {fileID: 2712171115394573083}
 --- !u!1001 &68002363724629710
 PrefabInstance:
   m_ObjectHideFlags: 0

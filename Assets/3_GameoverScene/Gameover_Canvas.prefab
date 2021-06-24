@@ -992,9 +992,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textElements:
-  - {fileID: 7516023759712817845}
-  - {fileID: 7516023759938428701}
-  - {fileID: 7516023759498829054}
+  - {fileID: 7516023759712817843}
+  - {fileID: 7516023759938428699}
+  - {fileID: 7516023759498829052}
   coinsGain: {fileID: 7516023760288355315}
 --- !u!114 &7516023760085593831
 MonoBehaviour:

@@ -3,7 +3,8 @@
 using UnityEngine;
 
 public class S2_PlayerController : MonoBehaviour {
-    [SerializeField] GameObject[] shipChoice = null;
+    [SerializeField] protected GameObject[] shipChoice = null;
+    [SerializeField] protected new Rigidbody rigidbody;
 
     protected Transform shipModel;
 
@@ -18,8 +19,8 @@ public class S2_PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        float vertical = Input.GetAxis("Vertical") * 12.0f * Time.deltaTime;
-        float horizontal = Input.GetAxis("Horizontal") * 12.0f * Time.deltaTime;
+        float vertical = Input.GetAxis("Vertical") * ShipStats.Instance.GetMaxSpeed() * Time.deltaTime;
+        float horizontal = Input.GetAxis("Horizontal") * ShipStats.Instance.GetMaxSpeed() * Time.deltaTime;
         transform.Translate(horizontal, vertical, 0.0f);
 
         float angleV = Input.GetAxis("Vertical") * 1500.0f * Time.deltaTime;

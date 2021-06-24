@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Music_ButtonController : MonoBehaviour {
-    [SerializeField] MusicPlayer musicPlayer = null;
-    [SerializeField] Button mainMenuButton = null;
-    [SerializeField] Button[] songPlayButtons = null;
-    [SerializeField] ScrollRect scrollRect = null;
+    [SerializeField] protected MusicPlayer musicPlayer = null;
+    [SerializeField] protected Button mainMenuButton = null;
+    [SerializeField] protected Button[] songPlayButtons = null;
+    [SerializeField] protected ScrollRect scrollRect = null;
 
-    bool canScroll = true;
-    int index;
-    float verticalPos;
+    protected bool canScroll = true;
+    protected int index;
+    protected float verticalPos;
 
     void Start() {
         if (!Cursor.visible) songPlayButtons[index].Select();
@@ -21,9 +21,10 @@ public class Music_ButtonController : MonoBehaviour {
     }
 
     void Update(){
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1)) GameManager.Instance.TraverseScenes(1);
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1)) GameManager.Instance.TraverseScenes("StartScreen");
 
-        if(!Cursor.visible && Input.GetAxis("Vertical") > 0.0f ^ Input.GetAxis("Vertical") < 0.0f && canScroll) {
+        if (Cursor.visible || !canScroll) return;
+        if(Input.GetAxis("Vertical") > 0.0f ^ Input.GetAxis("Vertical") < 0.0f) {
             canScroll = false;
             Invoke(nameof(DelayScroll), 0.35f);
 
@@ -47,16 +48,16 @@ public class Music_ButtonController : MonoBehaviour {
     void DelayScroll() { canScroll = true; }
 
     public void PlayTrack(int index) {
-        AudioManager.Instance.PlayButtonSound(1);
+        AudioManager.Instance.PlayInteractionSound(1);
         musicPlayer.PlaySong(index);
     }
 
     public void ButtonSelected() {
-        AudioManager.Instance.PlayButtonSound(0);
+        AudioManager.Instance.PlayInteractionSound(0);
     }
 
     public void MainMenuButton() {
-        AudioManager.Instance.PlayButtonSound(1);
-        GameManager.Instance.TraverseScenes(1);
+        AudioManager.Instance.PlayInteractionSound(1);
+        GameManager.Instance.TraverseScenes("StartScreen");
     }
 }

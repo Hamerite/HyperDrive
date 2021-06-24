@@ -15,12 +15,12 @@ public class S1_InstructionElements : MonoBehaviour {
         canvasgroups[0].interactable = false;
         canvasgroups[0].blocksRaycasts = false;
 
-        if (!Cursor.visible) buttons[1].Select();
         MenusManager.Instance.SetSelectedButton(buttons[1], null);
+        if (!Cursor.visible) buttons[1].Select();
     }
 
     public void ToggleInstructionsTab(){
-        AudioManager.Instance.PlayButtonSound(1);
+        AudioManager.Instance.PlayInteractionSound(1);
 
         for (int i = 0; i < buttons.Length; i++){
             buttons[i].interactable = !buttons[i].interactable;

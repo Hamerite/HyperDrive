@@ -4,10 +4,10 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public static class ADSM{
-    public static void SaveData(AudioManager audioManager){
+public static class ADSM {
+    public static void SaveData(AudioManager audioManager) {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/ADS";
+        string path = Application.persistentDataPath + "/ASD";
 
         FileStream stream;
         if (File.Exists(path)) stream = new FileStream(path, FileMode.Append);
@@ -18,10 +18,10 @@ public static class ADSM{
         stream.Close();
     }
 
-    public static SAD LoadData(){
-        string path = Application.persistentDataPath + "/ADS";
+    public static SAD LoadData() {
+        string path = Application.persistentDataPath + "/ASD";
 
-        if (File.Exists(path)){
+        if (File.Exists(path)) {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
@@ -30,6 +30,11 @@ public static class ADSM{
 
             return data;
         }
-        else { return null; }
+        else return null;
+    }
+
+    public static void DeleteData() {
+        string path = Application.persistentDataPath + "/ASD";
+        if (File.Exists(path)) File.Delete(path);
     }
 }

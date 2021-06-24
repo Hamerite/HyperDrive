@@ -55,8 +55,6 @@ Transform:
   - {fileID: 3840348260577827253}
   - {fileID: 3840348260971050983}
   - {fileID: 8937713918244496299}
-  - {fileID: 4062832723989011626}
-  - {fileID: 4213049015414803946}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -72,67 +70,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59daddd7401c4904cbbdf3619df94c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsPlanesOffset: 1
---- !u!1 &4447902515410482147
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4213049015414803946}
-  m_Layer: 0
-  m_Name: BufferObject (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4213049015414803946
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4447902515410482147}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 79390900929186551}
-  m_RootOrder: 28
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4880270411338061092
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4062832723989011626}
-  m_Layer: 0
-  m_Name: BufferObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4062832723989011626
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4880270411338061092}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 79390900929186551}
-  m_RootOrder: 27
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  asteroids:
+  - {fileID: 261006266315059636}
+  - {fileID: 261006266355454785}
+  - {fileID: 261006265344860741}
+  - {fileID: 261006266170271108}
+  - {fileID: 261006264518693835}
+  - {fileID: 261006264478179493}
+  - {fileID: 5386174504889171098}
+  - {fileID: 5386174504638884827}
+  - {fileID: 5386174504034986435}
+  - {fileID: 5386174503596051888}
+  - {fileID: 5386174503765012282}
+  - {fileID: 3448256393044142507}
+  - {fileID: 3448256391282886631}
+  - {fileID: 3448256391755124124}
+  - {fileID: 9168862028701524733}
+  - {fileID: 9168862027980828437}
+  - {fileID: 9168862027946720607}
+  - {fileID: 9168862029755224211}
+  - {fileID: 9168862029583585338}
+  - {fileID: 9168862028924448157}
+  - {fileID: 3840348259125132294}
+  - {fileID: 3840348259239147348}
+  - {fileID: 3840348260587293840}
+  - {fileID: 3840348259049376610}
+  - {fileID: 3840348260577827253}
+  - {fileID: 3840348260971050983}
 --- !u!1001 &79390900686078477
 PrefabInstance:
   m_ObjectHideFlags: 0
