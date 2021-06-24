@@ -201,6 +201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4523189223935121720}
   - component: {fileID: 4523189223935121727}
+  - component: {fileID: 1227372986007202508}
   m_Layer: 0
   m_Name: Destroyer
   m_TagString: Destroyer
@@ -235,3 +236,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1227372986007202508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523189223935121726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377ab3cb1f7113f4093251b7a02a8600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

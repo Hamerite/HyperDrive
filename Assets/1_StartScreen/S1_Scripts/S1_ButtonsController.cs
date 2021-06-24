@@ -10,8 +10,8 @@ public class S1_ButtonsController : MonoBehaviour {
     [SerializeField] protected Text titleText = null;
     [SerializeField] protected GameObject[] startMenus = null;
 
-    EventSystem eventSystem;
-    bool panelChange;
+    protected EventSystem eventSystem;
+    protected bool panelChange;
 
     void Awake() {
         Instance = this;
@@ -24,7 +24,7 @@ public class S1_ButtonsController : MonoBehaviour {
 
     public void ChangePanels(string text, bool[] status) {
         panelChange = true;
-        AudioManager.Instance.PlayButtonSound(1);
+        AudioManager.Instance.PlayInteractionSound(1);
 
         titleText.text = text;
         for (int i = 0; i < startMenus.Length; i++) { startMenus[i].SetActive(status[i]); }
@@ -39,9 +39,14 @@ public class S1_ButtonsController : MonoBehaviour {
 
     public void SetPanelChange() { panelChange = true; }
 
-    public void ButtonSelected() { if(!panelChange) AudioManager.Instance.PlayButtonSound(0); }
+    public void ButtonSelected() {
+        if (panelChange) return;
+        AudioManager.Instance.PlayInteractionSound(0); 
+    }
 
     public void BackButton(){
+        AudioManager.Instance.PlayInteractionSound(1);
+        if(startMenus[3].activeInHierarchy) AudioManager.Instance.SaveAudioSettings();
         ChangePanels("HyperDrive", new bool[] { true, false, false, false, false });
         panelChange = true;
     }

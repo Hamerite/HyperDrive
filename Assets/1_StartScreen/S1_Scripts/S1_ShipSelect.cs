@@ -5,31 +5,23 @@ using UnityEngine.UI;
 
 public class S1_ShipSelect : MonoBehaviour {
     [SerializeField] protected Button selectButton = null;
-    [SerializeField] protected Text selectText = null;
-    [SerializeField] protected Text price = null;
-    [SerializeField] protected Text coinCount = null;
+    [SerializeField] protected Text selectText = null, price = null, coinCount = null;
 
     [SerializeField] protected GameObject[] ships = null;
 
-    protected Vector3 center;
-    protected Vector3 rotaion = new Vector3(0, 70, 0);
+    protected Vector3 center, rotaion = new Vector3(0, 70, 0);
 
-    protected readonly bool[] wasPurchased = { true, false, false, false };
+    protected bool[] wasPurchased = { true, false, false, false };
     protected readonly int[] prices = { 0, 10000, 10000, 10000 };
 
-    protected int index;
-    protected int playerCoins;
-    protected int shipsLength;
+    protected int index, playerCoins;
 
-    void Start() {
+    void Awake() {
         SPD data = PDSM.LoadData();
-        if(data != null) {
-            for (int i = 1; i < wasPurchased.Length; i++) wasPurchased[i] = data.wasPurchased[i];
-            index = data.shipSelected;
-        }
+        if (data == null) return;
 
-        playerCoins = GameManager.Instance.GetNumbers("Coins");
-        shipsLength = ships.Length - 1;
+        wasPurchased = data.wasPurchased;
+        index = data.shipSelected;
     }
 
     void OnEnable() {
@@ -41,44 +33,47 @@ public class S1_ShipSelect : MonoBehaviour {
         ships[index].transform.position = center;
 
         if (index == 0) price.text = "";
-        coinCount.text = "Coins: " + playerCoins;
+
+        playerCoins = GameManager.Instance.GetCoinAmount();
+        coinCount.text = "Coins: " + playerCoins.ToString();
     }
 
-    void OnDisable() { foreach (GameObject item in ships) if(item) item.SetActive(false); }
+    void OnDisable() { foreach (GameObject item in ships) item.SetActive(false); }
 
-    void Update() { foreach (GameObject item in ships) item.transform.Rotate(rotaion * Time.deltaTime); }
+    void Update() { ships[index].transform.Rotate(rotaion * Time.deltaTime); }
 
     public void SelectButton() {
         if (wasPurchased[index] == true) {
+            AudioManager.Instance.PlayInteractionSound(1);
             ships[index].SetActive(false);
 
             S1_ButtonsController.Instance.ChangePanels("HyperDrive", new bool[] { true, false, false, false, false });
 
-            PDSM.SaveData(this);
+            SavePurchaseData();
             S1_ButtonsController.Instance.SetPanelChange();
         }
         else if (wasPurchased[index] == false && playerCoins >= prices[index]) {
+            AudioManager.Instance.PlayInteractionSound(6);
             selectText.text = "Purchsed";
             price.text = "";
 
             wasPurchased[index] = true;
-            PDSM.SaveData(this);
-
             playerCoins -= prices[index];
-            GameManager.Instance.SetNumbers("Coins", playerCoins);
+            GameManager.Instance.SetCoinAmount(playerCoins);
+            SavePurchaseData();
 
             coinCount.color = Color.red;
             coinCount.text = "Coins: " + playerCoins + " - " + prices[index];
             Invoke(nameof(Purchused), 0.8f);
         }
-        else AudioManager.Instance.PlayButtonSound(4);
+        else AudioManager.Instance.PlayInteractionSound(4);
     }
 
     public void Previous() {
         ships[index].SetActive(false);
 
         index--;
-        if (index < 0) index = shipsLength;
+        if (index < 0) index = ships.Length - 1;
 
         GoToNextShip();
     }
@@ -87,13 +82,13 @@ public class S1_ShipSelect : MonoBehaviour {
         ships[index].SetActive(false);
 
         index++;
-        if (index > shipsLength) index = 0;
+        if (index > ships.Length - 1) index = 0;
 
         GoToNextShip();
     }
 
     void GoToNextShip() {
-        AudioManager.Instance.PlayButtonSound(1);
+        AudioManager.Instance.PlayInteractionSound(1);
 
         if (wasPurchased[index] == false) {
             selectText.text = "BUY";
@@ -112,6 +107,8 @@ public class S1_ShipSelect : MonoBehaviour {
         coinCount.color = Color.yellow;
         coinCount.text = "Coins: " + playerCoins;
     }
+
+    void SavePurchaseData() { PDSM.SaveData(this); }
 
     public bool[] GetWasPurchsed() { return wasPurchased; }
 

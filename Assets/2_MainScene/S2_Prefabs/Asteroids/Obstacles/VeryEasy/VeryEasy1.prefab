@@ -68,7 +68,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59daddd7401c4904cbbdf3619df94c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsPlanesOffset: 3
+  asteroids:
+  - {fileID: 4694099805036999845}
+  - {fileID: 3795976117178695834}
+  - {fileID: 1747460205153540130}
+  - {fileID: 4619616205695341344}
+  - {fileID: 6130862087279575362}
+  - {fileID: 5787852234431794982}
+  - {fileID: 2412555665354552394}
+  - {fileID: 2395317099730544622}
+  - {fileID: 7201683276685809982}
+  - {fileID: 1725353866737414784}
+  - {fileID: 461963198805463290}
+  - {fileID: 84626600211564280}
+  - {fileID: 8366093693422595012}
+  - {fileID: 1241148292549826508}
+  - {fileID: 5920116494753608818}
+  - {fileID: 201367923851700864}
+  - {fileID: 1646779367133540226}
+  - {fileID: 982915217624430115}
+  - {fileID: 1986207385053179072}
+  - {fileID: 3576322569764472268}
+  - {fileID: 5790916049917929404}
+  - {fileID: 2225474381282033009}
 --- !u!1001 &427845891369194589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1409,7 +1431,7 @@ PrefabInstance:
     - target: {fileID: 3809503855045337078, guid: ec51dc56d81b18943aeef6f0185f15f1,
         type: 3}
       propertyPath: m_Name
-      value: Asteroid01 (5)
+      value: Asteroid01 (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec51dc56d81b18943aeef6f0185f15f1, type: 3}

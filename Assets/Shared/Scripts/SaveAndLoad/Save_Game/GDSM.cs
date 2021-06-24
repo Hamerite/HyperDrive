@@ -4,32 +4,37 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public class PDSM : MonoBehaviour {
-    public static void SaveData(S1_ShipSelect s1_ShipSelect) {
+public static class GDSM{
+    public static void SaveData(GameManager gameManager) {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/PDS";
+        string path = Application.persistentDataPath + "/GDS";
 
         FileStream stream;
         if (File.Exists(path)) stream = new FileStream(path, FileMode.Append);
         else stream = new FileStream(path, FileMode.Create);
 
-        SPD data = new SPD(s1_ShipSelect);
+        SGD data = new SGD(gameManager);
         formatter.Serialize(stream, data);
         stream.Close();
     }
 
-    public static SPD LoadData() {
-        string path = Application.persistentDataPath + "/PDS";
+    public static SGD LoadData(){
+        string path = Application.persistentDataPath + "/GDS";
 
         if (File.Exists(path)) {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
-            SPD data = formatter.Deserialize(stream) as SPD;
+            SGD data = formatter.Deserialize(stream) as SGD;
             stream.Close();
 
             return data;
         }
-        else { return null; }
+        else return null;
+    }
+
+    public static void DeleteData() {
+        string path = Application.persistentDataPath + "/GDS";
+        if (File.Exists(path)) File.Delete(path);
     }
 }

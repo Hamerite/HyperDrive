@@ -55,7 +55,6 @@ Transform:
   - {fileID: 4353821993658681285}
   - {fileID: 956413831904187247}
   - {fileID: 3946037127088130467}
-  - {fileID: 5007917310399401368}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -71,37 +70,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59daddd7401c4904cbbdf3619df94c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsPlanesOffset: 2
---- !u!1 &6553015196420039185
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5007917310399401368}
-  m_Layer: 0
-  m_Name: BufferObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5007917310399401368
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6553015196420039185}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5462880858964295554}
-  m_RootOrder: 27
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  asteroids:
+  - {fileID: 6415668503275448085}
+  - {fileID: 1052285438355428019}
+  - {fileID: 3258555592801816238}
+  - {fileID: 526551789704182943}
+  - {fileID: 2510912520063953974}
+  - {fileID: 1250859241679279349}
+  - {fileID: 7855634550558601877}
+  - {fileID: 7491380893418971746}
+  - {fileID: 5690761115189687915}
+  - {fileID: 710865497720014122}
+  - {fileID: 7971483202442137099}
+  - {fileID: 894392090592169994}
+  - {fileID: 2806603598098092141}
+  - {fileID: 4763891650292547338}
+  - {fileID: 8487911287205199466}
+  - {fileID: 1653577065362646321}
+  - {fileID: 9187558286752985612}
+  - {fileID: 2452475239946672652}
+  - {fileID: 428615256142654910}
+  - {fileID: 5131751672319572919}
+  - {fileID: 9156876550422753772}
+  - {fileID: 1888135660240256267}
+  - {fileID: 7494577495783539287}
+  - {fileID: 7417140363264928835}
+  - {fileID: 4353821993658681285}
 --- !u!1001 &118388131923878034
 PrefabInstance:
   m_ObjectHideFlags: 0

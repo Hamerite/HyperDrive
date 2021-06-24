@@ -12,8 +12,7 @@ public class S2_PlayerCollisionController : MonoBehaviour {
     protected readonly LayerMask[] layers = { 9, 10, 11, 12 };
     protected readonly Vector3[] dir = new Vector3[] { Vector3.up, Vector3.down, Vector3.right, Vector3.left };
 
-    protected bool canScore = true;
-    protected bool isAlive = true;
+    protected bool canScore = true, isAlive = true;
 
     void Start() { Instance = this; }
 
@@ -28,6 +27,7 @@ public class S2_PlayerCollisionController : MonoBehaviour {
                 canScore = false;
 
                 if (item == 9) {
+                    S2_HUDUI.Instance.SendGameInfo();
                     GetComponent<S2_PlayerController>().PlayerDeath();
                     playerAudio.PlayAudio(0);
                     Instantiate(playerDeathParticles, transform.position, Quaternion.identity);
@@ -35,7 +35,7 @@ public class S2_PlayerCollisionController : MonoBehaviour {
                     isAlive = false;
                 }
                 if (item == 10 || item == 11 || item == 12) {
-                    GameManager.Instance.SetNumbers("Score", item - 9);
+                    S2_HUDUI.Instance.SetScore(item - 9);
                     hit.collider.gameObject.SendMessage("PointsScored");
                 }
 
