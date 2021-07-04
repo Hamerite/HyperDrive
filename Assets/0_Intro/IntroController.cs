@@ -5,6 +5,11 @@ using UnityEngine;
 public class IntroController : MonoBehaviour {
     [SerializeField] protected CanvasGroup canvasGroup = null;
 
+    void Awake() {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+    }
+
     void Start() { LogoFadeIn(); }
 
     void Update() { if (Input.anyKeyDown) GameManager.Instance.TraverseScenes("StartScreen"); }
