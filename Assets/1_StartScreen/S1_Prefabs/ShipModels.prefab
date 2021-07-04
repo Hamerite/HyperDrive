@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4584285660041455674}
+  - component: {fileID: 4637717297286684879}
   m_Layer: 0
   m_Name: XThrust
   m_TagString: Untagged
@@ -31,6 +32,19 @@ Transform:
   m_Father: {fileID: 5223849189033736321}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4637717297286684879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704248587913452073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46654573dd6ae94419fc4970ca9e49f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: a80af8fc2e6a55f46a5a631712ea20d5, type: 2}
 --- !u!1 &3571923815993022348
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,6 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 118967729321701790}
+  - component: {fileID: 3594562011321247927}
   m_Layer: 0
   m_Name: BattleShip
   m_TagString: Untagged
@@ -141,6 +156,19 @@ Transform:
   m_Father: {fileID: 5223849189033736321}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3594562011321247927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4034646218941563789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46654573dd6ae94419fc4970ca9e49f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 9fc3f17a45b365b409ef18680472ee98, type: 2}
 --- !u!1 &4106504133472102207
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,6 +178,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1055639020028155180}
+  - component: {fileID: 7842692887000219525}
   m_Layer: 0
   m_Name: SharkShip
   m_TagString: Untagged
@@ -172,6 +201,19 @@ Transform:
   m_Father: {fileID: 5223849189033736321}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7842692887000219525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4106504133472102207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46654573dd6ae94419fc4970ca9e49f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 1485c09272b89bf40a20470a49bbc0d4, type: 2}
 --- !u!1 &5223849189033736320
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +336,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6324486259136495618}
+  - component: {fileID: 2039733434555378302}
   m_Layer: 0
   m_Name: SpaceShip
   m_TagString: Untagged
@@ -316,6 +359,19 @@ Transform:
   m_Father: {fileID: 5223849189033736321}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2039733434555378302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7034146969941275153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46654573dd6ae94419fc4970ca9e49f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: e4b02e8046ddf9c4084f4147664f9ca1, type: 2}
 --- !u!1 &7489974310503343632
 GameObject:
   m_ObjectHideFlags: 0

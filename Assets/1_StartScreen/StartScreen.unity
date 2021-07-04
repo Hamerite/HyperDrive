@@ -1938,6 +1938,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShipModels
       objectReference: {fileID: 0}
+    - target: {fileID: 5223849189033736320, guid: 04e27e183dfe3cb48b728312ceef70db,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5223849189033736321, guid: 04e27e183dfe3cb48b728312ceef70db,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2002,6 +2007,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1747953620}
     m_Modifications:
+    - target: {fileID: 295926048, guid: 83710de5c9b621947baa54b14b8d9373, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 720510971, guid: 83710de5c9b621947baa54b14b8d9373, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760425525, guid: 83710de5c9b621947baa54b14b8d9373, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6004962073459948960, guid: 83710de5c9b621947baa54b14b8d9373,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2131,6 +2148,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SelectionElements
+      objectReference: {fileID: 0}
+    - target: {fileID: 6004962073459948963, guid: 83710de5c9b621947baa54b14b8d9373,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6004962073494916467, guid: 83710de5c9b621947baa54b14b8d9373,
         type: 3}
