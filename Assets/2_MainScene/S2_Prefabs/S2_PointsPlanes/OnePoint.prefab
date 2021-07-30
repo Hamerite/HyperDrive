@@ -107,3 +107,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: c2859b10577356f4993d65a33821faba, type: 3}
+  collider: {fileID: 2646360118293009633}
