@@ -7,7 +7,6 @@ public class S2_PlayerController : MonoBehaviour {
 
     [SerializeField] protected GameObject[] shipChoice = null;
 
-    protected Transform shipModel;
     protected int index;
 
     void Awake() { Instance = this; }
@@ -17,7 +16,6 @@ public class S2_PlayerController : MonoBehaviour {
         if (data != null) index = data.shipSelected;
 
         shipChoice[index].SetActive(true);
-        shipModel = shipChoice[index].transform;
 
         S2_PlayerAnimationController.Instance.enabled = true;
     }
@@ -32,8 +30,8 @@ public class S2_PlayerController : MonoBehaviour {
 
         float angleV = Input.GetAxis("Vertical") * 1500.0f * Time.deltaTime;
         float angleH = Input.GetAxis("Horizontal") * 1500.0f * Time.deltaTime;
-        shipModel.rotation = Quaternion.RotateTowards(shipModel.rotation, Quaternion.Euler(-angleV, 0, -angleH), 1500.0f);
+        shipChoice[index].transform.rotation = Quaternion.RotateTowards(shipChoice[index].transform.rotation, Quaternion.Euler(-angleV, 0, -angleH), 1500.0f);
     }
 
-    public void PlayerDeath() { shipModel.gameObject.SetActive(false); }
+    public void PlayerDeath() { shipChoice[index].transform.gameObject.SetActive(false); }
 }
