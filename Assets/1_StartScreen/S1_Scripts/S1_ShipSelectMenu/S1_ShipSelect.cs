@@ -11,8 +11,12 @@ public class S1_ShipSelect : MonoBehaviour {
 
     protected Vector3 center, rotaion = new Vector3(0, 70, 0);
 
-    protected bool[] wasPurchased = { true, false, false, false, false,false,false,false };
-    protected readonly int[] prices = { 0, 10000, 10000, 10000, 0,0,0,0 };
+    protected bool[] wasPurchased = { true, false, false, false, false, 
+                                        false, false, false, false, false,
+                                        false };
+    protected readonly int[] prices = { 0, 10000, 10000, 10000, 10000, 
+                                        20000, 20000, 20000, 20000, 20000, 
+                                        30000 };
 
     protected int index, playerCoins;
 
@@ -23,11 +27,6 @@ public class S1_ShipSelect : MonoBehaviour {
 
         wasPurchased = data.wasPurchased;
         index = data.shipSelected;
-
-        //Validate data
-        PDSM.DeleteData();
-        data.wasPurchased = wasPurchased;
-        data.shipSelected = index;
     }
 
     void OnEnable() {
