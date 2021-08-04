@@ -119,7 +119,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173980109211065255}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.935, y: 0.278, z: -0.908}
+  m_LocalPosition: {x: 1.001, y: 0.278, z: -0.908}
   m_LocalScale: {x: 0.029112171, y: 0.029913206, z: 0.05485498}
   m_Children:
   - {fileID: 173980108982455008}
@@ -5111,7 +5111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7275661277664128498}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.911, y: 0.278, z: -0.899}
+  m_LocalPosition: {x: -0.921, y: 0.278, z: -0.899}
   m_LocalScale: {x: 0.029112171, y: 0.029913206, z: 0.05485498}
   m_Children:
   - {fileID: 7275661277632691381}
@@ -9912,7 +9912,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5120783206928644760}
-  - component: {fileID: 3788727519129266616}
+  - component: {fileID: 4545597634300254269}
   m_Layer: 0
   m_Name: AlienTank
   m_TagString: Player
@@ -9937,7 +9937,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3788727519129266616
+--- !u!114 &4545597634300254269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9946,7 +9946,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8163888039615170699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46654573dd6ae94419fc4970ca9e49f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a5dc4a516b4e6940b844508b353013b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 62b47630f8b82304e96d829c971d843c, type: 2}
+  stats: {fileID: 11400000, guid: a0c94d84916261f4690f9143a92be566, type: 2}

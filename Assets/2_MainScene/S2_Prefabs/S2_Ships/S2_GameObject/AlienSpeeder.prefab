@@ -9912,7 +9912,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5120783206928644760}
-  - component: {fileID: 3788727519129266616}
+  - component: {fileID: 4591420683458384838}
   m_Layer: 0
   m_Name: AlienSpeeder
   m_TagString: Player
@@ -9937,7 +9937,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3788727519129266616
+--- !u!114 &4591420683458384838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9946,7 +9946,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8163888039615170699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46654573dd6ae94419fc4970ca9e49f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a5dc4a516b4e6940b844508b353013b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 62b47630f8b82304e96d829c971d843c, type: 2}
+  stats: {fileID: 11400000, guid: f92b146477e9b844dbad116a671493e9, type: 2}

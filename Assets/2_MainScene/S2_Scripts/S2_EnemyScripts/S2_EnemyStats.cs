@@ -40,4 +40,9 @@ public class S2_EnemyStats : MonoBehaviour {
 
         return nearestVector3;
     }
+
+    public void Shoot()
+    {
+
+    }
 }
