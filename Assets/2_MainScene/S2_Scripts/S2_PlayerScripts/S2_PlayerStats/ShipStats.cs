@@ -6,10 +6,13 @@ public class ShipStats : MonoBehaviour {
     public static ShipStats Instance { get; private set; }
 
     [SerializeField] protected PlayerBaseClass stats = null;
+    [SerializeField] protected Transform gunPosition = null;
 
     void Awake() { Instance = this; } void OnEnable() { Instance = this; }
 
     void OnDestroy() { Instance = null; } void OnDisable() { Instance = null; }
 
     public PlayerBaseClass GetStats() { return stats; }
+
+    public Transform GetGunPosition() { return gunPosition; }
 }
