@@ -10,7 +10,7 @@ public class ParticleDestroy : MonoBehaviour{
         main.stopAction = ParticleSystemStopAction.Callback;
     }
 
-    public void OnParticleSystemStopped() { Invoke(nameof(DelaySceneChange), 1.0f); }
+    void OnParticleSystemStopped() { Invoke(nameof(DelaySceneChange), 1.0f); }
 
     void DelaySceneChange() { GameManager.Instance.TraverseScenes("Gameover"); }
 }

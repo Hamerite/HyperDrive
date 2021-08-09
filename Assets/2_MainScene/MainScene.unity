@@ -1015,11 +1015,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ObjectPoolsContainer
       objectReference: {fileID: 0}
-    - target: {fileID: 4523189223678135540, guid: 6ddbd0fd427c435439c380a63cd1b930,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4523189223678135541, guid: 6ddbd0fd427c435439c380a63cd1b930,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1077,6 +1072,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ddbd0fd427c435439c380a63cd1b930, type: 3}
+--- !u!1 &4523189223380454989 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2196622456677595805, guid: 6ddbd0fd427c435439c380a63cd1b930,
+    type: 3}
+  m_PrefabInstance: {fileID: 4523189223380454988}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4523189223380454990 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2268532041259008910, guid: 6ddbd0fd427c435439c380a63cd1b930,
+    type: 3}
+  m_PrefabInstance: {fileID: 4523189223380454988}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4523189223380454991 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 128545556907876636, guid: 6ddbd0fd427c435439c380a63cd1b930,
+    type: 3}
+  m_PrefabInstance: {fileID: 4523189223380454988}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4523189223380454992 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3354127329324010746, guid: 6ddbd0fd427c435439c380a63cd1b930,
+    type: 3}
+  m_PrefabInstance: {fileID: 4523189223380454988}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4523189223380454993 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3895146818388293957, guid: 6ddbd0fd427c435439c380a63cd1b930,
+    type: 3}
+  m_PrefabInstance: {fileID: 4523189223380454988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8572508303593310666
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1094,6 +1119,36 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 4789637822681668688, guid: a4835f4e458f89c428f1611227d71526,
+        type: 3}
+      propertyPath: bullets.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4789637822681668688, guid: a4835f4e458f89c428f1611227d71526,
+        type: 3}
+      propertyPath: bullets.Array.data[0]
+      value: 
+      objectReference: {fileID: 4523189223380454993}
+    - target: {fileID: 4789637822681668688, guid: a4835f4e458f89c428f1611227d71526,
+        type: 3}
+      propertyPath: bullets.Array.data[1]
+      value: 
+      objectReference: {fileID: 4523189223380454992}
+    - target: {fileID: 4789637822681668688, guid: a4835f4e458f89c428f1611227d71526,
+        type: 3}
+      propertyPath: bullets.Array.data[2]
+      value: 
+      objectReference: {fileID: 4523189223380454991}
+    - target: {fileID: 4789637822681668688, guid: a4835f4e458f89c428f1611227d71526,
+        type: 3}
+      propertyPath: bullets.Array.data[3]
+      value: 
+      objectReference: {fileID: 4523189223380454990}
+    - target: {fileID: 4789637822681668688, guid: a4835f4e458f89c428f1611227d71526,
+        type: 3}
+      propertyPath: bullets.Array.data[4]
+      value: 
+      objectReference: {fileID: 4523189223380454989}
     - target: {fileID: 5297751041196306895, guid: a4835f4e458f89c428f1611227d71526,
         type: 3}
       propertyPath: m_TagString

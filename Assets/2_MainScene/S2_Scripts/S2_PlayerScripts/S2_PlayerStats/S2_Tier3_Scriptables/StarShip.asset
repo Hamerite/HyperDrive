@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0da6494f26437d24f8761fd33928ac2f, type: 3}
-  m_Name: StartShip
+  m_Name: StarShip
   m_EditorClassIdentifier: 
   maxSpeed: 14
   attributes: 030000000200000005000000010000000600000002000000
