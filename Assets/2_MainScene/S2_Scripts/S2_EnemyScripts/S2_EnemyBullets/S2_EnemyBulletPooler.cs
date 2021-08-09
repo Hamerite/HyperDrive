@@ -6,6 +6,10 @@ public class S2_EnemyBulletPooler : MonoBehaviour
 {
     public static S2_EnemyBulletPooler Instance { private set; get; }
     [SerializeField] protected List<S2_BulletScript> bullets = new List<S2_BulletScript>();
+    public List<S2_BulletScript> GetBullets()
+    {
+        return bullets;
+    }
     [SerializeField] protected List<S2_BulletScript> inUse = new List<S2_BulletScript>();
 
     private void Awake()
@@ -17,12 +21,10 @@ public class S2_EnemyBulletPooler : MonoBehaviour
     {
         inUse.Add(bullet);
         bullets.Remove(bullet);
-        bullets.TrimExcess();
     }
     public void RemoveBulletFromInUse(S2_BulletScript bullet)
     {
         bullets.Add(bullet);
         inUse.Remove(bullet);
-        inUse.TrimExcess();
     }
 }
