@@ -33,7 +33,7 @@ public class S2_ShootingController : MonoBehaviour {
             usingGamepad = true;
         }
 
-        if (canShoot && (Input.GetButtonDown("Fire1") || Input.GetAxis("Fire1") > 0.1f)) {
+        if (canShoot && (Input.GetButton("Fire1") || Input.GetAxis("Fire1") > 0.1f)) {
             canShoot = false;
             audioSource.Play();
             GameObject newObstacle = S2_BulletPooler.Instance.GetBullet();
