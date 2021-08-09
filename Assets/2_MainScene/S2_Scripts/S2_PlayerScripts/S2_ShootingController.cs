@@ -3,12 +3,18 @@
 using UnityEngine;
 
 public class S2_ShootingController : MonoBehaviour {
-    [SerializeField] Texture2D crosshairs = null;
+    public static S2_ShootingController Instance { get; private set; }
 
-    Vector2 cursorPosition;
-    Vector3 mousePos;
+    [SerializeField] protected AudioSource audioSource = null;
+    [SerializeField] protected Texture2D crosshairs = null;
 
-    bool usingGamepad = true;
+    protected Vector3 cursorPosition;
+    protected Vector3 mousePos;
+    protected Vector3 crosshairPosition;
+
+    protected bool canShoot = true, usingGamepad = true;
+
+    void Awake() { Instance = this; }
 
     void Start() {
         Cursor.visible = false;
@@ -27,8 +33,19 @@ public class S2_ShootingController : MonoBehaviour {
             usingGamepad = true;
         }
 
-        if (Input.GetButtonDown("Fire1") || Input.GetAxis("Fire1") > 0.1f) { Debug.Log("SHOOTING"); }
+        if (canShoot && (Input.GetButtonDown("Fire1") || Input.GetAxis("Fire1") > 0.1f)) {
+            canShoot = false;
+            audioSource.Play();
+            GameObject newObstacle = S2_BulletPooler.Instance.GetBullet();
+
+            newObstacle.transform.position = ShipStats.Instance.GetGunPosition().position;
+            newObstacle.SetActive(true);
+
+            Invoke(nameof(ResetFireRate), 0.5f);
+        }
     }
+
+    void ResetFireRate() { canShoot = true; }
 
     void OnGUI() {
         if (usingGamepad) {
@@ -50,10 +67,15 @@ public class S2_ShootingController : MonoBehaviour {
         if (pos.y > 53.5) cursorPosition.y -= 5;
 
         GUI.DrawTexture(new Rect(cursorPosition.x, Screen.height - cursorPosition.y, 20, 20), crosshairs);
+
+        cursorPosition.z = Input.mousePosition.z;
+        crosshairPosition = new Vector3(cursorPosition.x, cursorPosition.y, cursorPosition.z);
     }
 
     void OnDestroy() {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
+
+    public Vector3 GetCrosshairPosition() { return crosshairPosition; }
 }

@@ -12,6 +12,7 @@ TagManager:
   - Medium
   - Hard
   - Very Hard
+  - ScoreText
   layers:
   - Default
   - TransparentFX
@@ -26,8 +27,8 @@ TagManager:
   - EasySafeZones
   - MediumSafeZones
   - HardSafeZones
-  - 
-  - 
+  - Player
+  - PlayerBullet
   - 
   - 
   - 

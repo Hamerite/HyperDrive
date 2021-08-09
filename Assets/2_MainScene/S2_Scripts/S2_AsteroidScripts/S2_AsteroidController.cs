@@ -13,7 +13,7 @@ public class S2_AsteroidController : MonoBehaviour {
     void Start() {
         for (int i = 0; i < asteroids.Length - 1; i++) {
             rotateDir.Add(new Vector3(Random.Range(-360, 360), Random.Range(-360, 360), 0));
-            rotateSpeed.Add(Random.Range(0.001f, 0.003f));
+            rotateSpeed.Add(Random.Range(0.005f, 0.01f));
         }
 
         rotateDir.TrimExcess();
