@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0da6494f26437d24f8761fd33928ac2f, type: 3}
-  m_Name: Deluge
+  m_Name: VAN
   m_EditorClassIdentifier: 
-  maxSpeed: 13
-  attributes: 020000000200000004000000010000000500000001000000
+  maxSpeed: 16
+  attributes: 020000000100000004000000020000000500000002000000

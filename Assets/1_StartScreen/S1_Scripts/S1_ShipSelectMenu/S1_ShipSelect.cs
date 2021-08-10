@@ -13,10 +13,10 @@ public class S1_ShipSelect : MonoBehaviour {
 
     protected bool[] wasPurchased = { true, false, false, false, false, 
                                         false, false, false, false, false,
-                                        false };
+                                        false, false, false, false, false };
     protected readonly int[] prices = { 0, 10000, 10000, 10000, 10000, 
                                         20000, 20000, 20000, 20000, 20000, 
-                                        30000 };
+                                        30000, 30000, 30000, 30000, 30000 };
 
     protected int index, playerCoins;
 

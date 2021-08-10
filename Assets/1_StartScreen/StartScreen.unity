@@ -2042,6 +2042,30 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5223849189780187582}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5223849189780187590 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2715853931928825425, guid: 04e27e183dfe3cb48b728312ceef70db,
+    type: 3}
+  m_PrefabInstance: {fileID: 5223849189780187582}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5223849189780187591 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4796610155837250725, guid: 04e27e183dfe3cb48b728312ceef70db,
+    type: 3}
+  m_PrefabInstance: {fileID: 5223849189780187582}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5223849189780187592 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6058587634922236295, guid: 04e27e183dfe3cb48b728312ceef70db,
+    type: 3}
+  m_PrefabInstance: {fileID: 5223849189780187582}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5223849189780187593 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2054093642288140516, guid: 04e27e183dfe3cb48b728312ceef70db,
+    type: 3}
+  m_PrefabInstance: {fileID: 5223849189780187582}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6004962073531716922
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2169,7 +2193,7 @@ PrefabInstance:
     - target: {fileID: 6004962073459948961, guid: 83710de5c9b621947baa54b14b8d9373,
         type: 3}
       propertyPath: ships.Array.size
-      value: 11
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6004962073459948961, guid: 83710de5c9b621947baa54b14b8d9373,
         type: 3}
@@ -2226,6 +2250,26 @@ PrefabInstance:
       propertyPath: ships.Array.data[10]
       value: 
       objectReference: {fileID: 5223849189780187589}
+    - target: {fileID: 6004962073459948961, guid: 83710de5c9b621947baa54b14b8d9373,
+        type: 3}
+      propertyPath: ships.Array.data[11]
+      value: 
+      objectReference: {fileID: 5223849189780187593}
+    - target: {fileID: 6004962073459948961, guid: 83710de5c9b621947baa54b14b8d9373,
+        type: 3}
+      propertyPath: ships.Array.data[12]
+      value: 
+      objectReference: {fileID: 5223849189780187592}
+    - target: {fileID: 6004962073459948961, guid: 83710de5c9b621947baa54b14b8d9373,
+        type: 3}
+      propertyPath: ships.Array.data[13]
+      value: 
+      objectReference: {fileID: 5223849189780187591}
+    - target: {fileID: 6004962073459948961, guid: 83710de5c9b621947baa54b14b8d9373,
+        type: 3}
+      propertyPath: ships.Array.data[14]
+      value: 
+      objectReference: {fileID: 5223849189780187590}
     - target: {fileID: 6004962073459948963, guid: 83710de5c9b621947baa54b14b8d9373,
         type: 3}
       propertyPath: m_Name
