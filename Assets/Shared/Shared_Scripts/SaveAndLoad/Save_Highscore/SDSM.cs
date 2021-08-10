@@ -5,25 +5,18 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public class SDSM : MonoBehaviour {
-    public static void SaveData(S3_GameOverManager s3_GameOverManager) {
+    public static void SaveData(S3_GameOverManager S3_GameOverManager) {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/SDS";
+        FileStream stream = File.Create(GetPath());
 
-        FileStream stream;
-        if (File.Exists(path)) stream = new FileStream(path, FileMode.Append);
-        else stream = new FileStream(path, FileMode.Create);
-
-        SSD data = new SSD(s3_GameOverManager);
-        formatter.Serialize(stream, data);
+        formatter.Serialize(stream, new SSD(S3_GameOverManager));
         stream.Close();
     }
 
     public static SSD LoadData() {
-        string path = Application.persistentDataPath + "/SDS";
-
-        if (File.Exists(path)) {
+        if (File.Exists(GetPath())) {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
+            FileStream stream = new FileStream(GetPath(), FileMode.Open);
 
             SSD data = formatter.Deserialize(stream) as SSD;
             stream.Close();
@@ -33,8 +26,7 @@ public class SDSM : MonoBehaviour {
         else return null;
     }
 
-    public static void DeleteData() {
-        string path = Application.persistentDataPath + "/SDS";
-        if (File.Exists(path)) File.Delete(path);
-    }
+    public static void DeleteData() { if (File.Exists(GetPath())) File.Delete(GetPath()); }
+
+    static string GetPath() { return Application.persistentDataPath + "/SDS"; }
 }
