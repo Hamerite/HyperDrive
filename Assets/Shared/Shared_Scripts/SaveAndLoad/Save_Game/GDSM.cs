@@ -7,23 +7,16 @@ using System.Runtime.Serialization.Formatters.Binary;
 public static class GDSM{
     public static void SaveData(GameManager gameManager) {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/GDS";
+        FileStream stream = File.Create(GetPath());
 
-        FileStream stream;
-        if (File.Exists(path)) stream = new FileStream(path, FileMode.Append);
-        else stream = new FileStream(path, FileMode.Create);
-
-        SGD data = new SGD(gameManager);
-        formatter.Serialize(stream, data);
+        formatter.Serialize(stream, new SGD(gameManager));
         stream.Close();
     }
 
     public static SGD LoadData(){
-        string path = Application.persistentDataPath + "/GDS";
-
-        if (File.Exists(path)) {
+        if (File.Exists(GetPath())) {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
+            FileStream stream = new FileStream(GetPath(), FileMode.Open);
 
             SGD data = formatter.Deserialize(stream) as SGD;
             stream.Close();
@@ -33,8 +26,7 @@ public static class GDSM{
         else return null;
     }
 
-    public static void DeleteData() {
-        string path = Application.persistentDataPath + "/GDS";
-        if (File.Exists(path)) File.Delete(path);
-    }
+    public static void DeleteData() { if (File.Exists(GetPath())) File.Delete(GetPath()); }
+
+    static string GetPath() { return Application.persistentDataPath + "/GDS"; }
 }

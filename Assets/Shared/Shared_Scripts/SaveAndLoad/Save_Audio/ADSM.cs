@@ -7,23 +7,16 @@ using System.Runtime.Serialization.Formatters.Binary;
 public static class ADSM {
     public static void SaveData(AudioManager audioManager) {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/ASD";
+        FileStream stream = File.Create(GetPath());
 
-        FileStream stream;
-        if (File.Exists(path)) stream = new FileStream(path, FileMode.Append);
-        else stream = new FileStream(path, FileMode.Create);
-
-        SAD data = new SAD(audioManager);
-        formatter.Serialize(stream, data);
+        formatter.Serialize(stream, new SAD(audioManager));
         stream.Close();
     }
 
     public static SAD LoadData() {
-        string path = Application.persistentDataPath + "/ASD";
-
-        if (File.Exists(path)) {
+        if (File.Exists(GetPath())) {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
+            FileStream stream = File.Open(GetPath(), FileMode.Open);
 
             SAD data = formatter.Deserialize(stream) as SAD;
             stream.Close();
@@ -33,8 +26,7 @@ public static class ADSM {
         else return null;
     }
 
-    public static void DeleteData() {
-        string path = Application.persistentDataPath + "/ASD";
-        if (File.Exists(path)) File.Delete(path);
-    }
+    public static void DeleteData() { if (File.Exists(GetPath())) File.Delete(GetPath()); }
+
+    static string GetPath() { return Application.persistentDataPath + "/ASD"; }
 }
