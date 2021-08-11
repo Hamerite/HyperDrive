@@ -12,11 +12,12 @@ public class S2_ShootingController : MonoBehaviour {
     protected Vector3 mousePos;
     protected Vector3 crosshairPosition;
 
-    protected bool canShoot = true, usingGamepad = true;
+    protected bool canShoot = true, usingGamepad = true, wasUsingMouse;
 
     void Awake() { Instance = this; }
 
     void Start() {
+        wasUsingMouse = Cursor.visible;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
@@ -73,7 +74,7 @@ public class S2_ShootingController : MonoBehaviour {
     }
 
     void OnDestroy() {
-        Cursor.visible = true;
+        Cursor.visible = wasUsingMouse;
         Cursor.lockState = CursorLockMode.None;
     }
 

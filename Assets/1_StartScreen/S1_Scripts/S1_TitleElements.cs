@@ -1,15 +1,14 @@
 ﻿//Created by Dylan LeClair
-//Last modified 20-09-20 (Dylan LeClair)
+//Last modified 11-08-21 (Dylan LeClair)
 using UnityEngine;
 using UnityEngine.UI;
 
 public class S1_TitleElements : MonoBehaviour {
     [SerializeField] protected Button selectedButton = null;
 
-    void OnEnable() {
-        if (!Cursor.visible) selectedButton.Select();
-        MenusManager.Instance.SetSelectedButton(selectedButton, null);
-    }
+    void OnEnable() { Invoke(nameof(CheckForButtonSelected), 0.001f); }
+
+    void CheckForButtonSelected() { MenusManager.Instance.SetSelectedButton(selectedButton, null, false); }
 
     public void StartButton() {
         AudioManager.Instance.PlayInteractionSound(1);

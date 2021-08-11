@@ -11,7 +11,7 @@ public class S3_ButtonsController : MonoBehaviour {
 
     void Awake() { Instance = this; }
 
-    void Start() { if (!Cursor.visible && !nameInput.isFocused) buttons[0].Select(); }
+    public void Start() { MenusManager.Instance.SetSelectedButton(buttons[0], null, nameInput.isFocused); }
 
     public void PlayAgainButton() {
         AudioManager.Instance.PlayInteractionSound(1);

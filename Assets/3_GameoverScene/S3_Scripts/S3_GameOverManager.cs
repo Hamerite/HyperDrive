@@ -40,7 +40,7 @@ public class S3_GameOverManager : MonoBehaviour {
         gameTime = Time.time;
         Invoke(nameof(AddCoins), 0.7f);
 
-        if (highScore > score) return;
+        if (highScore >= score) return;
         highScore = score;
 
         textElements[1].gameObject.SetActive(true);
@@ -82,8 +82,10 @@ public class S3_GameOverManager : MonoBehaviour {
     public void SetChampName(string name) {
         champName = name;
         textElements[1].gameObject.SetActive(false);
-        textElements[2].gameObject.GetComponent<Text>().text = "High Score: " + name + "  " + highScore;
+        textElements[2].text = "High Score: " + name + "  " + highScore;
         SaveScoreData();
+
+        S3_ButtonsController.Instance.Start();
     }
 
     void SaveScoreData() { SDSM.SaveData(this); }
