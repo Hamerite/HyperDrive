@@ -1,5 +1,5 @@
 ﻿//Created by Dylan LeClair
-//Last modified 20-09-20 (Dylan LeClair)
+//Last modified 11-08-21 (Dylan LeClair)
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -32,8 +32,8 @@ public class MenusManager : MonoBehaviour {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        if (newSelectedButton) newSelectedButton.Select();
-        else if (newSelectedToggle) newSelectedToggle.Select();
+        if (newSelectedButton) EventSystem.current.SetSelectedGameObject(newSelectedButton.gameObject);
+        else if (newSelectedToggle) EventSystem.current.SetSelectedGameObject(newSelectedToggle.gameObject);
     }
 
     void KeysToMouse() {
@@ -42,16 +42,16 @@ public class MenusManager : MonoBehaviour {
         EventSystem.current.SetSelectedGameObject(null);
     }
 
-    public void SetSelectedButton(Button selectedButton, Toggle selectedToggle) {
+    public void SetSelectedButton(Button selectedButton, Toggle selectedToggle, bool inputingHighscore) {
         newSelectedButton = selectedButton;
         newSelectedToggle = selectedToggle;
 
-        if (!selectedButton & !selectedToggle) EventSystem.current.SetSelectedGameObject(null);
+        if (!Cursor.visible && !inputingHighscore) {
+            if (selectedButton) EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
+            else if (selectedToggle) EventSystem.current.SetSelectedGameObject(selectedToggle.gameObject);
+        }
+        else EventSystem.current.SetSelectedGameObject(null);
     }
-
-    public Button GetSelectedButton() { return newSelectedButton; }
-
-    public Toggle GetSelectedToggle() { return newSelectedToggle; }
 
     public void ToggleInputingHighscore() { inputingHighscore = !inputingHighscore; }
 }
