@@ -64,7 +64,9 @@ public class S1_ShipSelect : MonoBehaviour {
         }
         else if (wasPurchased[index] == false && playerCoins >= prices[index]) {
             AudioManager.Instance.PlayInteractionSound(6);
-            selectText.text = "Purchsed";
+            MenusManager.Instance.SetSelectedButton(null, null);
+            FeedbackMessageController.Instance.SetMessage("PURCHASED", Color.yellow);
+            selectText.text = "SELECT";
             price.text = "";
 
             wasPurchased[index] = true;

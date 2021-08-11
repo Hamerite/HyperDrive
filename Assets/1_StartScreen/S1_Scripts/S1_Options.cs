@@ -39,11 +39,11 @@ public class S1_Options : MonoBehaviour {
 
     public void DeleteButton() {
         AudioManager.Instance.PlayInteractionSound(3);
+        FeedbackMessageController.Instance.SetMessage("SAVE DELETED", Color.red);
 
         SDSM.DeleteData();
 
         resetCheck.SetActive(false);
-        MenusManager.Instance.SetSelectedButton(null, mutes[0]);
         if (!Cursor.visible) mutes[0].Select();
     }
 
@@ -51,19 +51,33 @@ public class S1_Options : MonoBehaviour {
         AudioManager.Instance.PlayInteractionSound(1);
 
         resetCheck.SetActive(false);
-        MenusManager.Instance.SetSelectedButton(null, mutes[0]);
         if (!Cursor.visible) mutes[0].Select();
     }
 
     #region On Value Change
-    public void Mute(bool value) { AudioManager.Instance.SetMute(value); }
+    public void Mute(bool value) { 
+        AudioManager.Instance.SetMute(value);
+        if(Cursor.visible) MenusManager.Instance.SetSelectedButton(null, null);
+    }
     
-    public void MuteMenu(bool value) { AudioManager.Instance.SetMenuMute(value); }
+    public void MuteMenu(bool value) { 
+        AudioManager.Instance.SetMenuMute(value);
+        if (Cursor.visible) MenusManager.Instance.SetSelectedButton(null, null);
+    }
 
-    public void SetMaster(float value) { AudioManager.Instance.SetMasterVolume(value); }
+    public void SetMaster(float value) { 
+        AudioManager.Instance.SetMasterVolume(value);
+        if (Cursor.visible) MenusManager.Instance.SetSelectedButton(null, null);
+    }
 
-    public void SetMusic(float value) { AudioManager.Instance.SetMusicVolume(value); }
+    public void SetMusic(float value) { 
+        AudioManager.Instance.SetMusicVolume(value);
+        if (Cursor.visible) MenusManager.Instance.SetSelectedButton(null, null);
+    }
 
-    public void SetSFX(float value) { AudioManager.Instance.SetSFXVolume(value); }
+    public void SetSFX(float value) { 
+        AudioManager.Instance.SetSFXVolume(value);
+        if (Cursor.visible) MenusManager.Instance.SetSelectedButton(null, null);
+    }
     #endregion
 }
