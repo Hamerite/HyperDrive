@@ -6,6 +6,7 @@ public class S2_PlayerCollisionController : MonoBehaviour {
     public static S2_PlayerCollisionController Instance { get; private set; }
 
     [SerializeField] protected ParticleSystem playerDeathParticles = null;
+    [SerializeField] protected ParticleSystem hitSparks = null;
     [SerializeField] protected new Collider collider = null;
 
     protected readonly LayerMask[] layers = { 9, 10, 11, 12 };
@@ -17,7 +18,10 @@ public class S2_PlayerCollisionController : MonoBehaviour {
 
     void FixedUpdate() {
         foreach (Vector3 item in dir) {
-            if (Physics.Raycast(transform.position, item, out RaycastHit hit, 0.5f, 1 << 8)) transform.Translate(hit.normal / 4.5f);
+            if (Physics.Raycast(transform.position, item, out RaycastHit hit, 0.5f, 1 << 8)) {
+                transform.Translate(hit.normal / 4.5f);
+                PlaySparks(hit);
+            }
             if (Physics.Raycast(transform.position, item, 10.0f, 1 << 9) && playerStatus[0]) S2_PlayerAudioController.Instance.PlayAudio(1);
         }
 
@@ -38,6 +42,8 @@ public class S2_PlayerCollisionController : MonoBehaviour {
 
                         playerStatus[1] = false;
                     }
+
+                    PlaySparks(hit);
                     ToggleWasHit();
                     Invoke(nameof(ToggleWasHit), 0.25f);
                 }
@@ -48,6 +54,14 @@ public class S2_PlayerCollisionController : MonoBehaviour {
 
                 Invoke(nameof(ScoreLimiter), 0.25f);
             }
+        }
+    }
+
+    void PlaySparks(RaycastHit hit) {
+        if (!hitSparks.gameObject.activeInHierarchy) {
+            hitSparks.transform.position = hit.point;
+            hitSparks.gameObject.SetActive(true);
+            hitSparks.Play();
         }
     }
 
