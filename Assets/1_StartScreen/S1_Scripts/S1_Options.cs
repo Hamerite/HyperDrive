@@ -1,30 +1,34 @@
 ﻿//Created by Dylan LeClair
-//Last modified 20-09-20 (Dylan LeClair)
+//Last modified 11-08-21 (Dylan LeClair)
 using UnityEngine;
 using UnityEngine.UI;
 
 public class S1_Options : MonoBehaviour {
+    public static S1_Options Instance { get; private set; }
+
     [SerializeField] protected GameObject resetCheck = null;
     [SerializeField] protected Button selectedButton = null;
+    [SerializeField] protected Button[] buttonsToToggle = null;
     [SerializeField] protected Toggle[] mutes = null; // { All, Menu }
     [SerializeField] protected Slider[] volumeSliders = null; // { Master, Music, SFX }
 
-    void Start() { resetCheck.SetActive(false); }
+    void Awake() { Instance = this; }
 
     void OnEnable() {
-        if(!Cursor.visible) mutes[0].Select();
-        MenusManager.Instance.SetSelectedButton(null, mutes[0]);
-
         for (int i = 0; i < 2; i++) mutes[i].isOn = AudioManager.Instance.GetMutes()[i];
         for (int i = 0; i < 3; i++) volumeSliders[i].value = AudioManager.Instance.GetVolumes()[i];
+
+        Invoke(nameof(CheckForButtonSelected), 0.001f);
     }
+
+    void CheckForButtonSelected() { MenusManager.Instance.SetSelectedButton(null, mutes[0], false); }
 
     void Update() {
         if (!resetCheck.activeInHierarchy) return;
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1)) {
-            resetCheck.SetActive(false);
+            DeactivateResetCheck();
             S1_ButtonsController.Instance.SetPanelChange();
-            if (!Cursor.visible) mutes[0].Select();
+            MenusManager.Instance.SetSelectedButton(buttonsToToggle[0], null, false);
         }
     }
 
@@ -33,37 +37,61 @@ public class S1_Options : MonoBehaviour {
         resetCheck.SetActive(true);
         S1_ButtonsController.Instance.SetPanelChange();
 
-        MenusManager.Instance.SetSelectedButton(selectedButton, null);
-        if (!Cursor.visible) selectedButton.Select();
+        foreach (Button item in buttonsToToggle) item.interactable = false;
+        foreach (Toggle item in mutes) item.interactable = false;
+        foreach (Slider item in volumeSliders) item.interactable = false;
+
+        MenusManager.Instance.SetSelectedButton(selectedButton, null, false);
     }
 
     public void DeleteButton() {
         AudioManager.Instance.PlayInteractionSound(3);
+        FeedbackMessageController.Instance.SetMessage("SAVE DELETED", Color.red);
 
         SDSM.DeleteData();
-
-        resetCheck.SetActive(false);
-        MenusManager.Instance.SetSelectedButton(null, mutes[0]);
-        if (!Cursor.visible) mutes[0].Select();
+        DeactivateResetCheck();
     }
 
     public void CancelButton() {
         AudioManager.Instance.PlayInteractionSound(1);
-
-        resetCheck.SetActive(false);
-        MenusManager.Instance.SetSelectedButton(null, mutes[0]);
-        if (!Cursor.visible) mutes[0].Select();
+        DeactivateResetCheck();
     }
 
+    void DeactivateResetCheck() {
+        foreach (Button item in buttonsToToggle) item.interactable = true;
+        foreach (Toggle item in mutes) item.interactable = true;
+        foreach (Slider item in volumeSliders) item.interactable = true;
+
+        resetCheck.SetActive(false);
+        MenusManager.Instance.SetSelectedButton(buttonsToToggle[0], null, false);
+    }
+
+    public bool GetResetCheck() { return resetCheck.activeInHierarchy; }
+
     #region On Value Change
-    public void Mute(bool value) { AudioManager.Instance.SetMute(value); }
+    public void Mute(bool value) { 
+        AudioManager.Instance.SetMute(value);
+        MenusManager.Instance.SetSelectedButton(null, null, false);
+    }
     
-    public void MuteMenu(bool value) { AudioManager.Instance.SetMenuMute(value); }
+    public void MuteMenu(bool value) { 
+        AudioManager.Instance.SetMenuMute(value);
+        MenusManager.Instance.SetSelectedButton(null, null, false);
+    }
 
-    public void SetMaster(float value) { AudioManager.Instance.SetMasterVolume(value); }
+    public void SetMaster(float value) { 
+        AudioManager.Instance.SetMasterVolume(value);
+        MenusManager.Instance.SetSelectedButton(null, null, false);
+    }
 
-    public void SetMusic(float value) { AudioManager.Instance.SetMusicVolume(value); }
+    public void SetMusic(float value) { 
+        AudioManager.Instance.SetMusicVolume(value);
+        MenusManager.Instance.SetSelectedButton(null, null, false);
+    }
 
-    public void SetSFX(float value) { AudioManager.Instance.SetSFXVolume(value); }
+    public void SetSFX(float value) { 
+        AudioManager.Instance.SetSFXVolume(value);
+        MenusManager.Instance.SetSelectedButton(null, null, false);
+    }
     #endregion
 }

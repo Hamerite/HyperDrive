@@ -6,13 +6,12 @@ public class S2_PlayerBullet : MonoBehaviour {
     [SerializeField] protected new Rigidbody rigidbody = null;
 
     protected Vector3 worldPosition;
-
     protected Vector3 offset = new Vector3(0, 0, -5);
 
     void OnEnable() {
-        Plane plane = new Plane(Vector3.back, 30);
-        float distance;
+        Plane plane = new Plane(Vector3.back, 50);
         Ray ray = Camera.main.ScreenPointToRay(S2_ShootingController.Instance.GetCrosshairPosition());
+        float distance;
 
         if (plane.Raycast(ray, out distance)) worldPosition = ray.GetPoint(distance);
 

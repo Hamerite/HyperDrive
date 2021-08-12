@@ -1,5 +1,5 @@
 ﻿//Created by Dylan LeClair
-//Last revised 20-09-20 (Dylan LeClair)
+//Last revised 11-08-21 (Dylan LeClair)
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +14,7 @@ public class Music_ButtonController : MonoBehaviour {
     protected float verticalPos;
 
     void Start() {
-        if (!Cursor.visible) songPlayButtons[index].Select();
+        MenusManager.Instance.SetSelectedButton(songPlayButtons[index], null, false);
 
         verticalPos = 1.0f;
         foreach (Button item in songPlayButtons) item.onClick.AddListener(() => PlayTrack(System.Array.IndexOf(songPlayButtons, item)));
@@ -33,15 +33,15 @@ public class Music_ButtonController : MonoBehaviour {
 
             if (index == 9) {
                 mainMenuButton.Select();
-                MenusManager.Instance.SetSelectedButton(mainMenuButton, null);
+                MenusManager.Instance.SetSelectedButton(mainMenuButton, null, false);
             }
             else {
                 songPlayButtons[index].Select();
-                MenusManager.Instance.SetSelectedButton(songPlayButtons[index], null);
+                MenusManager.Instance.SetSelectedButton(songPlayButtons[index], null, false);
             }
 
             verticalPos = 1.0f - ((float)index / (songPlayButtons.Length - 1));
-            scrollRect.verticalNormalizedPosition = Mathf.Lerp(scrollRect.verticalNormalizedPosition, verticalPos, Time.deltaTime * 20.0f);
+            scrollRect.verticalNormalizedPosition = Mathf.Lerp(scrollRect.verticalNormalizedPosition, verticalPos, Time.deltaTime * 60.0f);
         }
     }
 

@@ -265,7 +265,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2650099135818867360}
   m_OnClick:
     m_PersistentCalls:
@@ -298,9 +298,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2650099137220684235}
-          m_MethodName: PlaySounds
-          m_Mode: 3
+        - m_Target: {fileID: 0}
+          m_MethodName: ButtonSelected
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -313,9 +313,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2650099137220684235}
-          m_MethodName: PlaySounds
-          m_Mode: 3
+        - m_Target: {fileID: 0}
+          m_MethodName: ButtonSelected
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -333,8 +333,8 @@ CanvasGroup:
   m_GameObject: {fileID: 2650099135818867363}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &2650099135912067609
 GameObject:
@@ -1066,7 +1066,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2650099137115218612
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1526,9 +1526,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2650099137220684235}
-          m_MethodName: PlaySounds
-          m_Mode: 3
+        - m_Target: {fileID: 0}
+          m_MethodName: ButtonSelected
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1541,9 +1541,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2650099137220684235}
-          m_MethodName: PlaySounds
-          m_Mode: 3
+        - m_Target: {fileID: 0}
+          m_MethodName: ButtonSelected
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

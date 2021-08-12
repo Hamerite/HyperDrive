@@ -8,15 +8,16 @@ public class S2_ShootingController : MonoBehaviour {
     [SerializeField] protected AudioSource audioSource = null;
     [SerializeField] protected Texture2D crosshairs = null;
 
-    protected Vector3 cursorPosition;
+    protected Vector2 cursorPosition;
+    protected Vector2 crosshairPosition;
     protected Vector3 mousePos;
-    protected Vector3 crosshairPosition;
 
-    protected bool canShoot = true, usingGamepad = true;
+    protected bool canShoot = true, usingGamepad = true, wasUsingMouse;
 
     void Awake() { Instance = this; }
 
     void Start() {
+        wasUsingMouse = Cursor.visible;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
@@ -33,13 +34,13 @@ public class S2_ShootingController : MonoBehaviour {
             usingGamepad = true;
         }
 
-        if (canShoot && (Input.GetButtonDown("Fire1") || Input.GetAxis("Fire1") > 0.1f)) {
+        if (canShoot && (Input.GetButton("Fire1") || Input.GetAxis("Fire1") > 0.1f)) {
             canShoot = false;
             audioSource.Play();
-            GameObject newObstacle = S2_BulletPooler.Instance.GetBullet();
+            GameObject newBullet = S2_BulletPooler.Instance.GetBullet();
 
-            newObstacle.transform.position = ShipStats.Instance.GetGunPosition().position;
-            newObstacle.SetActive(true);
+            newBullet.transform.position = ShipStats.Instance.GetGunPosition().position;
+            newBullet.SetActive(true);
 
             Invoke(nameof(ResetFireRate), 0.5f);
         }
@@ -66,14 +67,13 @@ public class S2_ShootingController : MonoBehaviour {
         if (pos.y < 1.5f) cursorPosition.y += 5;
         if (pos.y > 53.5) cursorPosition.y -= 5;
 
-        GUI.DrawTexture(new Rect(cursorPosition.x, Screen.height - cursorPosition.y, 20, 20), crosshairs);
+        GUI.DrawTexture(new Rect(cursorPosition.x - 10, Screen.height - cursorPosition.y - 10, 20, 20), crosshairs);
 
-        cursorPosition.z = Input.mousePosition.z;
-        crosshairPosition = new Vector3(cursorPosition.x, cursorPosition.y, cursorPosition.z);
+        crosshairPosition = new Vector3(cursorPosition.x, cursorPosition.y, 0);
     }
 
     void OnDestroy() {
-        Cursor.visible = true;
+        Cursor.visible = wasUsingMouse;
         Cursor.lockState = CursorLockMode.None;
     }
 

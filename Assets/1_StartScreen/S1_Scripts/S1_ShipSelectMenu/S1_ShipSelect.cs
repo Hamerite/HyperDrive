@@ -1,10 +1,10 @@
 ﻿//Created by Dylan LeClair
-//Last modified 20-09-20 (Dylan LeClair)
+//Last modified 11-08-21 (Dylan LeClair)
 using UnityEngine;
 using UnityEngine.UI;
 
 public class S1_ShipSelect : MonoBehaviour {
-    [SerializeField] protected Button selectButton = null;
+    [SerializeField] protected Button[] selectButton = null;
     [SerializeField] protected Text selectText = null, price = null, coinCount = null;
 
     [SerializeField] protected GameObject[] ships = null;
@@ -13,10 +13,10 @@ public class S1_ShipSelect : MonoBehaviour {
 
     protected bool[] wasPurchased = { true, false, false, false, false, 
                                         false, false, false, false, false,
-                                        false };
+                                        false, false, false, false, false };
     protected readonly int[] prices = { 0, 10000, 10000, 10000, 10000, 
                                         20000, 20000, 20000, 20000, 20000, 
-                                        30000 };
+                                        30000, 30000, 30000, 30000, 30000 };
 
     protected int index, playerCoins;
 
@@ -30,9 +30,6 @@ public class S1_ShipSelect : MonoBehaviour {
     }
 
     void OnEnable() {
-        if(!Cursor.visible) selectButton.Select();
-        MenusManager.Instance.SetSelectedButton(selectButton, null);
-
         ships[index].SetActive(true);
         center = new Vector3(Camera.main.pixelWidth / 100, Camera.main.pixelHeight / 100, 700);
         ships[index].transform.position = center;
@@ -41,7 +38,11 @@ public class S1_ShipSelect : MonoBehaviour {
 
         playerCoins = GameManager.Instance.GetCoinAmount();
         coinCount.text = "Coins: " + playerCoins.ToString();
+
+        Invoke(nameof(CheckForButtonSelected), 0.001f);
     }
+
+    void CheckForButtonSelected() { MenusManager.Instance.SetSelectedButton(selectButton[0], null, false); }
 
     void OnDisable() {
         foreach (GameObject item in ships) {
@@ -63,8 +64,11 @@ public class S1_ShipSelect : MonoBehaviour {
             S1_ButtonsController.Instance.SetPanelChange();
         }
         else if (wasPurchased[index] == false && playerCoins >= prices[index]) {
+            MenusManager.Instance.SetSelectedButton(selectButton[0], null, false);
+
             AudioManager.Instance.PlayInteractionSound(6);
-            selectText.text = "Purchsed";
+            FeedbackMessageController.Instance.SetMessage("PURCHASED", Color.yellow);
+            selectText.text = "SELECT";
             price.text = "";
 
             wasPurchased[index] = true;
@@ -76,10 +80,14 @@ public class S1_ShipSelect : MonoBehaviour {
             coinCount.text = "Coins: " + playerCoins + " - " + prices[index];
             Invoke(nameof(Purchused), 0.8f);
         }
-        else AudioManager.Instance.PlayInteractionSound(4);
+        else {
+            MenusManager.Instance.SetSelectedButton(selectButton[0], null, false);
+            AudioManager.Instance.PlayInteractionSound(4);
+        }
     }
 
     public void Previous() {
+        MenusManager.Instance.SetSelectedButton(selectButton[1], null, false);
         ships[index].SetActive(false);
 
         index--;
@@ -89,6 +97,7 @@ public class S1_ShipSelect : MonoBehaviour {
     }
 
     public void Next() {
+        MenusManager.Instance.SetSelectedButton(selectButton[2], null, false);
         ships[index].SetActive(false);
 
         index++;
@@ -99,7 +108,6 @@ public class S1_ShipSelect : MonoBehaviour {
 
     void GoToNextShip() {
         S1_ShipSelectController.Instance.GetNewValues();
-        MenusManager.Instance.SetSelectedButton(null, null);
         AudioManager.Instance.PlayInteractionSound(1);
 
         if (wasPurchased[index] == false) {
