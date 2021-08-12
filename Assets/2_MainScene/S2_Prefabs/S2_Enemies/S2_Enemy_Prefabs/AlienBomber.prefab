@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 206660362488217931}
   - component: {fileID: 8934180998508113339}
   - component: {fileID: 2360852277881294846}
-  m_Layer: 0
-  m_Name: default
+  - component: {fileID: 5519818794852817432}
+  m_Layer: 15
+  m_Name: Bomber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,6 +99,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentShip: {fileID: 7227216767779683570}
+--- !u!65 &5519818794852817432
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479414227156275502}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.1200001, y: 0.90999997, z: 3.5099998}
+  m_Center: {x: 0, y: 0.45499998, z: -0.06500006}
 --- !u!1 &2705149394027771609
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2705149394027771608}
   - component: {fileID: 2705149394027771607}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +216,7 @@ GameObject:
   - component: {fileID: 2705149394055014302}
   - component: {fileID: 2705149394055014300}
   - component: {fileID: 2705149394055014301}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ThrusterParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5018,7 +5032,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4834844633867288717}
   - component: {fileID: 4834844633867288706}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5112,7 +5126,7 @@ GameObject:
   - component: {fileID: 4834844634100093387}
   - component: {fileID: 4834844634100093385}
   - component: {fileID: 4834844634100093384}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ThrusterParticles (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9929,7 +9943,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6985131143977043616}
   - component: {fileID: 7227216767779683570}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: AlienBomber
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -9964,4 +9978,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: d8781f65565ca3c4e80e19dbccc7af7a, type: 2}
+  deathParticles: {fileID: 3124038253959315864, guid: c5fc38a63a69c74479fdf7718edf4761,
+    type: 3}
   myClass: 2
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 32768
+  shotMultiple: 0
+  life: 1

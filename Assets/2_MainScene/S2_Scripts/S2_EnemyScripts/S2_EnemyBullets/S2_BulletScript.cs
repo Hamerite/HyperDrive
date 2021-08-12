@@ -24,11 +24,11 @@ public class S2_BulletScript : MonoBehaviour
     {
         if (fired)
         {
-            if ((transform.position.z - endPos.z) > 0.5f)
-                transform.position = Vector3.Lerp(transform.position, endPos, shotSpeed * Time.deltaTime);
-            else
-                transform.position = Vector3.Lerp(transform.position, new Vector3(endPos.x, endPos.y, endPos.z - 10), shotSpeed * Time.deltaTime);
-            // transform.position += transform.forward * shotSpeed * Time.deltaTime;
+            //if ((transform.position.z - endPos.z) > 0.5f)
+            //    transform.position = Vector3.Lerp(transform.position, endPos, shotSpeed * Time.deltaTime);
+            //else
+            //    transform.position = Vector3.Lerp(transform.position, new Vector3(endPos.x, endPos.y, endPos.z - 30), shotSpeed * Time.deltaTime);
+             transform.position += transform.forward * shotSpeed * Time.deltaTime;
         }
         else return;
     }

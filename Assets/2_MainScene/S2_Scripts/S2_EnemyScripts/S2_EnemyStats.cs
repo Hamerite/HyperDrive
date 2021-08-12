@@ -2,72 +2,62 @@
 //Last modified 04/07/21 (Dylan LeClair)
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Analytics;
 
-public class S2_EnemyStats : MonoBehaviour, IKillable
+public class S2_EnemyStats : MonoBehaviour
 {
     [SerializeField] protected S2_EnemyBaseClass stats = null;
+    [SerializeField] protected ParticleSystem deathParticles;
     public enum ShipClass { speeder, tank, bomber};
     public ShipClass myClass;
-
-    GameObject target;
-    public GameObject GetTargetPosition()
+    float checkRadius = 2.5f;
+    private Vector3 target;
+    public Vector3 GetTargetPosition()
     {
         return target;
     }
-
-    bool spawned = false, canShoot = false;
+    public LayerMask enemyLayer;
+    public void SetTarget(Vector3 targetPos)
+    {
+        target = targetPos;
+    }
+    bool spawned = false, canShoot = false, hasMoved = false;
     float shotTime = 1.0f, zPos = 10;
-    int shotMultiple = 0;
+    public int shotMultiple = 0, life = 1;
     private void OnEnable()
     {
-        Invoke(nameof(GetTarget), 1f); Invoke(nameof(Shoot), 5);
+        //InvokeRepeating(nameof(Shoot), 5, 3);
     }
-
+    Vector3 targetPosition;
     void Update()
     {
-        if (!spawned) return;
-        if (transform.position.z > target.transform.position.z) { GetTarget(); }
-        Vector3 position = new Vector3(target.transform.position.x, target.transform.position.y, 10);
-        transform.position = Vector3.MoveTowards(transform.position, position, stats.GetMaxSpeed() * Time.deltaTime);
-    }
-
-    public void GetTarget()
-    {
-        spawned = true;
-        switch (myClass)
+        Vector3 p1 = transform.position;
+        Collider[] enemyCollider = Physics.OverlapSphere(p1,checkRadius,enemyLayer);
+        if (enemyCollider.Length > 0)
         {
-            case ShipClass.speeder:
-                target = ChooseNearest(transform.position, S2_PointsPlanesCheckIn.Instance.GetUpNext());
-                break;
-            case ShipClass.tank:
-                target = ChooseNearest(S2_PlayerController.Instance.transform.position, S2_PointsPlanesCheckIn.Instance.GetUpNext());
-                break;
-            case ShipClass.bomber:
-                target = ChooseNearest(transform.position, S2_PointsPlanesCheckIn.Instance.GetUpNext());
-                break;
-            default:
-                break;
-        }
-    }
-
-    GameObject ChooseNearest(Vector3 location, List<GameObject> destinations)
-    {
-        float nearestSqrMag = float.PositiveInfinity;
-        GameObject nearestVector3 = null;
-
-        foreach (GameObject item in destinations)
-        {
-            float sqrMag = (item.transform.position - location).sqrMagnitude;
-
-            if (sqrMag < nearestSqrMag)
+            if (!hasMoved)
             {
-                nearestSqrMag = sqrMag;
-                nearestVector3 = item;
+                Invoke(nameof(ChangeHasMoved), 0.1f);
+                hasMoved = true;
+                Vector3 direction = (p1 - enemyCollider[0].transform.position).normalized;
+                Vector3 targetDirection = (target - p1).normalized;
+                targetPosition = direction + targetDirection;
+                targetPosition *= 3;
+                targetPosition.z = 10;
             }
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, stats.GetMaxSpeed() * Time.deltaTime);
         }
-
-        return nearestVector3;
+        else
+        {
+            if (!hasMoved)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(target.x, target.y, 10), stats.GetMaxSpeed() * Time.deltaTime);
+            }
+            else
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(target.x, target.y, 10), stats.GetMaxSpeed() * Time.deltaTime);
+        }
     }
 
     public void Shoot()
@@ -85,21 +75,21 @@ public class S2_EnemyStats : MonoBehaviour, IKillable
                     shotMultiple++;
                     if (shotMultiple >= 3) Invoke(nameof(EndShot), 0.1f);
                     else
-                        Invoke(nameof(Shoot), 0.3f);
+                        Invoke(nameof(Shoot), 0.1f);
                     break;
                 case ShipClass.tank:
-                    canShoot = true;
-                    S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.position = transform.position;
-                    S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.rotation = Quaternion.Euler(0, 180, 0);
-                    S2_EnemyBulletPooler.Instance.GetBullets()[0].gameObject.SetActive(true);
-                    Invoke(nameof(EndShot), 0.1f);
+                    //canShoot = true;
+                    //S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.position = transform.position;
+                    //S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.rotation = Quaternion.Euler(0, 180, 0);
+                    //S2_EnemyBulletPooler.Instance.GetBullets()[0].gameObject.SetActive(true);
+                    //Invoke(nameof(EndShot), 0.1f);
                     break;
                 case ShipClass.bomber:
-                    canShoot = true;
-                    S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.position = transform.position;
-                    S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.rotation = Quaternion.Euler(0, 180, 0);
-                    S2_EnemyBulletPooler.Instance.GetBullets()[0].gameObject.SetActive(true);
-                    Invoke(nameof(Shoot), 2f);
+                    //canShoot = true;
+                    //S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.position = transform.position;
+                    //S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.rotation = Quaternion.Euler(0, 180, 0);
+                    //S2_EnemyBulletPooler.Instance.GetBullets()[0].gameObject.SetActive(true);
+                    //Invoke(nameof(Shoot), 2f);
                     break;
                 default:
                     break;
@@ -109,24 +99,36 @@ public class S2_EnemyStats : MonoBehaviour, IKillable
             return;
     }
 
+    void ChangeHasMoved()
+    {
+        hasMoved = !hasMoved;
+        //ChooseNearest(transform.position, S2_PointsPlanesCheckIn.Instance.GetUpNext());
+    }
+
+
+
     void EndShot()
     {
         shotMultiple = 0;
         return;
     }
-    public IEnumerator CheckHit(bool x)
+
+
+    public void TakeDamage()
     {
-        throw new System.NotImplementedException();
+        life--;
+        print("DAMAGE!");
+        if (life <= 0)
+            Die();
+        else
+            return;
     }
 
-    public IEnumerator TakeDamage()
+    public void Die()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public IEnumerator Die()
-    {
-        throw new System.NotImplementedException();
+        print("Im dead stop!");
+        Instantiate(deathParticles, transform.position, Quaternion.identity);
+        this.gameObject.SetActive(false);
     }
 
 

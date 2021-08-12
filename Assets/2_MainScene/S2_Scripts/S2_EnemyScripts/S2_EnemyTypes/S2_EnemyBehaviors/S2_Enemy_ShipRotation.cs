@@ -13,9 +13,18 @@ public class S2_Enemy_ShipRotation : MonoBehaviour
         {
 
             if (10 - parentShip.transform.position.z < 6) angleY = 180;
-            float angleV = parentShip.GetTargetPosition().transform.position.y - transform.position.y * 10f * Time.deltaTime;
-            float angleH = parentShip.GetTargetPosition().transform.position.x - transform.position.x * 10f * Time.deltaTime;
+            float angleV = parentShip.GetTargetPosition().y - transform.position.y * 10f * Time.deltaTime;
+            float angleH = parentShip.GetTargetPosition().x - transform.position.x * 10f * Time.deltaTime;
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(-angleV, angleY, -angleH), 150.00f * Time.deltaTime);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 14)
+        {
+            parentShip.TakeDamage();
+            print("HIT!");
         }
     }
 }

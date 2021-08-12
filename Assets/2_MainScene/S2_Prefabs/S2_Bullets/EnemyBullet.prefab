@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4127797224381927438}
-  - component: {fileID: 6279734214985769634}
   - component: {fileID: 4480217780719380798}
   - component: {fileID: 8145271323988736065}
+  - component: {fileID: 3976043179266433070}
   m_Layer: 14
-  m_Name: PlayerBullet
+  m_Name: EnemyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,19 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6279734214985769634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 621476788695314031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ae19a59a444f9b42850ea096a1eb14f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigidbody: {fileID: 4480217780719380798}
 --- !u!54 &4480217780719380798
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -76,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 1
-  outlineColor: {r: 0.54554987, g: 1, b: 0.3537736, a: 1}
+  outlineColor: {r: 1, g: 0.2069914, b: 0.1830188, a: 1}
   outlineWidth: 3
   precomputeOutline: 1
   bakeKeys:
@@ -633,6 +620,21 @@ MonoBehaviour:
     - {x: 0.7063923, y: 0.04494747, z: 0.706392}
     - {x: 0.34110048, y: 0.6646991, z: 0.6646996}
     - {x: 0.17692533, y: 0.69595146, z: 0.6959518}
+--- !u!114 &3976043179266433070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621476788695314031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b0e3d670142c374a8e9a5f4fba2f55a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shotSpeed: 5
+  shotDamage: 1
+  fired: 0
 --- !u!1 &9200004270853788801
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2834352687240356898}
   - component: {fileID: 2834352687240356896}
   - component: {fileID: 2834352687240356897}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ThrusterParticles (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4828,7 +4828,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2834352687410247012}
   - component: {fileID: 2834352687410247019}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4921,7 +4921,7 @@ GameObject:
   m_Component:
   - component: {fileID: 341533123057218377}
   - component: {fileID: 8941320279489354263}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: AlienSpeeder
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4956,7 +4956,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: f92b146477e9b844dbad116a671493e9, type: 2}
+  deathParticles: {fileID: 3124038253959315864, guid: c5fc38a63a69c74479fdf7718edf4761,
+    type: 3}
   myClass: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 32768
+  shotMultiple: 0
+  life: 1
 --- !u!1 &4740014822372725366
 GameObject:
   m_ObjectHideFlags: 0
@@ -4968,7 +4975,7 @@ GameObject:
   - component: {fileID: 4740014822372725367}
   - component: {fileID: 4740014822372725365}
   - component: {fileID: 4740014822372725364}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ThrusterParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9784,7 +9791,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4740014822479659825}
   - component: {fileID: 4740014822479659838}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9879,8 +9886,10 @@ GameObject:
   - component: {fileID: 7391323799412307106}
   - component: {fileID: 2283856199671683154}
   - component: {fileID: 1928537606745606416}
-  m_Layer: 0
-  m_Name: default
+  - component: {fileID: 6931389490872540756}
+  - component: {fileID: 7175109622311987338}
+  m_Layer: 15
+  m_Name: Speeder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9965,3 +9974,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentShip: {fileID: 8941320279489354263}
+--- !u!65 &6931389490872540756
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7127595017106154695}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7228986, y: 0.9, z: 2.109295}
+  m_Center: {x: -0.7385507, y: 0.45, z: 0.054647446}
+--- !u!65 &7175109622311987338
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7127595017106154695}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.75705194, y: 0.455979, z: 1.0554523}
+  m_Center: {x: 0.021474004, y: 0.6720105, z: -0.47227383}

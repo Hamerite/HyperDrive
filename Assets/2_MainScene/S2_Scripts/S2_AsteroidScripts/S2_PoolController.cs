@@ -26,6 +26,10 @@ public class S2_PoolController : MonoBehaviour {
     protected float speed = 75.0f, waitTime = 1.8f, benchedTime = 5.4f;
 
     protected readonly string[] obstacleDifficulty = { "Very Easy", "Easy", "Medium", "Hard", "Very Hard" };
+    public float GetWaitTime()
+    {
+        return waitTime;
+    }
 
     private void Awake() {
         Instance = this;
