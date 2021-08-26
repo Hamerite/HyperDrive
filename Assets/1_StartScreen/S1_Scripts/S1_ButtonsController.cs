@@ -35,7 +35,7 @@ public class S1_ButtonsController : MonoBehaviour {
     }
 
     public void BackButton(){
-        AudioManager.Instance.PlayInteractionSound(1);
+        AudioManager.Instance.PlayInteractionSound(7);
 
         if(S1_Options.Instance && S1_Options.Instance.GetResetCheck()) return;
 

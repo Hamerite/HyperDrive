@@ -8,7 +8,7 @@ public class AudioManager : MonoBehaviour {
 
     [SerializeField] protected AudioSource[] audioSource = null; // { Music, SFX, MenuSounds }
     [SerializeField] protected AudioMixer audioMixer = null;
-    [SerializeField] protected AudioClip[] interactionSoundClips = null; // { MousedOver, Pressed, saveHighScore, deleteHighScore, DenySelection, Coins, Purchased }
+    [SerializeField] protected AudioClip[] interactionSoundClips = null; // { MousedOver, Pressed, saveHighScore, deleteHighScore, DenySelection, Coins, Purchased, GoBack }
 
     protected bool[] mutes = { false, false }; // { All, Menues }
     protected float[] volumes = { .5f, .5f, .5f }; // { Master, Music, SFX }

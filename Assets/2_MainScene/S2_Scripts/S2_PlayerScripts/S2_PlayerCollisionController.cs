@@ -22,7 +22,7 @@ public class S2_PlayerCollisionController : MonoBehaviour {
                 transform.Translate(hit.normal / 4.5f);
                 PlaySparks(hit);
             }
-            if (Physics.Raycast(transform.position, item, 10.0f, 1 << 9) && playerStatus[0]) S2_PlayerAudioController.Instance.PlayAudio(1);
+            if (Physics.Raycast(transform.position, item, 10.0f, 1 << 9) && playerStatus[0]) S2_PlayerAudioController.Instance.PlayRandomWhoosh();
         }
 
         if (!playerStatus[0] || !playerStatus[1] || playerStatus[2]) return;
@@ -61,6 +61,7 @@ public class S2_PlayerCollisionController : MonoBehaviour {
         if (!hitSparks.gameObject.activeInHierarchy) {
             hitSparks.transform.position = hit.point;
             hitSparks.gameObject.SetActive(true);
+            S2_PlayerAudioController.Instance.PlayAudio(6);
             hitSparks.Play();
         }
     }
