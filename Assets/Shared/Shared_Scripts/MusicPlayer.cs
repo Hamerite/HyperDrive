@@ -6,8 +6,18 @@ using UnityEngine.SceneManagement;
 public class MusicPlayer : MonoBehaviour {
     [SerializeField] protected AudioClip[] SongClips = null;
 
+    protected bool sceneChanged;
+
+    void Start() {
+        sceneChanged = true;
+        AudioManager.Instance.GetAudioSources()[0].Stop();
+        AudioManager.Instance.GetAudioSources()[0].clip = SongClips[Random.Range(0, SongClips.Length)];
+        AudioManager.Instance.GetAudioSources()[0].Play();
+        sceneChanged = false;
+    }
+
     void Update() {
-        if (SceneManager.GetActiveScene().name == "Music" || AudioManager.Instance.GetAudioSources()[0].isPlaying) return;
+        if (sceneChanged || SceneManager.GetActiveScene().name == "Music" || AudioManager.Instance.GetAudioSources()[0].isPlaying) return;
 
         AudioManager.Instance.GetAudioSources()[0].clip = SongClips[Random.Range(0, SongClips.Length)];
         AudioManager.Instance.GetAudioSources()[0].Play();

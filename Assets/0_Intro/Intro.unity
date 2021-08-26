@@ -615,6 +615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c7e2442be10fd94abade6b9eb6588ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  introAudio: {fileID: 8300000, guid: bfb5513367e61d34e980cef6f4c4947e, type: 3}
   canvasGroup: {fileID: 949540018}
 --- !u!225 &949540018
 CanvasGroup:
