@@ -4921,6 +4921,7 @@ GameObject:
   m_Component:
   - component: {fileID: 341533123057218377}
   - component: {fileID: 8941320279489354263}
+  - component: {fileID: 6108524043437758430}
   m_Layer: 15
   m_Name: AlienSpeeder
   m_TagString: Player
@@ -4958,12 +4959,32 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: f92b146477e9b844dbad116a671493e9, type: 2}
   deathParticles: {fileID: 3124038253959315864, guid: c5fc38a63a69c74479fdf7718edf4761,
     type: 3}
+  canonPosition: {fileID: 3348650817768043058}
   myClass: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 32768
-  shotMultiple: 0
-  life: 1
+  isMoving: 0
+  m_Collider: {fileID: 6931389490872540756}
+--- !u!95 &6108524043437758430
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3667626953185952090}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4740014822372725366
 GameObject:
   m_ObjectHideFlags: 0
@@ -9874,6 +9895,36 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &6080891469172605040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3348650817768043058}
+  m_Layer: 15
+  m_Name: canon
+  m_TagString: Untagged
+  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3348650817768043058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080891469172605040}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.75, y: 0.36, z: 1.87}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7841753618189951089}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7127595017106154695
 GameObject:
   m_ObjectHideFlags: 0
@@ -9909,6 +9960,7 @@ Transform:
   - {fileID: 4740014822372725367}
   - {fileID: 4740014822479659825}
   - {fileID: 2834352687240356898}
+  - {fileID: 3348650817768043058}
   m_Father: {fileID: 341533123057218377}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -7,15 +7,15 @@ public class S2_PointsPlanesCheckIn : MonoBehaviour
 {
     public static S2_PointsPlanesCheckIn Instance { get; protected set; }
 
-    protected List<Vector3> pointsPlanesTransforms = new List<Vector3>();
+    protected List<GameObject> pointsPlanesTransforms = new List<GameObject>();
 
     void Awake() { Instance = this; }
 
-    public void CheckIn(Vector3 objectTrasform) { pointsPlanesTransforms.Add(objectTrasform); }
+    public void CheckIn(GameObject objectTrasform) { pointsPlanesTransforms.Add(objectTrasform); }
 
-    public void CheckOut(Vector3 objectTransform) { pointsPlanesTransforms.Remove(objectTransform); }
+    public void CheckOut(GameObject objectTransform) { pointsPlanesTransforms.Remove(objectTransform); }
 
-    public List<Vector3> GetUpNext() { return pointsPlanesTransforms.GetRange(0, 3); }
+    public List<GameObject> GetUpNext() { return pointsPlanesTransforms.GetRange(0, 3); }
 
-    public List<Vector3> ReturnPointPlanes() { return pointsPlanesTransforms; }
+    public List<GameObject> ReturnPointPlanes() { return pointsPlanesTransforms; }
 }

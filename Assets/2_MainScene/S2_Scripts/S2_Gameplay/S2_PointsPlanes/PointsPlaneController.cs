@@ -8,7 +8,7 @@ public class PointsPlaneController : MonoBehaviour {
 
     public void PointsScored() { AudioManager.Instance.GetAudioSources()[1].PlayOneShot(clip); }
 
-    void OnEnable() { S2_PointsPlanesCheckIn.Instance.CheckIn(gameObject.transform.position); }
+    void OnEnable() { S2_PointsPlanesCheckIn.Instance.CheckIn(gameObject); }
 
-    void OnDisable() { S2_PointsPlanesCheckIn.Instance.CheckOut(gameObject.transform.position); }
+    void OnDisable() { S2_PointsPlanesCheckIn.Instance.CheckOut(gameObject); }
 }

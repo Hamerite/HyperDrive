@@ -34,6 +34,7 @@ Transform:
   - {fileID: 2705149394055014302}
   - {fileID: 4834844634100093387}
   - {fileID: 2705149394027771608}
+  - {fileID: 5009289871417279800}
   m_Father: {fileID: 6985131143977043616}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -112,6 +113,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.1200001, y: 0.90999997, z: 3.5099998}
   m_Center: {x: 0, y: 0.45499998, z: -0.06500006}
+--- !u!1 &723370085292725816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5009289871417279800}
+  m_Layer: 15
+  m_Name: canon
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5009289871417279800
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723370085292725816}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.01, y: 0.45, z: 0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 621202125913281944}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2705149394027771609
 GameObject:
   m_ObjectHideFlags: 0
@@ -9943,6 +9974,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6985131143977043616}
   - component: {fileID: 7227216767779683570}
+  - component: {fileID: 3020639118107618981}
   m_Layer: 15
   m_Name: AlienBomber
   m_TagString: Player
@@ -9980,9 +10012,29 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: d8781f65565ca3c4e80e19dbccc7af7a, type: 2}
   deathParticles: {fileID: 3124038253959315864, guid: c5fc38a63a69c74479fdf7718edf4761,
     type: 3}
+  canonPosition: {fileID: 5009289871417279800}
   myClass: 2
   enemyLayer:
     serializedVersion: 2
     m_Bits: 32768
-  shotMultiple: 0
-  life: 1
+  isMoving: 0
+  m_Collider: {fileID: 5519818794852817432}
+--- !u!95 &3020639118107618981
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6245210775780324531}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 42b22a9359244a5499eb266a2a32dd5f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

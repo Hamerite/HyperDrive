@@ -111,6 +111,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.2, y: 0.7, z: 2.4}
   m_Center: {x: 0, y: 0.35, z: -0.099999964}
+--- !u!1 &1196905590992885195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5341957178482300449}
+  m_Layer: 15
+  m_Name: canon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5341957178482300449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196905590992885195}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.01, y: 0.27, z: 1.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7362393264443249301}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2546448469828575980
 GameObject:
   m_ObjectHideFlags: 0
@@ -9943,6 +9973,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7362393264443249301}
   - component: {fileID: 2173515060369469488}
+  - component: {fileID: 4172348690154310565}
   m_Layer: 15
   m_Name: AlienTank
   m_TagString: Player
@@ -9962,6 +9993,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1027566613510750637}
+  - {fileID: 5341957178482300449}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -9980,9 +10012,29 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: a0c94d84916261f4690f9143a92be566, type: 2}
   deathParticles: {fileID: 3124038253959315864, guid: c5fc38a63a69c74479fdf7718edf4761,
     type: 3}
+  canonPosition: {fileID: 5341957178482300449}
   myClass: 1
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
-  shotMultiple: 0
-  life: 1
+  isMoving: 0
+  m_Collider: {fileID: 4330479521654756506}
+--- !u!95 &4172348690154310565
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5798138721279189126}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5b559adb4d6777642b0a564bbed982d5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

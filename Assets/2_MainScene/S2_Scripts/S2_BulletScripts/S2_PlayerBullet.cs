@@ -9,7 +9,7 @@ public class S2_PlayerBullet : MonoBehaviour {
     protected Vector3 offset = new Vector3(0, 0, -5);
 
     void OnEnable() {
-        Plane plane = new Plane(Vector3.back, 50);
+        Plane plane = new Plane(Vector3.back, 25);
         Ray ray = Camera.main.ScreenPointToRay(S2_ShootingController.Instance.GetCrosshairPosition());
         float distance;
 
