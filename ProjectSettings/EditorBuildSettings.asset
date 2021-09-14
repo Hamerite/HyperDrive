@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/4_MusicPlayerScene/Music.unity
     guid: cc433b7ca0c0af848b21d3e3ada6b13e
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: b7328b3cb5f37b549a0880e219cd7330,
+      type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000,
+      guid: f950d599e4ad36e46a5f6ed06f690119, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
+      guid: 41f358a2f31a57840b4b42eeb549e30c, type: 2}

@@ -39,6 +39,7 @@
             v2f vert(appdata v)
             {
                 v2f o;
+                UNITY_INITIALIZE_OUTPUT(v2f, o);
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 return o;
             }

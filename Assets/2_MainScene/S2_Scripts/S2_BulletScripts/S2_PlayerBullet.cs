@@ -20,12 +20,14 @@ public class S2_PlayerBullet : MonoBehaviour {
         Invoke(nameof(TimedOut), 7);
     }
 
-    void Update() { rigidbody.AddForce(transform.forward * 5, ForceMode.Impulse); }
+    void FixedUpdate() { rigidbody.position += (transform.forward) * (100 * Time.deltaTime); }
 
     void TimedOut() { gameObject.SetActive(false); }
 
     void OnTriggerEnter(Collider other) {
-        ParticleSystem newExplosion = S2_HitExplosionPooler.Instance.GetHitExplosion();
+        bool hitObstacle = false;
+        if (other.gameObject.layer == 9) hitObstacle = true;
+        ParticleSystem newExplosion = S2_HitExplosionPooler.Instance.GetHitExplosion(hitObstacle);
 
         newExplosion.transform.position = transform.position + offset;
         newExplosion.time = 0;

@@ -72,7 +72,7 @@ Shader "GAP/ParticlesABMobile_Scroll"
 
 		ENDCG
 	}
-	CustomEditor "ASEMaterialInspector"
+	//CustomEditor "ASEMaterialInspector"
 }
 /*ASEBEGIN
 Version=18707
