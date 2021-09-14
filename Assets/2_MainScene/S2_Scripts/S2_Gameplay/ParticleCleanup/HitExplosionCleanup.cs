@@ -6,6 +6,8 @@ public class HitExplosionCleanup : MonoBehaviour {
     [SerializeField] protected AudioSource audioSource = null;
     [SerializeField] protected new ParticleSystem particleSystem = null;
 
+    protected bool hitObstacle;
+
     void Start() {
         ParticleSystem.MainModule main = particleSystem.main;
         main.stopAction = ParticleSystemStopAction.Callback;
@@ -13,7 +15,12 @@ public class HitExplosionCleanup : MonoBehaviour {
 
     void OnEnable() { audioSource.Play(); }
 
-    void Update() { transform.Translate(Vector3.up * S2_PoolController.Instance.GetSpeed() * Time.deltaTime); }
+    void Update() { 
+        if (!hitObstacle) return; 
+        transform.Translate(Vector3.back * S2_PoolController.Instance.GetSpeed() * Time.deltaTime); 
+    }
 
     void OnParticleSystemStopped() { gameObject.SetActive(false); }
+
+    public void ToggleHitObstacle() { hitObstacle = !hitObstacle; }
 }

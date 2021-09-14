@@ -20,16 +20,16 @@ public class S2_PlayerController : MonoBehaviour {
         S2_PlayerAnimationController.Instance.enabled = true;
     }
 
-    void Update() {
+    void FixedUpdate() {
         if (!ShipStats.Instance) return;
 
         if (S2_PlayerAnimationController.Instance.GetIsRolling()) return;
-        float vertical = Input.GetAxis("Vertical") * ShipStats.Instance.GetStats().GetMaxSpeed() * Time.deltaTime;
-        float horizontal = Input.GetAxis("Horizontal") * ShipStats.Instance.GetStats().GetMaxSpeed() * Time.deltaTime;
+        float vertical = Input.GetAxis("Vertical") * ShipStats.Instance.GetStats().GetMaxSpeed() * Time.fixedDeltaTime;
+        float horizontal = Input.GetAxis("Horizontal") * ShipStats.Instance.GetStats().GetMaxSpeed() * Time.fixedDeltaTime;
         transform.Translate(horizontal, vertical, 0.0f);
 
-        float angleV = Input.GetAxis("Vertical") * 1500.0f * Time.deltaTime;
-        float angleH = Input.GetAxis("Horizontal") * 1500.0f * Time.deltaTime;
+        float angleV = Input.GetAxis("Vertical") * 1500.0f * Time.fixedDeltaTime;
+        float angleH = Input.GetAxis("Horizontal") * 1500.0f * Time.fixedDeltaTime;
         shipChoice[index].transform.rotation = Quaternion.RotateTowards(shipChoice[index].transform.rotation, Quaternion.Euler(-angleV, 0, -angleH), 1500.0f);
     }
 
