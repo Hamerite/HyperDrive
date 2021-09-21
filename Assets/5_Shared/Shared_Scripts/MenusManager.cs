@@ -20,7 +20,7 @@ public class MenusManager : MonoBehaviour {
     }
 
     void Update() {
-        if (inputingHighscore || SceneManager.GetActiveScene().name == "MainScene") return;
+        if (inputingHighscore || SceneManager.GetActiveScene().name == "MainScene" || SceneManager.GetActiveScene().name == "LoadingScene") return;
 
         if (Cursor.visible && (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)) MouseToKeys();
         else if (!Cursor.visible && mousePos != Input.mousePosition) KeysToMouse();

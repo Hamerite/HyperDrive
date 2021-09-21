@@ -40,7 +40,7 @@ public class S2_PoolController : MonoBehaviour {
         S2_HUDUI.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
         arrayIndex++;
 
-        InvokeRepeating(nameof(ChooseObstacle), 0.5f, waitTime);
+        InvokeRepeating(nameof(ChooseObstacle), 3, waitTime);
         benched.TrimExcess();
     }
 

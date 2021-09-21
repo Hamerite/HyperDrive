@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/4_MusicPlayerScene/Music.unity
     guid: cc433b7ca0c0af848b21d3e3ada6b13e
+  - enabled: 1
+    path: Assets/6_LoadingScene/LoadingScene.unity
+    guid: e4e34751e2f5cf7429c5b8e505b200c8
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: b7328b3cb5f37b549a0880e219cd7330,
       type: 2}

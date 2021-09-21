@@ -12,7 +12,7 @@ public class S1_TitleElements : MonoBehaviour {
 
     public void StartButton() {
         AudioManager.Instance.PlayInteractionSound(1);
-        GameManager.Instance.TraverseScenes("MainScene");
+        GameManager.Instance.TraverseScenes("LoadingScene");
     }
 
     public void InstructionsButton() {
