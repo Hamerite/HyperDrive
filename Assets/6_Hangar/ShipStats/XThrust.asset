@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf75505b3033ddb40835baaa7f3fd2cb, type: 3}
+  m_Name: XThrust
+  m_EditorClassIdentifier: 
+  attributes: 0a000000020000000000000003000000020000000700000000000000
+  description: The next generation of the MK-1, the MK-2 X-Thrust boasts upgraded
+    antediluvian class armor and engines, as well as in-line phaser modulation transinduction
+    manifolds, making this the pride of the Sol Initiative. Piloted by Phillip Mange,
+    son of Larry Mange, he follows a faint beacon into the rift...
