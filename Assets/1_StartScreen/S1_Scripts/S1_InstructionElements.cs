@@ -22,6 +22,6 @@ public class S1_InstructionElements : MonoBehaviour {
         }
         for (int i = 2; i < InstructionElements.Length; i++) InstructionElements[i].SetActive(!InstructionElements[i].activeSelf);
 
-        S1_ButtonsController.Instance.ChangePanels("Instructions", new bool[] { false, true, false, false, true });
+        S1_ButtonsController.Instance.ChangePanels("Instructions", new bool[] { false, true, false, true });
     }
 }

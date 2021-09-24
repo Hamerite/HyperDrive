@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 12
   attributes: 040000000100000003000000010000000500000001000000
+  description: The Predator is heavily armed with four laser cannons on the Q-foils
+    and merged onto the fuselage. The Predator class ships were designed for dogfighting
+    and long missions. It also has a swim up hot tub bar.

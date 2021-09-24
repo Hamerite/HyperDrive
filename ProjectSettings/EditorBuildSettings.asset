@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/4_MusicPlayerScene/Music.unity
     guid: cc433b7ca0c0af848b21d3e3ada6b13e
+  - enabled: 1
+    path: Assets/5_HangarScene/Hangar.unity
+    guid: 09958301e967d7b429246b9287e251aa
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: b7328b3cb5f37b549a0880e219cd7330,
       type: 2}
