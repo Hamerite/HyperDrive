@@ -1,0 +1,459 @@
+fileFormatVersion: 2
+guid: fc8742f70f8d5aa4e81e0fd24c344ba1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6648615632501698503
+    second: Hyperdrive_UI_Assets_0
+  - first:
+      213: -8835014220538926212
+    second: Hyperdrive_UI_Assets_1
+  - first:
+      213: 9100293859166749513
+    second: Hyperdrive_UI_Assets_2
+  - first:
+      213: -6776705086705776684
+    second: Hyperdrive_UI_Assets_3
+  - first:
+      213: -7329265200400956287
+    second: Hyperdrive_UI_Assets_4
+  - first:
+      213: 5435275946939416805
+    second: Hyperdrive_UI_Assets_5
+  - first:
+      213: -3898314525878951762
+    second: Hyperdrive_UI_Assets_6
+  - first:
+      213: 9014728908539924037
+    second: Hyperdrive_UI_Assets_7
+  - first:
+      213: 2789080359625931060
+    second: Hyperdrive_UI_Assets_8
+  - first:
+      213: 6021434100308168748
+    second: Hyperdrive_UI_Assets_9
+  - first:
+      213: -4985256810858222034
+    second: Hyperdrive_UI_Assets_10
+  - first:
+      213: -787062490088765883
+    second: Hyperdrive_UI_Assets_11
+  - first:
+      213: -4374003503652702115
+    second: Hyperdrive_UI_Assets_12
+  - first:
+      213: 1093731979518361353
+    second: Hyperdrive_UI_Assets_13
+  - first:
+      213: -1914786316456303385
+    second: Hyperdrive_UI_Assets_14
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_0
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 104
+        width: 156
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cf6f5f11b0a44c50800000000000000
+      internalID: 6648615632501698503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_1
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 85
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7ba0475069b36580800000000000000
+      internalID: -8835014220538926212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_2
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 83
+        width: 23
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9438d4bac0dba4e70800000000000000
+      internalID: 9100293859166749513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_3
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 84
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d7c15fc0ae44f1a0800000000000000
+      internalID: -6776705086705776684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_4
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 53
+        width: 58
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1840871e128394a90800000000000000
+      internalID: -7329265200400956287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_5
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 66
+        width: 29
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e08c892daafd6b40800000000000000
+      internalID: 5435275946939416805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_6
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 48
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea06d36c79766e9c0800000000000000
+      internalID: -3898314525878951762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_8
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 46
+        width: 24
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 439b5855fcdc4b620800000000000000
+      internalID: 2789080359625931060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_9
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 17
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c20da4b496e609350800000000000000
+      internalID: 6021434100308168748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_10
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 11
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2ee2b2f75fc0dab0800000000000000
+      internalID: -4985256810858222034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_11
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 48
+        width: 1
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5468936d5dac315f0800000000000000
+      internalID: -787062490088765883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_12
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 41
+        width: 54
+        height: 1
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d587776ecfa6c43c0800000000000000
+      internalID: -4374003503652702115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_13
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 34
+        width: 54
+        height: 1
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90f3da6c077bd2f00800000000000000
+      internalID: 1093731979518361353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyperdrive_UI_Assets_14
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 27
+        width: 54
+        height: 1
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e4e7da7dff4d65e0800000000000000
+      internalID: -1914786316456303385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: f9cf2719396e0f741adae7ea1cc6efdd
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
