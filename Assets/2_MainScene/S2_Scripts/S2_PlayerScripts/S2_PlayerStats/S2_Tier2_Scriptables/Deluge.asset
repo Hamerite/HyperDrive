@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 13
   attributes: 020000000200000004000000010000000500000001000000
+  description: Prized by many for its maneuverability and speed in the Apollo Circuit,
+    the Deluge class ship is hard to come by.  Most have been stripped down and pimped
+    out in hopes of winning the Milky Way Invitational Cup.

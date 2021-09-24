@@ -40,7 +40,7 @@ public class S1_ButtonsController : MonoBehaviour {
         if(S1_Options.Instance && S1_Options.Instance.GetResetCheck()) return;
 
         if(startMenus[3].activeInHierarchy) AudioManager.Instance.SaveAudioSettings();
-        ChangePanels("HyperDrive", new bool[] { true, false, false, false, false });
+        ChangePanels("HyperDrive", new bool[] { true, false, false, false });
         panelChange = true;
     }
 }
