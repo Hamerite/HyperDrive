@@ -141,8 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbbf86e1ec8d70649a6dcdddbfc4c6a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeOnScreen: 5
-  warningTime: 1
+  timeOnScreen: 10
+  warningTime: 2.5
   damageObject: {fileID: 6219641144731864298}
   warningObject: {fileID: 8553349741648559327}
 --- !u!54 &4359536500681024679

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10471ddb9d257a545b14b34f60d3530c, type: 3}
   m_Name: Test Boss
   m_EditorClassIdentifier: 
-  maxSpeed: 2.5
-  minSpeed: 5
+  maxSpeed: 1
+  minSpeed: 2.5
   attributes:
   - 1
   - 0.25

@@ -230,7 +230,7 @@ public class S2_BossBaseClass : MonoBehaviour
         StopCoroutine(followPath);
         if (currentbehavior == behavior.chase) //need an intermediate state to move towards the starting point of the path
         {
-            InvokeRepeating(nameof(RapidFire), 0, 0.15f); //each boss will have it's own rapid fire rate            
+            InvokeRepeating(nameof(RapidFire), 2, 0.15f); //each boss will have it's own rapid fire rate            
         }
         else
         {
@@ -241,7 +241,7 @@ public class S2_BossBaseClass : MonoBehaviour
 
         if(currentbehavior == behavior.lockOn)
         {
-            InvokeRepeating(nameof(HomingShots), 0, 1);//change this back to 
+            InvokeRepeating(nameof(HomingShots), 0, 1);//change this back to each boss
         }
         else
         {

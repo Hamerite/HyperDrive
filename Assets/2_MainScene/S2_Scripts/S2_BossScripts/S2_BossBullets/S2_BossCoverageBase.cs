@@ -10,21 +10,18 @@ public class S2_BossCoverageBase : MonoBehaviour
     [SerializeField]
     GameObject[] waves;
 
-    GameObject activeWave;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        foreach(GameObject w in waves)
-        {
-            w.SetActive(false);
-        }
-    }
+    GameObject activeWave;   
 
     private void OnEnable()
     {
+        for(int i = 0; i < waves.Length; i++)
+        { waves[i].SetActive(false); }
+
+        if (activeWave)
+            activeWave.SetActive(false);
+
         Invoke(nameof(Deactivate), 3);
-        int r = Random.Range(0, waves.Length);
+        int r = Random.Range(0, waves.Length);       
         activeWave = waves[r];
         activeWave.SetActive(true);
     }
@@ -41,9 +38,9 @@ public class S2_BossCoverageBase : MonoBehaviour
     }
 
     void Deactivate()
-    {
-        activeWave.SetActive(false);
-        gameObject.SetActive(false);
+    {     
+        if(gameObject.activeInHierarchy)
+            gameObject.SetActive(false);
     }
 
     
