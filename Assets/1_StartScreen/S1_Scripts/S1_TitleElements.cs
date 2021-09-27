@@ -12,17 +12,17 @@ public class S1_TitleElements : MonoBehaviour {
 
     public void StartButton() {
         AudioManager.Instance.PlayInteractionSound(1);
-        GameManager.Instance.TraverseScenes("MainScene");
+        GameManager.Instance.TraverseScenes("LoadingScene");
     }
 
     public void InstructionsButton() {
         AudioManager.Instance.PlayInteractionSound(1);
-        S1_ButtonsController.Instance.ChangePanels("Instructions", new bool[] { false, true, false, false, true }); 
+        S1_ButtonsController.Instance.ChangePanels("Instructions", new bool[] { false, true, false, true }); 
     }
 
     public void ShipSelect() {
         AudioManager.Instance.PlayInteractionSound(1);
-        S1_ButtonsController.Instance.ChangePanels("Ship Selection", new bool[] { false, false, true, false, true }); 
+        GameManager.Instance.TraverseScenes("Hangar");
     }
 
     public void SoundTrackButton() {
@@ -32,7 +32,7 @@ public class S1_TitleElements : MonoBehaviour {
 
     public void OptionsButton() {
         AudioManager.Instance.PlayInteractionSound(1);
-        S1_ButtonsController.Instance.ChangePanels("Ship Selection", new bool[] { false, false, false, true, true }); 
+        S1_ButtonsController.Instance.ChangePanels("Ship Selection", new bool[] { false, false, true, true }); 
     }
 
     public void QuitGame(){

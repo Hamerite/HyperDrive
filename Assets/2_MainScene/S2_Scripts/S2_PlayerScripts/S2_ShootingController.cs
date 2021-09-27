@@ -12,7 +12,7 @@ public class S2_ShootingController : MonoBehaviour {
     protected Vector2 crosshairPosition;
     protected Vector3 mousePos;
 
-    protected bool canShoot = true, usingGamepad = true, wasUsingMouse;
+    protected bool canShoot = true, usingGamepad = true, wasUsingMouse, introFinished;
 
     void Awake() { Instance = this; }
 
@@ -23,6 +23,8 @@ public class S2_ShootingController : MonoBehaviour {
 
         mousePos = Input.mousePosition;
         cursorPosition = new Vector2(Screen.width / 2, Screen.height / 2);
+
+        Invoke(nameof(ToggleIntroFinished), 3.5f);
     }
 
     void Update() {
@@ -49,6 +51,8 @@ public class S2_ShootingController : MonoBehaviour {
     void ResetFireRate() { canShoot = true; }
 
     void OnGUI() {
+        if (!introFinished) return;
+
         if (usingGamepad) {
             float horizontal = 500 * Input.GetAxis("Mouse X") * Time.deltaTime;
             float vertical = 500 * Input.GetAxis("Mouse Y") * Time.deltaTime;
@@ -72,10 +76,14 @@ public class S2_ShootingController : MonoBehaviour {
         crosshairPosition = new Vector3(cursorPosition.x, cursorPosition.y, 0);
     }
 
+    void ToggleIntroFinished() { introFinished = true; }
+
     void OnDestroy() {
         Cursor.visible = wasUsingMouse;
         Cursor.lockState = CursorLockMode.None;
     }
 
     public Vector3 GetCrosshairPosition() { return crosshairPosition; }
+
+    public bool GetIntroFinished() { return introFinished; }
 }
