@@ -1,0 +1,101 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class S2_BossBulletPooler : MonoBehaviour
+{
+    public static S2_BossBulletPooler Instance { get; private set; }
+
+    [SerializeField] protected GameObject lockOnPrefab = null; //each type of prefab will have mutiple textures and/or ps that will be chosen from when fired
+    [SerializeField] protected List<GameObject> lockOnBullets = new List<GameObject>();
+
+    [SerializeField] protected GameObject chasePrefab = null; 
+    [SerializeField] protected List<GameObject> chaseBullets = new List<GameObject>();
+
+    [SerializeField] protected GameObject disruptorPrefab = null;
+    [SerializeField] protected List<GameObject> disruptorBullets = new List<GameObject>();
+
+    [SerializeField] protected GameObject coveragePrefab = null;
+    [SerializeField] protected List<GameObject> coverageBullets = new List<GameObject>();
+
+    void Awake() 
+    {       
+        Instance = this; 
+        for(int i =0; i < 20; i++)
+        {
+            GameObject chaser = Instantiate(chasePrefab);
+            chaser.SetActive(false);
+            chaseBullets.Add(chaser);
+            
+        }
+
+        for(int i = 0; i < 5; i++)
+        {
+            GameObject homer = Instantiate(lockOnPrefab);
+            homer.SetActive(false);
+            lockOnBullets.Add(homer);
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject disruptor = Instantiate(disruptorPrefab);
+            disruptor.SetActive(false);
+            disruptorBullets.Add(disruptor);
+        }
+
+        for(int i = 0; i < 3; i++)
+        {
+            GameObject coverage = Instantiate(coveragePrefab);
+            coverage.SetActive(false);
+            coverageBullets.Add(coverage);
+        }
+    }
+
+    public GameObject GetLockOnBullet()
+    {
+        for (int i = 0; i < lockOnBullets.Count; i++)
+        {
+            if (!lockOnBullets[i].activeInHierarchy)
+            {
+                return lockOnBullets[i];
+            }
+        }
+        return null;
+    }
+
+    public GameObject GetChaseBullet()
+    {
+        for (int i = 0; i < chaseBullets.Count; i++)
+        {
+            if (!chaseBullets[i].activeInHierarchy)
+            {
+                return chaseBullets[i];
+            }
+        }
+        return null;
+    }
+
+    public GameObject GetDisruptorBullet()
+    {
+        for (int i = 0; i < disruptorBullets.Count; i++)
+        {
+            if (!disruptorBullets[i].activeInHierarchy)
+            {
+                return disruptorBullets[i];
+            }
+        }
+        return null;
+    }
+
+    public GameObject GetCoverageBullet()
+    {
+        for (int i = 0; i < coverageBullets.Count; i++)
+        {
+            if (!coverageBullets[i].activeInHierarchy)
+            {
+                return coverageBullets[i];
+            }
+        }
+        return null;
+    }
+}

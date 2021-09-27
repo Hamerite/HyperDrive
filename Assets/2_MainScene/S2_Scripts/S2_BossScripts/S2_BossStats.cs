@@ -1,4 +1,4 @@
-//Created 21/09/21 AT
+//Created 21/09/21 by AT
 
 using System.Collections;
 using System.Collections.Generic;
@@ -8,9 +8,12 @@ using UnityEngine;
 public class S2_BossStats : ScriptableObject
 {
     [SerializeField] protected float maxSpeed;
-    [SerializeField] protected int[] attributes; //{ FirePower, Shields, Health }
+    [SerializeField] protected float minSpeed;
+    [SerializeField] protected float[] attributes; //{ FirePower, RapidFireSpeed, Shields, Health }
 
     public float GetMaxSpeed() { return maxSpeed; }
 
-    public int[] GetAttributes() { return attributes; }
+    public float[] GetAttributes() { return attributes; }
+
+    public float GetMinSpeed() { return minSpeed; }
 }

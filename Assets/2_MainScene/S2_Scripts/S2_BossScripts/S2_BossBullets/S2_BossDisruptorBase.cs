@@ -8,6 +8,12 @@ public class S2_BossDisruptorBase : MonoBehaviour
     float timeOnScreen;
     [SerializeField]
     float warningTime;
+
+    [SerializeField]
+    GameObject damageObject;
+    [SerializeField]
+    GameObject warningObject;
+
     float timer;
 
     // Start is called before the first frame update
@@ -16,9 +22,29 @@ public class S2_BossDisruptorBase : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        ShowWarning();
+        Invoke(nameof(ActivateBullets), warningTime);
+        Invoke(nameof(DeactivateBullets), warningTime + timeOnScreen);
     }
+
+
+    public void ShowWarning()
+    {
+        warningObject.SetActive(true);
+        damageObject.SetActive(false);
+    }
+
+    public void ActivateBullets()
+    {
+        warningObject.SetActive(false);
+        damageObject.SetActive(true);
+    }
+
+    public void DeactivateBullets()
+    {
+        gameObject.SetActive(false);
+    }
+
 }
