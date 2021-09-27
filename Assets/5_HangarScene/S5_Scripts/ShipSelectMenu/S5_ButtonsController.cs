@@ -43,7 +43,7 @@ public class S5_ButtonsController : MonoBehaviour {
         }
     }
 
-    void StartGame() { GameManager.Instance.TraverseScenes("MainScene"); }
+    void StartGame() { GameManager.Instance.TraverseScenes("LoadingScene"); }
 
     public void Previous() {
         MenusManager.Instance.SetSelectedButton(buttons[1], null, false);

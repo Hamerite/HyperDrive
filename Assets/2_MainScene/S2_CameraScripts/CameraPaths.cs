@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//Created by Kyle Ennis 15/09/21
+//Last modified 15/09/21 (Dylan LeClair)
+using System.Collections;
 using UnityEngine;
 
 [AddComponentMenu("Camera/Camera Path", 1)]
@@ -10,14 +12,14 @@ public class CameraPaths : MonoBehaviour {
 
     [Header("Behaviour Variables")]
     [SerializeField] protected bool playOnStart, hasEndCam;
-    [SerializeField] protected float time, stayTime, endCamStayTime;
+    [SerializeField] protected float time, startDelay, stayTime, endCamStayTime;
 
     protected WaitForEndOfFrame waitForEndOfFrame;
     protected bool hasPlayed = false;
 
     void Start() {
         paths = FindObjectsOfType<CPC_CameraPath>();
-        if (playOnStart) Invoke(nameof(StartPathing), 2);
+        if (playOnStart) Invoke(nameof(StartPathing), startDelay);
     }
 
     void StartPathing() {

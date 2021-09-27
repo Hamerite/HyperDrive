@@ -620,8 +620,8 @@ MonoBehaviour:
   paths: []
   playOnStart: 1
   hasEndCam: 0
-  startWaitTime: 2
-  time: 2
+  time: 1
+  startDelay: 3
   stayTime: 0
   endCamStayTime: 0
 --- !u!1 &1255603335
