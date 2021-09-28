@@ -430,7 +430,7 @@ PrefabInstance:
     - target: {fileID: 5779188725693291609, guid: ffc66f290a334c242ae6eaa67bf2d019,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.033
       objectReference: {fileID: 0}
     - target: {fileID: 5779188725693291609, guid: ffc66f290a334c242ae6eaa67bf2d019,
         type: 3}
@@ -1524,6 +1524,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Revelation
       objectReference: {fileID: 0}
+    - target: {fileID: 4414115187143903377, guid: 50fffd49aca717c4c9c9d97e34635938,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4817457270328018131, guid: 50fffd49aca717c4c9c9d97e34635938,
         type: 3}
       propertyPath: playOnAwake
@@ -1559,6 +1564,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Orcinus 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6697095698684234806, guid: 6ae18e357df202a41902ffbc5368cea8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7351914466431398331, guid: 6ae18e357df202a41902ffbc5368cea8,
         type: 3}
       propertyPath: playOnAwake
@@ -1587,7 +1597,7 @@ PrefabInstance:
     - target: {fileID: 7686383247139814949, guid: 6ae18e357df202a41902ffbc5368cea8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.085
       objectReference: {fileID: 0}
     - target: {fileID: 7686383247139814949, guid: 6ae18e357df202a41902ffbc5368cea8,
         type: 3}
@@ -1738,6 +1748,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UPC Endeavor
+      objectReference: {fileID: 0}
+    - target: {fileID: 6864305107796216676, guid: e4b4ebaad52151f4496171d759943ebd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4b4ebaad52151f4496171d759943ebd, type: 3}
