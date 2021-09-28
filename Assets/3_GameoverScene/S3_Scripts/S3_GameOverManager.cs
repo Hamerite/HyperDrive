@@ -1,14 +1,14 @@
 ﻿//Created by Dylan LeClair
 //Last revised 20-09-20 (Dylan LeClair)
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class S3_GameOverManager : MonoBehaviour {
     public static S3_GameOverManager Instance { get; private set; }
 
-    [SerializeField] protected Text[] textElements = null;
-    [SerializeField] protected Text coinsGain = null;
+    [SerializeField] protected TextMeshProUGUI[] textElements = null; //{ Score, NewHighScore, HighScore }
+    [SerializeField] protected TextMeshProUGUI coinsGain = null;
 
     protected int highScore, score, coins;
     protected float preAddedCoins, addedCoins, gameTime, addRate = 300.0f;
