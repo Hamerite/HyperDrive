@@ -8,8 +8,7 @@ public class S2_ShootingController : MonoBehaviour {
     [SerializeField] protected AudioSource audioSource = null;
     [SerializeField] protected Texture2D crosshairs = null;
 
-    protected Vector2 cursorPosition;
-    protected Vector2 crosshairPosition;
+    protected Vector2 cursorPosition, crosshairPosition;
     protected Vector3 mousePos;
 
     protected bool canShoot = true, usingGamepad = true, wasUsingMouse, introFinished;
@@ -24,7 +23,7 @@ public class S2_ShootingController : MonoBehaviour {
         mousePos = Input.mousePosition;
         cursorPosition = new Vector2(Screen.width / 2, Screen.height / 2);
 
-        Invoke(nameof(ToggleIntroFinished), 3.5f);
+        Invoke(nameof(ToggleIntroFinished), 4);
     }
 
     void Update() {
