@@ -6,9 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
 
-    protected int coins;
-    protected int score;
-    protected int counter;
+    protected int coins, score, difficulty, counter, enemiesKilled;
 
     void Awake() {
         if (Instance != null && Instance != this) DestroyImmediate(gameObject);
@@ -23,13 +21,15 @@ public class GameManager : MonoBehaviour {
         coins = data.coins;
     }
 
-    public void SetScoreVariables(int scoreValue, int counterValue) {
+    public void SetScoreVariables(int scoreValue, int difficultyReached, int counterValue, int kills) {
         score = scoreValue;
+        difficulty = difficultyReached;
         counter = counterValue;
+        enemiesKilled = kills;
     }
 
     public void CalculateCoins() {
-        coins += (score * 5) + (counter * 2);
+        coins += (score * difficulty) + (counter * 2) + (enemiesKilled * 2);
         SaveGameManager();
     }
 

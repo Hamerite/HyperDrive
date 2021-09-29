@@ -9,9 +9,10 @@ public class S2_HUDUI : MonoBehaviour {
 
     [SerializeField] protected Text[] textElements = null; //{ Score, Obstacles, Level, Thruster }
     [SerializeField] protected Slider[] shipAttributes = null; //{ Shields, Health, Thrusters }
-    
-    protected int score, passedCounter;
-    protected float countDown;
+
+    protected bool rapidKillRutineRunning;
+    protected int score, passedCounter, difficultyPassed, enemiesKilled, rapidKillCount;
+    protected float countDown, timer;
 
     void Awake() { Instance = this; }
 
@@ -24,8 +25,28 @@ public class S2_HUDUI : MonoBehaviour {
         for (int i = 0; i < shipAttributes.Length - 1; i++) shipAttributes[i].value = ShipStats.Instance.GetStats().GetAttributes()[i + 1];
     }
 
-    public void SetScore(int add) { 
-        score += add;
+    public void SendGameInfo() { GameManager.Instance.SetScoreVariables(score, difficultyPassed, passedCounter, enemiesKilled); }
+
+    public void StartCountdownTimer() {
+        textElements[3].gameObject.SetActive(true);
+        countDown = ShipStats.Instance.GetStats().GetAttributes()[4];
+        StartCoroutine(Countdown());
+    }
+
+    public void EnemyKilled(int value) {
+        enemiesKilled++;
+
+        if (rapidKillCount >= 5) value *= 2;
+        score += value;
+        textElements[0].text = "Score: " + score.ToString();
+
+        rapidKillCount++;
+        timer = 3;
+        if (!rapidKillRutineRunning) StartCoroutine(KillsMultiplierTimer());
+    }
+
+    public void SetScore(int value) {
+        score += value;
         textElements[0].text = "Score: " +  score.ToString();
     }
 
@@ -34,21 +55,18 @@ public class S2_HUDUI : MonoBehaviour {
         textElements[1].text = "Obstacles Passed: " + passedCounter.ToString();
     }
 
-    public int GetObstacleCounter() { return passedCounter; }
+    public void SetLevel(string level) { 
+        textElements[2].text = "Level: " + level;
+        difficultyPassed++;
 
-    public void SetLevel(string level) { textElements[2].text = "Level: " + level; }
-
-    public void SendGameInfo() { GameManager.Instance.SetScoreVariables(score, passedCounter); }
+        if(difficultyPassed > 1) score += (int)(shipAttributes[0].value + shipAttributes[1].value);
+    }
 
     public void SetAttributes(int index, int valueChange) { shipAttributes[index].value += valueChange; }
 
-    public Slider[] GetAttributes() { return shipAttributes; }
+    public int GetObstacleCounter() { return passedCounter; }
 
-    public void StartCountdownTimer() {
-        textElements[3].gameObject.SetActive(true);
-        countDown = ShipStats.Instance.GetStats().GetAttributes()[4];
-        StartCoroutine(Countdown());
-    }
+    public Slider[] GetAttributes() { return shipAttributes; }
 
     IEnumerator Countdown() {
         do {
@@ -58,5 +76,17 @@ public class S2_HUDUI : MonoBehaviour {
         } while (countDown > 0);
 
         textElements[3].gameObject.SetActive(false);
+    }
+    
+    IEnumerator KillsMultiplierTimer() {
+        rapidKillRutineRunning = true;
+
+        do {
+            timer -= Time.deltaTime;
+            yield return null;
+        } while (timer > 0);
+
+        rapidKillCount = 0;
+        rapidKillRutineRunning = false;
     }
 }

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: T2_Bombers
   m_EditorClassIdentifier: 
   maxSpeed: 11
+  pointsValue: 4
   attributes: 020000000100000002000000
