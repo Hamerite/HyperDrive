@@ -47,10 +47,7 @@ public class S2_PlayerCollisionController : MonoBehaviour {
                     ToggleWasHit();
                     Invoke(nameof(ToggleWasHit), 0.25f);
                 }
-                if (item == 10 || item == 11 || item == 12) {
-                    S2_HUDUI.Instance.SetScore(item - 9);
-                    hit.collider.gameObject.SendMessage("PointsScored");
-                }
+                if (item == 10 || item == 11 || item == 12) { S2_HUDUI.Instance.SetScore(item - 9); }
 
                 Invoke(nameof(ScoreLimiter), 0.25f);
             }

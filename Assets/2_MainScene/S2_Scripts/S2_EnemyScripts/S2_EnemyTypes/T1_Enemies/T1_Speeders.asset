@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: T1_Speeders
   m_EditorClassIdentifier: 
   maxSpeed: 9
+  pointsValue: 2
   attributes: 010000000000000001000000
