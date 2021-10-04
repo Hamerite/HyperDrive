@@ -1278,7 +1278,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2653015484256524583, guid: c955e26603953454f80fef9b06db0540,
         type: 3}
-      propertyPath: buttonsToToggle.Array.data[1]
+      propertyPath: buttonsToToggle.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2653015484256524583, guid: c955e26603953454f80fef9b06db0540,
+        type: 3}
+      propertyPath: buttonsToToggle.Array.data[2]
       value: 
       objectReference: {fileID: 1163510558}
     - target: {fileID: 2653015484388025250, guid: c955e26603953454f80fef9b06db0540,
@@ -1381,6 +1386,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5823580615858342418, guid: c955e26603953454f80fef9b06db0540,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 1163510558}
     - target: {fileID: 5937881874593604277, guid: c955e26603953454f80fef9b06db0540,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target

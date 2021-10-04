@@ -1,5 +1,5 @@
 ﻿//Created by Dylan LeClair 31/05/21
-//Last modified 31/05/21 (Dylan LeClair)
+//Last modified 29/09/21 (Dylan LeClair)
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,8 +11,9 @@ public class S2_HUDUI : MonoBehaviour {
     [SerializeField] protected Slider[] shipAttributes = null; //{ Shields, Health, Thrusters }
 
     protected bool rapidKillRutineRunning;
-    protected int score, passedCounter, difficultyPassed, enemiesKilled, rapidKillCount;
+    int[] runInfo = new int[6]; // { Score, PassedCounter, EnemiesKilled, DifficultyPassed, HighestKillCount, RapidKillCount }
     protected float countDown, timer;
+    protected string diffultyLevelName;
 
     void Awake() { Instance = this; }
 
@@ -25,7 +26,10 @@ public class S2_HUDUI : MonoBehaviour {
         for (int i = 0; i < shipAttributes.Length - 1; i++) shipAttributes[i].value = ShipStats.Instance.GetStats().GetAttributes()[i + 1];
     }
 
-    public void SendGameInfo() { GameManager.Instance.SetScoreVariables(score, difficultyPassed, passedCounter, enemiesKilled); }
+    public void SendGameInfo() { 
+        GameManager.Instance.SetScoreVariables(runInfo);
+        PlayerInfoManager.Instance.SetInfoValues(runInfo, diffultyLevelName);
+    }
 
     public void StartCountdownTimer() {
         textElements[3].gameObject.SetActive(true);
@@ -34,37 +38,38 @@ public class S2_HUDUI : MonoBehaviour {
     }
 
     public void EnemyKilled(int value) {
-        enemiesKilled++;
+        runInfo[2]++;
 
-        if (rapidKillCount >= 5) value *= 2;
-        score += value;
-        textElements[0].text = "Score: " + score.ToString();
+        if (runInfo[5] >= 5) value *= 2;
+        runInfo[0] += value;
+        textElements[0].text = "Score: " + runInfo[0].ToString();
 
-        rapidKillCount++;
+        runInfo[5]++;
         timer = 3;
         if (!rapidKillRutineRunning) StartCoroutine(KillsMultiplierTimer());
     }
 
     public void SetScore(int value) {
-        score += value;
-        textElements[0].text = "Score: " +  score.ToString();
+        runInfo[0] += value;
+        textElements[0].text = "Score: " + runInfo[0].ToString();
     }
 
-    public void SetObstacleCounter() { 
-        passedCounter++;
-        textElements[1].text = "Obstacles Passed: " + passedCounter.ToString();
+    public void SetObstacleCounter() {
+        runInfo[1]++;
+        textElements[1].text = "Obstacles Passed: " + runInfo[1].ToString();
     }
 
     public void SetLevel(string level) { 
         textElements[2].text = "Level: " + level;
-        difficultyPassed++;
+        diffultyLevelName = level;
+        runInfo[3]++;
 
-        if(difficultyPassed > 1) score += (int)(shipAttributes[0].value + shipAttributes[1].value);
+        if(runInfo[3] > 1) runInfo[0] += (int)(shipAttributes[0].value + shipAttributes[1].value);
     }
 
     public void SetAttributes(int index, int valueChange) { shipAttributes[index].value += valueChange; }
 
-    public int GetObstacleCounter() { return passedCounter; }
+    public int GetObstacleCounter() { return runInfo[1]; }
 
     public Slider[] GetAttributes() { return shipAttributes; }
 
@@ -86,7 +91,8 @@ public class S2_HUDUI : MonoBehaviour {
             yield return null;
         } while (timer > 0);
 
-        rapidKillCount = 0;
+        if (runInfo[5] > runInfo[4]) runInfo[4] = runInfo[5];
+        runInfo[5] = 0;
         rapidKillRutineRunning = false;
     }
 }
