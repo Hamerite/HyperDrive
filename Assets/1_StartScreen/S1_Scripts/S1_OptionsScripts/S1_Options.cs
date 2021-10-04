@@ -6,11 +6,16 @@ using UnityEngine.UI;
 public class S1_Options : MonoBehaviour {
     public static S1_Options Instance { get; private set; }
 
+    [SerializeField] protected GameObject settings = null;
+    [SerializeField] protected GameObject stats = null;
     [SerializeField] protected GameObject resetCheck = null;
+
     [SerializeField] protected Button selectedButton = null;
     [SerializeField] protected Button[] buttonsToToggle = null;
     [SerializeField] protected Toggle[] mutes = null; // { All, Menu }
     [SerializeField] protected Slider[] volumeSliders = null; // { Master, Music, SFX }
+
+    [SerializeField] protected Text statsToggleText = null;
 
     void Awake() { Instance = this; }
 
@@ -19,6 +24,12 @@ public class S1_Options : MonoBehaviour {
         for (int i = 0; i < 3; i++) volumeSliders[i].value = AudioManager.Instance.GetVolumes()[i];
 
         Invoke(nameof(CheckForButtonSelected), 0.001f);
+    }
+
+    void OnDisable() {
+        statsToggleText.text = "Player Stats";
+        settings.SetActive(true);
+        stats.SetActive(false);
     }
 
     void CheckForButtonSelected() { MenusManager.Instance.SetSelectedButton(null, mutes[0], false); }
@@ -30,6 +41,22 @@ public class S1_Options : MonoBehaviour {
             S1_ButtonsController.Instance.SetPanelChange();
             MenusManager.Instance.SetSelectedButton(buttonsToToggle[0], null, false);
         }
+    }
+
+    public void ToggleStats() {
+        AudioManager.Instance.PlayInteractionSound(1);
+        if (mutes[0].gameObject.activeInHierarchy) {
+            statsToggleText.text = "Settings";
+            settings.SetActive(false);
+            stats.SetActive(true);
+        }
+        else {
+            statsToggleText.text = "Player Stats";
+            settings.SetActive(true);
+            stats.SetActive(false);
+        }
+
+        MenusManager.Instance.SetSelectedButton(buttonsToToggle[1], null, false);
     }
 
     public void ResetHighScores() {
