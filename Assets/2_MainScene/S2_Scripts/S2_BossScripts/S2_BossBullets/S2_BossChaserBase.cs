@@ -5,8 +5,12 @@ using UnityEngine;
 public class S2_BossChaserBase : MonoBehaviour
 {
     [SerializeField]
+    S2_ChaserStats[] bulletStats;
     float speed;
+    float timeOnScreen;
 
+    [SerializeField]
+    GameObject[] bulletTypes; //use this to set type of bullet
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +20,12 @@ public class S2_BossChaserBase : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke(nameof(StopDisableBullet), 3);
+        Invoke(nameof(StopDisableBullet), timeOnScreen);
+        for (int i = 0; i < bulletTypes.Length; i++)
+        { bulletTypes[i].SetActive(false); }
+        SelectBullet(S2_BossManager.Instance.GetBossNum());
+        speed = bulletStats[S2_BossManager.Instance.GetBossNum()].GetSpeed();
+        timeOnScreen = bulletStats[S2_BossManager.Instance.GetBossNum()].GetTimeOnScreen();
     }
 
     // Update is called once per frame
@@ -34,6 +43,18 @@ public class S2_BossChaserBase : MonoBehaviour
     public void StopDisableBullet()
     {
         gameObject.SetActive(false);
+    }
+
+    public void SelectBullet(int i)
+    {
+        bulletTypes[i].SetActive(true);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //play whatever effects needed here
+        if(other.gameObject.layer != 9)
+            gameObject.SetActive(false);
     }
 
 }

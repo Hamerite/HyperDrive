@@ -12,11 +12,19 @@ public class S2_BossWeakPoint : MonoBehaviour
 
     [SerializeField]
     bool vulnerable;
+    [SerializeField]
+    bool weakPoint;
+
+    [SerializeField]
+    Material vulnerableMat = null;
+    [SerializeField]
+    Material nonVulnerableMat = null;
+    MeshRenderer rend;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        rend = gameObject.GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -29,12 +37,22 @@ public class S2_BossWeakPoint : MonoBehaviour
     {
         if(other.gameObject.layer == 14 && vulnerable)
         {
-            bossBody.TakeDamage(ShipStats.Instance.GetStats().GetAttributes()[0]);
+            bossBody.TakeDamage(ShipStats.Instance.GetStats().GetAttributes()[0], weakPoint, this);
         }
     }
 
     public void SetVulnerablility(bool b)
     {
         vulnerable = b;
+        if(b)
+        {
+            if (vulnerableMat != null)
+                rend.material = vulnerableMat;
+        }
+        else
+        {
+            if (nonVulnerableMat != null)
+                rend.material = nonVulnerableMat;
+        }
     }
 }

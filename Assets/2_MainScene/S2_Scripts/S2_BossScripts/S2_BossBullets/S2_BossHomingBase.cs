@@ -5,13 +5,15 @@ using UnityEngine;
 public class S2_BossHomingBase : MonoBehaviour
 {
     [SerializeField]
+    S2_LockOnStats[] bulletStats;
     float speed;
-    [SerializeField]
     float lateralSpeed;
+    float timeOnScreen;
 
-    Transform player;
     [SerializeField]
-    Transform child;
+    GameObject[] bulletTypes; //use this to set type of bullet
+
+    Transform player;   
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +23,14 @@ public class S2_BossHomingBase : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke(nameof(DisableBullet), 3);
+        Invoke(nameof(DisableBullet), timeOnScreen);
+        for (int i = 0; i < bulletTypes.Length; i++)
+        { bulletTypes[i].SetActive(false); }
+        SelectBullet(S2_BossManager.Instance.GetBossNum());
+        speed = bulletStats[S2_BossManager.Instance.GetBossNum()].GetSpeed();
+        lateralSpeed = bulletStats[S2_BossManager.Instance.GetBossNum()].GetLateralSpeed();
+        timeOnScreen = bulletStats[S2_BossManager.Instance.GetBossNum()].GetTimeOnScreen();
+
     }
 
     // Update is called once per frame
@@ -37,12 +46,24 @@ public class S2_BossHomingBase : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, lateralPos, lateralSpeed * Time.deltaTime);
         if (transform.position.z > player.position.z)
         {
-            child.transform.LookAt(player.position);
+            bulletTypes[S2_BossManager.Instance.GetBossNum()].transform.LookAt(player.position);
         }
     }
 
     public void DisableBullet()
     {
         gameObject.SetActive(false);
+    }
+
+    public void SelectBullet(int i)
+    {
+        bulletTypes[i].SetActive(true);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //play whatever effects needed here
+        if (other.gameObject.layer != 9)
+            gameObject.SetActive(false);
     }
 }

@@ -18,34 +18,33 @@ public class S2_BossBulletPooler : MonoBehaviour
     [SerializeField] protected GameObject coveragePrefab = null;
     [SerializeField] protected List<GameObject> coverageBullets = new List<GameObject>();
 
-    void Awake() 
+    void Start() 
     {       
         Instance = this; 
-        for(int i =0; i < 20; i++)
+        for(int i =0; i < 40; i++)
         {
-            GameObject chaser = Instantiate(chasePrefab);
+            GameObject chaser = Instantiate(chasePrefab, transform);
             chaser.SetActive(false);
-            chaseBullets.Add(chaser);
-            
+            chaseBullets.Add(chaser);            
         }
 
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 10; i++)
         {
-            GameObject homer = Instantiate(lockOnPrefab);
+            GameObject homer = Instantiate(lockOnPrefab, transform);
             homer.SetActive(false);
             lockOnBullets.Add(homer);
         }
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
-            GameObject disruptor = Instantiate(disruptorPrefab);
+            GameObject disruptor = Instantiate(disruptorPrefab, transform);
             disruptor.SetActive(false);
             disruptorBullets.Add(disruptor);
         }
 
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 10; i++)
         {
-            GameObject coverage = Instantiate(coveragePrefab);
+            GameObject coverage = Instantiate(coveragePrefab, transform);
             coverage.SetActive(false);
             coverageBullets.Add(coverage);
         }
@@ -97,5 +96,13 @@ public class S2_BossBulletPooler : MonoBehaviour
             }
         }
         return null;
+    }
+
+    private void OnEnable()
+    {
+        foreach(GameObject bullet in coverageBullets)
+        {
+            bullet.SetActive(false);
+        }
     }
 }

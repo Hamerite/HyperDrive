@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class S2_BossBaseClass : MonoBehaviour
 {
+    #region variables
     //boss properties
     [SerializeField]
     protected S2_BossStats stats = null;
@@ -18,10 +19,14 @@ public class S2_BossBaseClass : MonoBehaviour
 
     [SerializeField]
     public GameObject childShip;
-
+    
+    
     //for boss behaviors
-    public enum behavior { coverage, lockOn, chase, disruptor}
+    public enum behavior { enter, coverage, lockOn, chase, disruptor}
     public behavior currentbehavior;
+    public enum healthState { full, threeQuater, half, quater }
+    public healthState currentHealth;
+
     //to be used to set the behavior
     behavior[][] behaviorOrder = new behavior[4][];
     int orderNo;
@@ -32,22 +37,15 @@ public class S2_BossBaseClass : MonoBehaviour
     float timer;
 
 
-
-    //differnet types of projectiles (dont actually need this when using the pool)
-    //[SerializeField]
-    //S2_BossCoverageBase coverageObject;
-    //[SerializeField]
-    //S2_BossHomingBase homingObject;
-    //[SerializeField]
-    //S2_BossChaserBase chasingObject;
-    //[SerializeField]
-    //S2_BossDisruptorBase disruptorObject;
-
-    //
     [SerializeField]
-    S2_BossWeakPoint[] weakPoints;
+    int disruptorNumber = 5;
+    
+    
+    [SerializeField]
+    protected S2_BossWeakPoint[] weakPoints;
     [SerializeField]
     Transform launchPoint;
+    [SerializeField] Transform startLocation;
 
     GameObject player;
 
@@ -60,28 +58,36 @@ public class S2_BossBaseClass : MonoBehaviour
     Vector3[] points = new Vector3[4];
     Vector3 targetPosition;
     Coroutine followPath;
+    #endregion
 
-
-    // Start is called before the first frame update
+    #region Setup
     public virtual void Start()
     {
         player = S2_PlayerController.Instance.gameObject;
-        orderNo = 0;
-        cycleNo = 0;
-        health = stats.GetAttributes()[2];
-        shields = stats.GetAttributes()[3];
-        speed = stats.GetMaxSpeed();
+        //each boss will have set it's own behaviors using the setup behavior
         for(int i = 0; i < behaviorOrder.Length; i++)
         {
             behaviorOrder[i] = new behavior[4];
         }
-        //each boss will have set it's own behaviors using the setup behavior
+        ResetBoss(); 
+    }
+
+    public virtual void ResetBoss()
+    {
+        orderNo = 0;
+        cycleNo = 0;
+        health = stats.GetAttributes()[3];
+        shields = stats.GetAttributes()[2];
+        speed = stats.GetMaxSpeed();
         currentHealth = healthState.full;
+        transform.position = startLocation.position;
+        currentbehavior = behavior.enter;
 
         //following paths
         nextPath = 0;
         t = 0;
-        moveToNext = true;
+        moveToNext = false;
+        S2_BossManager.Instance.UpdateText(health, shields);
     }
 
     public virtual void SetUpBehaviors(int x, behavior b1, behavior b2, behavior b3, behavior b4)
@@ -94,19 +100,21 @@ public class S2_BossBaseClass : MonoBehaviour
     /* example of set up
      * setupbehavior(i, enterbehavor orders you want here);
      */
+    #endregion
 
-
-    // Update is called once per frame
+    #region behaviors
     public virtual void Update()
     {
-        Movement();
-        Flourish();
+        Movement();        
     }
 
     public virtual void Movement() //for the general screenwide pattern
     {
         switch(currentbehavior)
         {
+            case behavior.enter:
+                Entre();
+                break;
             case behavior.coverage:
                 Coverage();
                 break;
@@ -127,56 +135,52 @@ public class S2_BossBaseClass : MonoBehaviour
         }
 
         //timer to change which behavior is active
-        timer += Time.deltaTime;
-        if (timer >= maxTimePerCycle)
+        if (currentbehavior != behavior.enter)
         {
-            if (cycleNo < 3)
+            timer += Time.deltaTime;
+            if (timer >= maxTimePerCycle)
             {
-                cycleNo += 1;
-            }
-            else
-                cycleNo = 0;
+                if (cycleNo < 3)
+                {
+                    cycleNo += 1;
+                }
+                else
+                    cycleNo = 0;
 
-            currentbehavior = behaviorOrder[orderNo][cycleNo];
-            OnStateChange();
-            timer = 0;
+                currentbehavior = behaviorOrder[orderNo][cycleNo];
+                OnStateChange();
+                timer = 0;
+            }
+
+            Flourish();
         }
     }
 
     public virtual void Flourish() //for the smaller area movement, each boss will have a different action
     {
-
     }
 
+    public virtual void Entre()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, paths[0].GetChild(0).position, speed * 1.5f * Time.deltaTime);
+        if(Vector3.Distance(transform.position, paths[0].GetChild(0).position) < 0.5f)
+        {
+            currentbehavior = behaviorOrder[orderNo][cycleNo];
+            moveToNext = true;
+        }
+    }
 
-    public virtual void Coverage() //coverage behavior will have the boss follow its normal pattern
+    public virtual void Coverage() 
     {
-        //if (moveToNext)
-        //{
-        //    followPath = StartCoroutine(FollowPath(nextPath));
-        //}
-
     }
-    public virtual void LockOn() //lock on behavior will have the boss follow its normal pattern
+    public virtual void LockOn() 
     {
-        //if (moveToNext)
-        //{
-        //    followPath = StartCoroutine(FollowPath(nextPath));
-        //}
     }
-    public virtual void Chase()//chase behavior will have the boss follow the player around
-    {
-        //Vector3 playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
-        //transform.position = Vector3.MoveTowards(transform.position, playerPosition, speed * Time.deltaTime);
-    
-    
+    public virtual void Chase()
+    {       
     }
-    public virtual void Disruptor() //disruptor behavior will have the boss follow its normal pattern
-    {
-        //if (moveToNext)
-        //{
-        //    followPath = StartCoroutine(FollowPath(nextPath));
-        //}
+    public virtual void Disruptor() 
+    {        
     }
 
     //ienumerator used to follow the path
@@ -209,7 +213,6 @@ public class S2_BossBaseClass : MonoBehaviour
         moveToNext = true;
     }
 
-
     //used to go to next cycle not based on a timer
     public virtual void CycleThrough()
     {
@@ -225,7 +228,7 @@ public class S2_BossBaseClass : MonoBehaviour
         timer = 0;
     }
 
-    public void OnStateChange()
+    public virtual void OnStateChange()
     {
         StopCoroutine(followPath);
         if (currentbehavior == behavior.chase) //need an intermediate state to move towards the starting point of the path
@@ -263,36 +266,70 @@ public class S2_BossBaseClass : MonoBehaviour
         }
 
 
-        followPath = StartCoroutine(FollowPath(nextPath));
-        
+        followPath = StartCoroutine(FollowPath(nextPath));        
     }
+    #endregion
 
-    //used during chase phase
+    #region weapon fire
     public void RapidFire()
     {
         GameObject bullet = S2_BossBulletPooler.Instance.GetChaseBullet();
-        bullet.transform.position = launchPoint.position;
-        bullet.transform.LookAt(player.transform.position);
-        bullet.SetActive(true);
+        if (bullet != null)
+        {
+            bullet.transform.position = launchPoint.position;
+            bullet.transform.LookAt(player.transform.position);
+            bullet.SetActive(true);
+        }
     }
 
     public void HomingShots()
     {
         GameObject bullet = S2_BossBulletPooler.Instance.GetLockOnBullet();
-        bullet.transform.position = launchPoint.position;
-        bullet.transform.rotation = transform.rotation;
-        bullet.SetActive(true);
+        if (bullet != null)
+        {
+            bullet.transform.position = launchPoint.position;
+            bullet.transform.rotation = transform.rotation;
+            bullet.SetActive(true);
+        }
     }
 
     public void ActivateDisruptors()
     {
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < disruptorNumber; i++)
         {
             GameObject bullet = S2_BossBulletPooler.Instance.GetDisruptorBullet();
-            int x = Random.Range(-8, 9);
-            int y = Random.Range(-4, 5);
-            bullet.transform.position = new Vector3(x, y, player.transform.position.z);
-            bullet.SetActive(true);
+            if (bullet != null)
+            {
+                int x = 0;
+                int y = 0;
+                if(i == 0)
+                {
+                    x = Random.Range(-12, 1);
+                    y = Random.Range(1, 5);
+                }
+                else if(i == 1)
+                {
+                    x = Random.Range(1, 12);
+                    y = Random.Range(1, 5);
+                }
+                else if (i == 2)
+                {
+                    x = Random.Range(-12, 1);
+                    y = Random.Range(-5, -1);
+                }
+                else if (i == 3)
+                {
+                    x = Random.Range(1, 12);
+                    y = Random.Range(-5, -1);
+                }
+                else if (i == 4)
+                {
+                    x = Random.Range(-3, 3);
+                    y = Random.Range(-2, 2);
+                }
+                bullet.transform.position = new Vector3(x, y, player.transform.position.z);
+                bullet.SetActive(true);
+            }
         }
     }
 
@@ -304,18 +341,16 @@ public class S2_BossBaseClass : MonoBehaviour
             bullet.transform.position = new Vector3(0, 0, transform.position.z);
             bullet.transform.rotation = transform.rotation;
             bullet.SetActive(true);
-        }
-        
+        }        
     }
+    #endregion
 
-    public enum healthState { full, threeQuater, half, quater}
-    public healthState currentHealth;
-
-    public virtual void TakeDamage(int dmg)
+    #region damage and destroying
+    public virtual void TakeDamage(int dmg, bool weak, S2_BossWeakPoint weakPoint)
     {
         Mathf.Round(shields);
         Mathf.Round(health);
-        if(shields > 0)
+        if(!weak && shields > 0)
         {
             shields -= dmg;
             if(shields < 0)
@@ -326,34 +361,78 @@ public class S2_BossBaseClass : MonoBehaviour
         }
         else { health -= dmg; }
 
-        if (health <= 0.25f * stats.GetAttributes()[3] && currentHealth != healthState.quater)
+        if (health <= 0.25f * stats.GetAttributes()[3])
         {
-            orderNo = 3;
-            cycleNo = 0;
-            currentHealth = healthState.quater;
-            currentbehavior = behaviorOrder[orderNo][cycleNo];
-            OnStateChange();
-            timer = 0;
+            if (currentHealth != healthState.quater)
+            {
+                orderNo = 3;
+                cycleNo = 0;
+                currentHealth = healthState.quater;
+            }
+            //currentbehavior = behaviorOrder[orderNo][cycleNo];
+            //OnStateChange();
+            //timer = 0;
         }
-        else if (health <= 0.5f * stats.GetAttributes()[3] && currentHealth != healthState.half)
+        else if (health <= 0.5f * stats.GetAttributes()[3])
         {
-            orderNo = 2;
-            cycleNo = 0;
-            currentHealth = healthState.half;
-            currentbehavior = behaviorOrder[orderNo][cycleNo];
-            OnStateChange();
-            timer = 0;
+            if (currentHealth != healthState.half)
+            {
+                orderNo = 2;
+                cycleNo = 0;
+                currentHealth = healthState.half;
+            }
+            //currentbehavior = behaviorOrder[orderNo][cycleNo];
+            //OnStateChange();
+            //timer = 0;
         }
-        else if (health <= 0.75f * stats.GetAttributes()[3] && currentHealth != healthState.threeQuater)
+        else if (health <= 0.75f * stats.GetAttributes()[3])
         {
-            orderNo = 1;
-            cycleNo = 0;
-            currentHealth = healthState.threeQuater;
-            currentbehavior = behaviorOrder[orderNo][cycleNo];
-            OnStateChange();
-            timer = 0;
-        }       
+            if (currentHealth != healthState.threeQuater)
+            {
+                orderNo = 1;
+                cycleNo = 0;
+                currentHealth = healthState.threeQuater;
+            }
+            //currentbehavior = behaviorOrder[orderNo][cycleNo];
+            //OnStateChange();
+            //timer = 0;
+        } 
+
+        if(health <= 0)
+        {
+            S2_BossManager.Instance.EndBoss();
+        }
+
+        S2_BossManager.Instance.UpdateText(health, shields);
     }
 
-   
+    private void OnDisable()
+    {
+        CancelInvoke(nameof(RapidFire));
+        CancelInvoke(nameof(HomingShots));
+        CancelInvoke(nameof(CoverageShot));
+    }
+
+    public void AddScore()
+    {
+        //S2_HUDUI.Instance.EnemyKilled(stats.GetPointsValue()); commeented out until merge
+    }
+    #endregion
+
+    #region Temp Shields
+    public virtual void DestroyShield()
+    {
+
+    }
+
+    #endregion
+
+    #region Extent Orbs
+    public virtual void OrbDestroyed()
+    {
+
+    }
+
+
+    #endregion
 }

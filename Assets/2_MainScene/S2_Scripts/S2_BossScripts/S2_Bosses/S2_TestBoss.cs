@@ -19,8 +19,10 @@ public class S2_TestBoss : S2_BossBaseClass
         base.Update();
     }
 
-    [SerializeField]float xDist;
-    [SerializeField]float yDist;
+    [SerializeField]float minxDist;
+    [SerializeField]float maxxDist;
+    [SerializeField]float minyDist;
+    [SerializeField]float maxyDist;
     float x;
     float y;
     bool hasTarget;
@@ -33,8 +35,12 @@ public class S2_TestBoss : S2_BossBaseClass
         base.Flourish();
         if(!hasTarget)
         {
-            x = Random.Range(-xDist, xDist);
-            y = Random.Range(-yDist, yDist);
+            x = Random.Range(minxDist, maxxDist);
+            y = Random.Range(minyDist, maxyDist);
+            int randX = Random.Range(-1, 2);
+            x *= randX;
+            int randY = Random.Range(-1, 2);
+            y *= randY;
             //target = new Vector3(x, y, transform.position.z);
             hasTarget = true;
         }
@@ -58,5 +64,27 @@ public class S2_TestBoss : S2_BossBaseClass
         hasTarget = false;
         waiting = false;
     }
-    
+
+    public override void OnStateChange()
+    {
+        base.OnStateChange();
+        if(currentHealth == healthState.half || currentHealth == healthState.quater)
+        {
+            if (currentbehavior == behavior.disruptor)
+            {
+                foreach (S2_BossWeakPoint wp in weakPoints)
+                {
+                    wp.SetVulnerablility(false);
+                }
+            }
+            else
+            {
+                foreach (S2_BossWeakPoint wp in weakPoints)
+                {
+                    wp.SetVulnerablility(true);
+                }
+            }
+        }
+    }
+
 }

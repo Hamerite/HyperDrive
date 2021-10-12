@@ -24,6 +24,7 @@ public class S2_PoolController : MonoBehaviour {
 
     protected int RNG, arrayIndex;
     protected float speed = 75.0f, waitTime = 1.8f, benchedTime = 5.4f;
+    public int GetArrayIndex() { return arrayIndex; }
 
     protected readonly string[] obstacleDifficulty = { "Very Easy", "Easy", "Medium", "Hard", "Very Hard" };
 
@@ -77,9 +78,16 @@ public class S2_PoolController : MonoBehaviour {
     public void CheckForBehaviourChange() {
         int counterValue = S2_HUDUI.Instance.GetObstacleCounter();
 
-        if (counterValue % 90 == 0) {
+        //added this for quick testing of boss in scene, will move to %90
+        //if(counterValue % 5 ==0)
+        //{
+        //    S2_BossManager.Instance.StartBoss(0);
+        //}
+
+        if (counterValue % 5 == 0) {
             benched.Clear();
             S2_HUDUI.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
+            S2_BossManager.Instance.StartBoss(arrayIndex-1);
             arrayIndex++;
         }
         else if (counterValue % 30 == 0) speed += 5.0f;
@@ -95,4 +103,19 @@ public class S2_PoolController : MonoBehaviour {
     }
 
     public float GetSpeed() { return speed; }
+
+    private void OnDisable()
+    {
+        CancelInvoke(nameof(ChooseObstacle));
+    }
+
+    public void StopAsteroids()
+    {
+        CancelInvoke(nameof(ChooseObstacle));
+    }
+
+    public void StartUpAsteroids()
+    {
+        InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime);
+    }
 }
