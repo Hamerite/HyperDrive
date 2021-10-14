@@ -21,7 +21,7 @@ public class S2_PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        if (!ShipStats.Instance) return;
+        if (!S2_ShootingController.Instance.GetIntroFinished() || !ShipStats.Instance) return;
 
         if (S2_PlayerAnimationController.Instance.GetIsRolling()) return;
         float vertical = Input.GetAxis("Vertical") * ShipStats.Instance.GetStats().GetMaxSpeed() * Time.fixedDeltaTime;
