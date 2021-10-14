@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: T2_Minions
   m_EditorClassIdentifier: 
   maxSpeed: 12
+  pointsValue: 2
   attributes: 010000000100000002000000

@@ -1,4 +1,6 @@
-﻿[System.Serializable]
+﻿//Created by Dylan LeClair 26/05/21
+//Last modified 26/05/21 (Dylan LeClair)
+[System.Serializable]
 public class SPD {
     public bool[] wasPurchased;
     public int shipSelected;
