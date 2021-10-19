@@ -12,7 +12,7 @@ public class S2_EnemyManager : MonoBehaviour
     private int
         waveCount, waveTime,
         topUpTime, upgradeTime,
-        enemyCount, numberOfLiveEnemies,
+        enemyCount = 3, numberOfLiveEnemies,
         enemiesKilled, enemiesKilledTotal, 
         currentEnemyHealth, totalEnemyHealth,
         scaleDifficulty;
@@ -100,6 +100,7 @@ public class S2_EnemyManager : MonoBehaviour
 
         if (ShieldScoring() >= 0.75) scaleDifficulty++;
         else if (ShieldScoring() <= 25) scaleDifficulty--;
+        print("Difficulty scale = " + scaleDifficulty);
     }
 
     void SpawnWave()
@@ -107,7 +108,7 @@ public class S2_EnemyManager : MonoBehaviour
         waveComplete = false;
         if(waveCount > 0)
         {
-
+            AdaptiveGameplay();
         }
         for (int i = 0; i < enemyCount; i++)
         {
@@ -136,13 +137,15 @@ public class S2_EnemyManager : MonoBehaviour
                     break;
             }
         }
+        SpawnEnemy(scaleDifficulty);
         Invoke(nameof(TopUpEnemies), topUpTime);
         Invoke(nameof(UpgradeEnemies), upgradeTime);
         waveCount++;
     }
     void SpawnEnemy(int x)
     {
-        S2_EnemyStats newEnemy = Instantiate(enemies[x], spawnPoint[Random.Range(0, spawnPoint.Count)].position, Quaternion.identity);
+        S2_EnemyStats newEnemy = Instantiate(enemies[0], spawnPoint[Random.Range(0, spawnPoint.Count)].position, Quaternion.identity);
+        enemiesInWave.Add(newEnemy);
         newEnemy.gameObject.SetActive(true);
         newEnemy.SetTarget(ChooseNearest(newEnemy.transform.position, S2_PointsPlanesCheckIn.Instance.GetUpNext()));
         totalEnemyHealth += newEnemy.GetMaxHealth();
@@ -155,6 +158,7 @@ public class S2_EnemyManager : MonoBehaviour
         totalEnemyHealth = 0;
         CancelInvoke();
         GetPlayerShieldsAndHealth();
+        Invoke(nameof(SpawnWave), waveTime);
     }
 
      void SetNewTarget()
