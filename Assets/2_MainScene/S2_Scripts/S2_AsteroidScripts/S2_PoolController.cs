@@ -24,7 +24,10 @@ public class S2_PoolController : MonoBehaviour {
 
     protected int RNG, arrayIndex;
     protected float speed = 75.0f, waitTime = 1.8f, benchedTime = 5.4f;
-
+    public float GetWaitTime()
+    {
+        return waitTime;
+    }
     protected readonly string[] obstacleDifficulty = { "Very Easy", "Easy", "Medium", "Hard", "Very Hard" };
 
     void Awake() {
@@ -80,6 +83,7 @@ public class S2_PoolController : MonoBehaviour {
         if (counterValue % 90 == 0) {
             benched.Clear();
             S2_HUDUI.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
+            S2_EnemyManager.Instance.SetDifficulty(obstacleDifficulty[arrayIndex]);
             arrayIndex++;
         }
         else if (counterValue % 30 == 0) speed += 5.0f;

@@ -14,6 +14,10 @@ public class S2_HUDUI : MonoBehaviour {
     int[] runInfo = new int[6]; // { Score, PassedCounter, EnemiesKilled, DifficultyPassed, HighestKillCount, RapidKillCount }
     protected float countDown, timer;
     protected string diffultyLevelName;
+    public string ReturnDifficulty()
+    {
+        return diffultyLevelName;
+    }
 
     void Awake() { Instance = this; }
 
@@ -44,6 +48,14 @@ public class S2_HUDUI : MonoBehaviour {
         runInfo[0] += value;
         textElements[0].text = "Score: " + runInfo[0].ToString();
 
+        # region Calls to S2_EnemyManager
+        S2_EnemyManager.Instance.SetEnemiesLive();
+        if(S2_EnemyManager.Instance.GetEnemiesLive() <= 0)
+        {
+            S2_EnemyManager.Instance.EndWave();
+        }
+        #endregion
+
         runInfo[5]++;
         timer = 3;
         if (!rapidKillRutineRunning) StartCoroutine(KillsMultiplierTimer());
@@ -73,6 +85,7 @@ public class S2_HUDUI : MonoBehaviour {
 
     public Slider[] GetAttributes() { return shipAttributes; }
 
+    public float GetAttributesValue(int x) { return shipAttributes[x].value; }
     IEnumerator Countdown() {
         do {
             countDown -= Time.deltaTime;

@@ -5,12 +5,9 @@ using UnityEngine;
 [CreateAssetMenu]
 public class S2_EnemyBaseClass : ScriptableObject {
     [SerializeField] protected float maxSpeed;
-    [SerializeField] protected int pointsValue;
     [SerializeField] protected int[] attributes; //{ FirePower, Shields, Health }
 
     public float GetMaxSpeed() { return maxSpeed; }
-
-    public int GetPointsValue() { return pointsValue; }
 
     public int [] GetAttributes() { return attributes; }
 }
