@@ -13,14 +13,93 @@ public class S2_EnemyManager : MonoBehaviour
         waveCount, waveTime,
         topUpTime, upgradeTime,
         enemyCount = 3, numberOfLiveEnemies,
-        enemiesKilled, enemiesKilledTotal, 
+        enemiesKilled, enemiesKilledTotal,
         scaleDifficulty = 0;
+
+    public int[]
+        minion_Ve =  { 85, 75, 65 },
+        speeder_Ve = { 15, 20, 25 },
+        tank_Ve =    {  0,  4,  5 },
+        bomber_Ve =  {  0,  1,  5 },
+
+        minion_E =   { 70, 60, 40 },
+        speeder_E =  { 25, 25, 35 },
+        tank_E =     {  5, 10, 15 },
+        bomber_E =   {  0,  5, 10 };
 
     private float 
         healthCache, currentShields,
-        shieldCache, currentHealth;
+        shieldCache, currentHealth,
+        RNG;
     private bool waveComplete = false;
     private string difficulty = "Very Easy";
+
+    void EnemySpawnDifficultyAdjuster(int difficultyScale)
+    {
+        RNG = Random.Range(0, 100);
+        switch (difficulty)
+        {
+            #region Very Easy
+
+            case "Very Easy":
+                if (RNG > minion_Ve[difficultyScale])
+                {
+                    if (RNG > (minion_Ve[difficultyScale] + speeder_Ve[difficultyScale]))
+                    {
+                        if (difficultyScale >= -1 && difficultyScale <= 1)
+                        {
+                            if (RNG > minion_Ve[difficultyScale] + speeder_Ve[difficultyScale] + tank_Ve[difficultyScale])
+                            {
+                                SpawnEnemy(3);
+                            }
+                            else
+                                SpawnEnemy(2);
+                        }
+                        else
+                            EnemySpawnDifficultyAdjuster(difficultyScale);
+                    }
+                    else
+                        SpawnEnemy(1);
+                }
+                else
+                    SpawnEnemy(0);
+                break;
+            #endregion
+            case "Easy":
+                if (RNG > minion_E[difficultyScale])
+                {
+                    if (RNG > (minion_E[difficultyScale] + speeder_E[difficultyScale]))
+                    {
+
+                        if (RNG > minion_E[difficultyScale] + speeder_E[difficultyScale] + tank_E[difficultyScale])
+                        { 
+                            if (difficultyScale >= -1 && difficultyScale <= 1) { SpawnEnemy(3);}
+                            else
+                                EnemySpawnDifficultyAdjuster(difficultyScale); 
+                        }
+                        else
+                            SpawnEnemy(2);
+                    }
+                    else
+                        SpawnEnemy(1);
+                }
+                else
+                    SpawnEnemy(0);
+                break;
+            case "Medium":
+
+                break;
+            case "Hard":
+
+                break;
+            case "Very Hard":
+
+                break;
+            default:
+                break;
+        }
+    }
+
     public void RemoveFromEnemiesInWave(S2_EnemyStats x)
     {
         enemiesInWave.Remove(x);
@@ -78,7 +157,6 @@ public class S2_EnemyManager : MonoBehaviour
         enemiesKilledTotal++;
         enemiesKilled++;
         numberOfLiveEnemies--;
-        print("Enemies Left: " + numberOfLiveEnemies);
     }
 
     public int GetEnemiesLive()
@@ -144,8 +222,9 @@ public class S2_EnemyManager : MonoBehaviour
                 break;
         }
         for (int i = 0; i < enemyCount; i++)
-        {      
-            SpawnEnemy(scaleDifficulty);
+        {
+            EnemySpawnDifficultyAdjuster(scaleDifficulty);
+            //SpawnEnemy(scaleDifficulty);
         }
 
         Invoke(nameof(TopUpEnemies), topUpTime);
