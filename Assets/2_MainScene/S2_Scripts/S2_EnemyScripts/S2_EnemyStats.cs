@@ -189,8 +189,8 @@ public class S2_EnemyStats : MonoBehaviour
     public void Die()
     {
         Instantiate(deathParticles, transform.position, Quaternion.identity);
-        S2_EnemyManager.Instance.RemoveFromEnemiesInWave(this);
         S2_HUDUI.Instance.EnemyKilled(1);
+        S2_EnemyManager.Instance.RemoveFromEnemiesInWave(this);
         Destroy(this.gameObject);
     }
 

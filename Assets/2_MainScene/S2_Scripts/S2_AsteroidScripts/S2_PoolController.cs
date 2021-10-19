@@ -83,7 +83,7 @@ public class S2_PoolController : MonoBehaviour {
         if (counterValue % 90 == 0) {
             benched.Clear();
             S2_HUDUI.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
-            S2_EnemyManager.Instance.SetDifficulty(obstacleDifficulty[arrayIndex]);
+            S2_EnemyManager.Instance.SetDifficulty(obstacleDifficulty[arrayIndex-1]);
             arrayIndex++;
         }
         else if (counterValue % 30 == 0) speed += 5.0f;
@@ -95,6 +95,12 @@ public class S2_PoolController : MonoBehaviour {
             benchedTime -= 0.3f;
 
             InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime);
+        }
+        else if(counterValue % 10 == 0)
+        {
+            S2_EnemyManager.Instance.AdaptiveGameplay();
+            S2_EnemyManager.Instance.GetPlayerShieldsAndHealth();
+            S2_EnemyManager.Instance.ResetEnemyCounter();
         }
     }
 

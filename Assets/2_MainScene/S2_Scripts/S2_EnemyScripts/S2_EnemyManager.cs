@@ -14,26 +14,42 @@ public class S2_EnemyManager : MonoBehaviour
         topUpTime, upgradeTime,
         enemyCount = 3, numberOfLiveEnemies,
         enemiesKilled, enemiesKilledTotal, 
-        currentEnemyHealth, totalEnemyHealth,
-        scaleDifficulty;
+        scaleDifficulty = 0;
 
     private float 
         healthCache, currentShields,
         shieldCache, currentHealth;
     private bool waveComplete = false;
-    private string difficulty;
+    private string difficulty = "Very Easy";
     public void RemoveFromEnemiesInWave(S2_EnemyStats x)
     {
         enemiesInWave.Remove(x);
+    }
+
+
+    void Start()
+    {
+        Instance = this;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            enemies[i].gameObject.SetActive(false);
+        }
+        Invoke(nameof(SpawnWave), 10);
+        GetPlayerShieldsAndHealth();
     }
 
     void UpgradeEnemies()
     {
         if (!waveComplete)
         {
-            for (int i = 0; i < numberOfLiveEnemies; i++)
+            if (numberOfLiveEnemies >= enemyCount)
             {
-                enemiesInWave[i].Upgrade();
+                for (int i = 0; i < numberOfLiveEnemies; i++)
+                {
+                    enemiesInWave[i].Upgrade();
+                }
+                Invoke(nameof(UpgradeEnemies), upgradeTime);
+                print("Enemies upgraded");
             }
         }
     }
@@ -46,6 +62,8 @@ public class S2_EnemyManager : MonoBehaviour
             {
                 enemiesInWave[i].TopUp();
             }
+            Invoke(nameof(TopUpEnemies), topUpTime);
+            print("Enemy Health Restored");
         }
     }
 
@@ -54,21 +72,13 @@ public class S2_EnemyManager : MonoBehaviour
         difficulty = x;
     }
 
-    void Start()
-    {
-        Instance = this;
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            enemies[i].gameObject.SetActive(false);
-        }
-            Invoke(nameof(SpawnWave), 1);
-    }
   
     public void SetEnemiesLive()
     {
         enemiesKilledTotal++;
         enemiesKilled++;
         numberOfLiveEnemies--;
+        print("Enemies Left: " + numberOfLiveEnemies);
     }
 
     public int GetEnemiesLive()
@@ -76,7 +86,7 @@ public class S2_EnemyManager : MonoBehaviour
         return numberOfLiveEnemies;
     }
 
-    void GetPlayerShieldsAndHealth()
+    public void GetPlayerShieldsAndHealth()
     {
       shieldCache = S2_HUDUI.Instance.GetAttributesValue(0);
       healthCache = S2_HUDUI.Instance.GetAttributesValue(1);
@@ -93,51 +103,51 @@ public class S2_EnemyManager : MonoBehaviour
         currentShields = S2_HUDUI.Instance.GetAttributesValue(0);
         return currentShields / shieldCache;
     }
-    void AdaptiveGameplay()
+    public void AdaptiveGameplay()
     {
         if (HealthScoring() >= 0.75) scaleDifficulty++;
         else if (HealthScoring() <= 25) scaleDifficulty--;
 
         if (ShieldScoring() >= 0.75) scaleDifficulty++;
         else if (ShieldScoring() <= 25) scaleDifficulty--;
+
+        if (enemiesKilled <= 4) scaleDifficulty--;
+        else if (enemiesKilled >= 9) scaleDifficulty++;
+
+        if (scaleDifficulty >= 3) scaleDifficulty = 3;
+        else if (scaleDifficulty <= -3) scaleDifficulty = -3;
+
         print("Difficulty scale = " + scaleDifficulty);
     }
 
     void SpawnWave()
     {
         waveComplete = false;
-        if(waveCount > 0)
+        switch (difficulty)
         {
-            AdaptiveGameplay();
+            case "Very Easy":
+                enemyCount = 3; waveTime = 3; topUpTime = 5; upgradeTime = 9;
+                break;
+            case "Easy":
+                enemyCount = 3; waveTime = 2; topUpTime = 4; upgradeTime = 8;
+                break;
+            case "Medium":
+                enemyCount = 3; waveTime = 2; topUpTime = 3; upgradeTime = 7;
+                break;
+            case "Hard":
+                enemyCount = 2; waveTime = 1; topUpTime = 2; upgradeTime = 6;
+                break;
+            case "Very Hard":
+                enemyCount = 1; waveTime = 1; topUpTime = 1; upgradeTime = 5;
+                break;
+            default:
+                break;
         }
         for (int i = 0; i < enemyCount; i++)
-        {
-            switch (difficulty)
-            {
-                case "Very Easy":
-                    enemyCount = 3; waveTime = 3;topUpTime = 5;upgradeTime = 9;
-                    break;
-                case "Easy":
-                    enemyCount = 3; waveTime = 2; topUpTime = 4; upgradeTime = 8;
-
-                    break;
-                case "Medium":
-                    enemyCount = 3; waveTime = 2; topUpTime = 3; upgradeTime = 7;
-
-                    break;
-                case "Hard":
-                    enemyCount = 2; waveTime = 1; topUpTime = 2; upgradeTime = 6;
-
-                    break;
-                case "Very Hard":
-                    enemyCount = 1; waveTime = 1; topUpTime = 1; upgradeTime = 5;
-
-                    break;
-                default:
-                    break;
-            }
+        {      
+            SpawnEnemy(scaleDifficulty);
         }
-        SpawnEnemy(scaleDifficulty);
+
         Invoke(nameof(TopUpEnemies), topUpTime);
         Invoke(nameof(UpgradeEnemies), upgradeTime);
         waveCount++;
@@ -146,30 +156,37 @@ public class S2_EnemyManager : MonoBehaviour
     {
         S2_EnemyStats newEnemy = Instantiate(enemies[0], spawnPoint[Random.Range(0, spawnPoint.Count)].position, Quaternion.identity);
         enemiesInWave.Add(newEnemy);
+        numberOfLiveEnemies++;
         newEnemy.gameObject.SetActive(true);
         newEnemy.SetTarget(ChooseNearest(newEnemy.transform.position, S2_PointsPlanesCheckIn.Instance.GetUpNext()));
-        totalEnemyHealth += newEnemy.GetMaxHealth();
         Invoke(nameof(SetNewTarget), S2_PoolController.Instance.GetWaitTime());
     }
 
     public void EndWave()
     {
         waveComplete = true;
-        totalEnemyHealth = 0;
         CancelInvoke();
-        GetPlayerShieldsAndHealth();
+        print("End Of Wave " + waveCount);
         Invoke(nameof(SpawnWave), waveTime);
+    }
+
+    public void ResetEnemyCounter()
+    {
+        enemiesKilled = 0;
     }
 
      void SetNewTarget()
     {
-        for (int i = 0; i < enemyCount; i++)
+        if (enemyCount > 0)
         {
-            if (enemiesInWave[i].isActiveAndEnabled)
+            for (int i = 0; i < enemiesInWave.Count; i++)
             {
-                GameObject nextPoint = ChooseNearest(enemiesInWave[i].transform.position, S2_PointsPlanesCheckIn.Instance.GetUpNext());
-                enemiesInWave[i].SetTarget(nextPoint);
-                enemiesInWave[i].GetComponent<S2_EnemyStats>().isMoving = true;
+                if (enemiesInWave[i].isActiveAndEnabled)
+                {
+                    GameObject nextPoint = ChooseNearest(enemiesInWave[i].transform.position, S2_PointsPlanesCheckIn.Instance.GetUpNext());
+                    enemiesInWave[i].SetTarget(nextPoint);
+                    enemiesInWave[i].GetComponent<S2_EnemyStats>().isMoving = true;
+                }
             }
         }
         Invoke(nameof(SetNewTarget), S2_PoolController.Instance.GetWaitTime());
