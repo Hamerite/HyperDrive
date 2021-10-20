@@ -319,6 +319,13 @@ public class S2_EnemyManager : MonoBehaviour
         Invoke(nameof(SpawnWave), waveTime);
     }
 
+    public void CancelWave()
+    {
+        waveComplete = true;
+        CancelInvoke();
+        //this should work, if not will rework
+    }
+
     public void ResetEnemyCounter()
     {
         enemiesKilled = 0;
