@@ -93,45 +93,45 @@ public class S2_EnemyStats : MonoBehaviour
         //    switch (myClass)
         //    {
         //        case ShipClass.speeder:
-        //            //canShoot = false;
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.position = canonPosition.position;
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.rotation = Quaternion.Euler(0, 180, 0);
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].GetComponent<S2_BulletScript>().SetType(0);
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].GetComponent<S2_BulletScript>().SetShotSpeed(20);
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].gameObject.SetActive(true);
+        //            canShoot = false;
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.position = canonPosition.position;
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.rotation = Quaternion.Euler(0, 180, 0);
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].GetComponent<S2_BulletScript>().SetType(0);
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].GetComponent<S2_BulletScript>().SetShotSpeed(20);
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].gameObject.SetActive(true);
 
-        //            //shotMultiple++;
+        //            shotMultiple++;
 
-        //            //if (shotMultiple >= 3) Invoke(nameof(EndShot), 0.1f);
-        //            //else
-        //            //{
-        //            //    Invoke(nameof(Shoot), 0.1f);
-        //            //}
+        //            if (shotMultiple >= 3) Invoke(nameof(EndShot), 0.1f);
+        //            else
+        //            {
+        //                Invoke(nameof(Shoot), 0.1f);
+        //            }
         //            break;
 
         //        case ShipClass.tank:
-        //            //canShoot = false;
+        //            canShoot = false;
 
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.position = canonPosition.position;
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.rotation = Quaternion.Euler(0, 180, 0);
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].GetComponent<S2_BulletScript>().SetType(0);
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].GetComponent<S2_BulletScript>().SetShotSpeed(40);
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].gameObject.SetActive(true);
-        //            //shotMultiple++;
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.position = canonPosition.position;
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.rotation = Quaternion.Euler(0, 180, 0);
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].GetComponent<S2_BulletScript>().SetType(0);
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].GetComponent<S2_BulletScript>().SetShotSpeed(40);
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].gameObject.SetActive(true);
+        //            shotMultiple++;
 
-        //            //if (shotMultiple >= 10) Invoke(nameof(EndShot), 1f);
-        //            //else
-        //            //{
-        //            //    Invoke(nameof(Shoot), 0.05f);
-        //            //}
+        //            if (shotMultiple >= 10) Invoke(nameof(EndShot), 1f);
+        //            else
+        //            {
+        //                Invoke(nameof(Shoot), 0.05f);
+        //            }
         //            break;
 
         //        case ShipClass.bomber:
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.position = canonPosition.position;
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.rotation = Quaternion.Euler(0, 180, 0);
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].GetComponent<S2_BulletScript>().SetType(1);
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].GetComponent<S2_BulletScript>().SetShotSpeed(5);
-        //            //S2_EnemyBulletPooler.Instance.GetBullets()[0].gameObject.SetActive(true);
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.position = canonPosition.position;
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].transform.rotation = Quaternion.Euler(0, 180, 0);
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].GetComponent<S2_BulletScript>().SetType(1);
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].GetComponent<S2_BulletScript>().SetShotSpeed(5);
+        //            S2_EnemyBulletPooler.Instance.GetBullets()[0].gameObject.SetActive(true);
         //            Invoke(nameof(Shoot), 2f);
         //            break;
         //        default:
