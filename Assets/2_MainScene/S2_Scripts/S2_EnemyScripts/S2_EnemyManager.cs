@@ -16,7 +16,7 @@ public class S2_EnemyManager : MonoBehaviour
         enemiesKilled, enemiesKilledTotal,
         scaleDifficulty = 0;
 
-    public int[]
+    private int[]
         minion_Ve =  { 85, 75, 65 },
         speeder_Ve = { 15, 20, 25 },
         tank_Ve =    {  0,  4,  5 },
@@ -25,7 +25,22 @@ public class S2_EnemyManager : MonoBehaviour
         minion_E =   { 70, 60, 40 },
         speeder_E =  { 25, 25, 35 },
         tank_E =     {  5, 10, 15 },
-        bomber_E =   {  0,  5, 10 };
+        bomber_E =   {  0,  5, 10 },
+
+        minion_M =   { 40, 35, 30 },
+        speeder_M =  { 40, 35, 30 },
+        tank_M =     { 15, 20, 25 },
+        bomber_M =   {  5, 10, 15 },
+
+        minion_H =   { 20, 15, 10 },
+        speeder_H =  { 50, 45, 35 },
+        tank_H =     { 20, 25, 30 },
+        bomber_H =   { 10, 15, 25 },
+        
+        minion_VH =   { 10,  5,  5 },
+        speeder_VH =  { 35, 25, 15 },
+        tank_VH =     { 35, 40, 45 },
+        bomber_VH =   { 25, 30, 35 };
 
     private float 
         healthCache, currentShields,
@@ -44,8 +59,6 @@ public class S2_EnemyManager : MonoBehaviour
         RNG = Random.Range(0, 100);
         switch (difficulty)
         {
-            #region Very Easy
-
             case "Very Easy":
                 if (RNG > minion_Ve[choice])
                 {
@@ -54,9 +67,7 @@ public class S2_EnemyManager : MonoBehaviour
                         if (difficultyScale >= -1 && difficultyScale <= 1)
                         {
                             if (RNG > minion_Ve[choice] + speeder_Ve[choice] + tank_Ve[choice])
-                            {
                                 SpawnEnemy(3);
-                            }
                             else
                                 SpawnEnemy(2);
                         }
@@ -69,7 +80,6 @@ public class S2_EnemyManager : MonoBehaviour
                 else
                     SpawnEnemy(0);
                 break;
-            #endregion
             case "Easy":
                 if (RNG > minion_E[choice])
                 {
@@ -79,9 +89,7 @@ public class S2_EnemyManager : MonoBehaviour
                         if (RNG > minion_E[choice] + speeder_E[choice] + tank_E[choice])
                         { 
                             if (difficultyScale >= -1 && difficultyScale <= 1) 
-                            { 
                                 SpawnEnemy(3);
-                            }
                             else
                                 EnemySpawnDifficultyAdjuster(difficultyScale); 
                         }
@@ -95,13 +103,66 @@ public class S2_EnemyManager : MonoBehaviour
                     SpawnEnemy(0);
                 break;
             case "Medium":
-
+                if (RNG > minion_M[choice] + speeder_M[choice])
+                {
+                        if (RNG > minion_M[choice] + speeder_M[choice] + tank_M[choice])
+                            SpawnEnemy(3);
+                        else
+                            SpawnEnemy(2);
+                }
+                else
+                {
+                    int x = Random.Range(0, 100);
+                    if (x <= 50)
+                        SpawnEnemy(0);
+                    else
+                        SpawnEnemy(1);
+                }
                 break;
             case "Hard":
+                if (RNG > speeder_H[choice])
+                {
 
+                    if (RNG > speeder_H[choice] + minion_H[choice] + tank_H[choice])
+                        SpawnEnemy(3);
+                    else
+                    {
+                        if (difficultyScale <= -2)
+                        {
+                            int x = Random.Range(0, 100);
+                            if (x < 50) SpawnEnemy(0);
+                            else SpawnEnemy(2);
+                        }
+                        else
+                        {
+                            if (RNG > speeder_H[choice] + minion_H[choice])
+                                SpawnEnemy(2);
+                            else
+                                SpawnEnemy(0);
+                        }    
+                    }
+                }
+                else
+                    SpawnEnemy(1);
                 break;
             case "Very Hard":
+                if (RNG > minion_VH[choice])
+                {
+                    if (RNG > (minion_VH[choice] + speeder_VH[choice]))
+                    {
 
+                        if (RNG > minion_VH[choice] + speeder_VH[choice] + tank_VH[choice])
+                        {
+                                SpawnEnemy(3);
+                        }
+                        else
+                            SpawnEnemy(2);
+                    }
+                    else
+                        SpawnEnemy(1);
+                }
+                else
+                    SpawnEnemy(0);
                 break;
             default:
                 break;
