@@ -1,3 +1,5 @@
+//Created by Kyle Ennis
+//property of 9Tales Studio 2021
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,8 +48,19 @@ public class S2_EnemyManager : MonoBehaviour
         healthCache, currentShields,
         shieldCache, currentHealth,
         RNG;
+
     private bool waveComplete = false;
     private string difficulty = "Very Easy";
+    void Awake()
+    {
+        Instance = this;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            enemies[i].gameObject.SetActive(false);
+        }
+        Invoke(nameof(SpawnWave), 10);
+        GetPlayerShieldsAndHealth();
+    }
 
     void EnemySpawnDifficultyAdjuster(int difficultyScale)
     {
@@ -172,18 +185,6 @@ public class S2_EnemyManager : MonoBehaviour
     public void RemoveFromEnemiesInWave(S2_EnemyStats x)
     {
         enemiesInWave.Remove(x);
-    }
-
-
-    void Start()
-    {
-        Instance = this;
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            enemies[i].gameObject.SetActive(false);
-        }
-        Invoke(nameof(SpawnWave), 10);
-        GetPlayerShieldsAndHealth();
     }
 
     void UpgradeEnemies()
