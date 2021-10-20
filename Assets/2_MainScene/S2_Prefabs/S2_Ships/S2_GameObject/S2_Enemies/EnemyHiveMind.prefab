@@ -5196,26 +5196,6 @@ MonoBehaviour:
   - {fileID: 8882401747943121289}
   - {fileID: 8804115847699560623}
   enemiesInWave: []
-  minion_Ve: 550000004b00000041000000
-  speeder_Ve: 0f0000001400000019000000
-  tank_Ve: 000000000400000005000000
-  bomber_Ve: 000000000100000005000000
-  minion_E: 460000003c00000028000000
-  speeder_E: 190000001900000023000000
-  tank_E: 050000000a0000000f000000
-  bomber_E: 00000000050000000a000000
-  minion_M: 28000000230000001e000000
-  speeder_M: 28000000230000001e000000
-  tank_M: 0f0000001400000019000000
-  bomber_M: 050000000a0000000f000000
-  minion_H: 140000000f0000000a000000
-  speeder_H: 320000002d00000023000000
-  tank_H: 14000000190000001e000000
-  bomber_H: 0a0000000f00000014000000
-  minion_VH: 0a0000000500000005000000
-  speeder_VH: 23000000190000000f000000
-  tank_VH: 23000000280000002d000000
-  bomber_VH: 190000001e00000023000000
 --- !u!1 &4922880394534887581
 GameObject:
   m_ObjectHideFlags: 0
@@ -5263,7 +5243,6 @@ GameObject:
   - component: {fileID: 2575982866393720279}
   - component: {fileID: 2796123371785368725}
   - component: {fileID: 6647145772736816081}
-  - component: {fileID: 6889739934505522447}
   m_Layer: 15
   m_Name: Speeder
   m_TagString: Untagged
@@ -5362,21 +5341,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7228986, y: 0.9, z: 2.109295}
-  m_Center: {x: -0.7385507, y: 0.45, z: 0.054647446}
---- !u!65 &6889739934505522447
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6837612397756553538}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.75705194, y: 0.455979, z: 1.0554523}
-  m_Center: {x: 0.021474004, y: 0.6720105, z: -0.47227383}
+  m_Size: {x: 2.4759088, y: 2.4261072, z: 0.6123295}
+  m_Center: {x: 0.12349486, y: 1.9153095, z: 0.7484827}
 --- !u!1 &7524938055465991669
 GameObject:
   m_ObjectHideFlags: 0
@@ -10673,6 +10639,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f7dd2466eb0e4e4dac7a135b1b387e5, type: 3}
+--- !u!4 &234530849996112684 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7362393264443249301, guid: 5f7dd2466eb0e4e4dac7a135b1b387e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 7308569489086206393}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8882401747943121289 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2173515060369469488, guid: 5f7dd2466eb0e4e4dac7a135b1b387e5,
@@ -10685,9 +10657,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a5dc4a516b4e6940b844508b353013b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &234530849996112684 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7362393264443249301, guid: 5f7dd2466eb0e4e4dac7a135b1b387e5,
-    type: 3}
-  m_PrefabInstance: {fileID: 7308569489086206393}
-  m_PrefabAsset: {fileID: 0}
