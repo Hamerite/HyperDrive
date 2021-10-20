@@ -36,19 +36,24 @@ public class S2_EnemyManager : MonoBehaviour
 
     void EnemySpawnDifficultyAdjuster(int difficultyScale)
     {
+        int choice;
+        if (difficultyScale <= -2) choice = 0;
+        else if (difficultyScale >= 2) choice = 2;
+        else choice = 1;
+
         RNG = Random.Range(0, 100);
         switch (difficulty)
         {
             #region Very Easy
 
             case "Very Easy":
-                if (RNG > minion_Ve[difficultyScale])
+                if (RNG > minion_Ve[choice])
                 {
-                    if (RNG > (minion_Ve[difficultyScale] + speeder_Ve[difficultyScale]))
+                    if (RNG > (minion_Ve[choice] + speeder_Ve[choice]))
                     {
                         if (difficultyScale >= -1 && difficultyScale <= 1)
                         {
-                            if (RNG > minion_Ve[difficultyScale] + speeder_Ve[difficultyScale] + tank_Ve[difficultyScale])
+                            if (RNG > minion_Ve[choice] + speeder_Ve[choice] + tank_Ve[choice])
                             {
                                 SpawnEnemy(3);
                             }
@@ -66,14 +71,17 @@ public class S2_EnemyManager : MonoBehaviour
                 break;
             #endregion
             case "Easy":
-                if (RNG > minion_E[difficultyScale])
+                if (RNG > minion_E[choice])
                 {
-                    if (RNG > (minion_E[difficultyScale] + speeder_E[difficultyScale]))
+                    if (RNG > (minion_E[choice] + speeder_E[choice]))
                     {
 
-                        if (RNG > minion_E[difficultyScale] + speeder_E[difficultyScale] + tank_E[difficultyScale])
+                        if (RNG > minion_E[choice] + speeder_E[choice] + tank_E[choice])
                         { 
-                            if (difficultyScale >= -1 && difficultyScale <= 1) { SpawnEnemy(3);}
+                            if (difficultyScale >= -1 && difficultyScale <= 1) 
+                            { 
+                                SpawnEnemy(3);
+                            }
                             else
                                 EnemySpawnDifficultyAdjuster(difficultyScale); 
                         }
@@ -233,7 +241,7 @@ public class S2_EnemyManager : MonoBehaviour
     }
     void SpawnEnemy(int x)
     {
-        S2_EnemyStats newEnemy = Instantiate(enemies[0], spawnPoint[Random.Range(0, spawnPoint.Count)].position, Quaternion.identity);
+        S2_EnemyStats newEnemy = Instantiate(enemies[x], spawnPoint[Random.Range(0, spawnPoint.Count)].position, Quaternion.identity);
         enemiesInWave.Add(newEnemy);
         numberOfLiveEnemies++;
         newEnemy.gameObject.SetActive(true);
