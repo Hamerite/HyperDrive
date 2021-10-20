@@ -207,12 +207,11 @@ public class S2_EnemyManager : MonoBehaviour
     {
         if (!waveComplete)
         {
-            for (int i = 0; i < numberOfLiveEnemies; i++)
+            for (int i = numberOfLiveEnemies; i < enemyCount; i++)
             {
-                enemiesInWave[i].TopUp();
+                EnemySpawnDifficultyAdjuster(scaleDifficulty);
             }
             Invoke(nameof(TopUpEnemies), topUpTime);
-            print("Enemy Health Restored");
         }
     }
 
