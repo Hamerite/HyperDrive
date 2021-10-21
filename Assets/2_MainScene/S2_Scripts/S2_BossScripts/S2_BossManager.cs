@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class S2_BossManager : MonoBehaviour
 {
     public static S2_BossManager Instance { get; private set;}
-
-    [SerializeField]
-    GameObject spawner;
+       
     [SerializeField]
     GameObject[] bosses;
     S2_BossBaseClass activeBoss;
@@ -35,14 +33,7 @@ public class S2_BossManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(Input.GetKeyDown(KeyCode.G))
-        //{
-        //    Time.timeScale = 0;
-        //}
-        //if (Input.GetKeyDown(KeyCode.H))
-        //{
-        //    Time.timeScale = 1;
-        //}
+        
     }
 
     public void StartBoss(int i)
@@ -51,7 +42,6 @@ public class S2_BossManager : MonoBehaviour
             bossNum = i;
         else
             bossNum = bosses.Length - 1;
-        //spawner.SetActive(false);
         S2_PoolController.Instance.StopAsteroids();
         Invoke(nameof(BossWait), 0);
         bulletPooler.SetActive(true);
@@ -69,7 +59,6 @@ public class S2_BossManager : MonoBehaviour
     {
         activeBoss.AddScore();
         bossCanvas.SetActive(true);
-        //spawner.SetActive(true);
         bosses[bossNum].SetActive(false);
         S2_PoolController.Instance.StartUpAsteroids();
         bossCanvas.SetActive(false);

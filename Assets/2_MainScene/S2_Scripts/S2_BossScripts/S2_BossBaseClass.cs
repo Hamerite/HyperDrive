@@ -1,4 +1,4 @@
-//create 21/09/21 by AT
+//create 21/09/21 (Alek Tepylo)
 //handles the basic boss behaviors
 using System.Collections;
 using System.Collections.Generic;
@@ -403,6 +403,7 @@ public class S2_BossBaseClass : MonoBehaviour
             S2_BossManager.Instance.EndBoss();
         }
 
+        //updates the UI. will change this to a bar once we get assets in
         S2_BossManager.Instance.UpdateText(health, shields);
     }
 
