@@ -35,7 +35,14 @@ public class S2_BossManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //if(Input.GetKeyDown(KeyCode.G))
+        //{
+        //    Time.timeScale = 0;
+        //}
+        //if (Input.GetKeyDown(KeyCode.H))
+        //{
+        //    Time.timeScale = 1;
+        //}
     }
 
     public void StartBoss(int i)
@@ -74,5 +81,7 @@ public class S2_BossManager : MonoBehaviour
         healthText.text = health.ToString();
         shieldTest.text = shield.ToString();
     }
+
+    
 
 }

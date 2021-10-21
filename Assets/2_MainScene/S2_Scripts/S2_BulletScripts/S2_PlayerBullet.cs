@@ -9,7 +9,7 @@ public class S2_PlayerBullet : MonoBehaviour {
     protected Vector3 offset = new Vector3(0, 0, -5);
 
     void OnEnable() {
-        Plane plane = new Plane(Vector3.back, 50);
+        Plane plane = new Plane(Vector3.back, 25); //was 50 changed to 25 for more accuracy
         Ray ray = Camera.main.ScreenPointToRay(S2_ShootingController.Instance.GetCrosshairPosition());
         float distance;
 
@@ -28,8 +28,9 @@ public class S2_PlayerBullet : MonoBehaviour {
         bool hitObstacle = false;
         if (other.gameObject.layer == 9) hitObstacle = true;
         ParticleSystem newExplosion = S2_HitExplosionPooler.Instance.GetHitExplosion(hitObstacle);
-
-        newExplosion.transform.position = transform.position + offset;
+        
+        if (other.gameObject.layer == 9) newExplosion.transform.position = transform.position + offset;
+        else newExplosion.transform.position = transform.position;
         newExplosion.time = 0;
         newExplosion.Play();
         newExplosion.gameObject.SetActive(true);

@@ -79,7 +79,7 @@ public class S2_PoolController : MonoBehaviour {
         int counterValue = S2_HUDUI.Instance.GetObstacleCounter();
               
         //change to lower for boss testing
-        if (counterValue % 90 == 0) {
+        if (counterValue % 5 == 0) {
             benched.Clear();
             S2_HUDUI.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
             S2_BossManager.Instance.StartBoss(arrayIndex-1);

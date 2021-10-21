@@ -12,6 +12,10 @@ public class S2_VEBoss_Tanker : S2_BossBaseClass
         SetUpBehaviors(1, behavior.coverage, behavior.lockOn, behavior.chase, behavior.disruptor);
         SetUpBehaviors(2, behavior.coverage, behavior.lockOn, behavior.chase, behavior.disruptor);
         SetUpBehaviors(3, behavior.coverage, behavior.lockOn, behavior.chase, behavior.disruptor);
+        foreach (S2_BossWeakPoint wp in weakPoints)
+        {
+            wp.SetVulnerablility(true);
+        }
     }
 
     public override void Update()

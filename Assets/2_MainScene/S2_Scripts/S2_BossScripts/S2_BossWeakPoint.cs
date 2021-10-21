@@ -46,13 +46,19 @@ public class S2_BossWeakPoint : MonoBehaviour
         vulnerable = b;
         if(b)
         {
-            if (vulnerableMat != null)
-                rend.material = vulnerableMat;
+            if (weakPoint)
+            {
+                rend.material.SetColor("_Color", Color.white);
+                //rend.material = vulnerableMat;
+            }
         }
         else
         {
-            if (nonVulnerableMat != null)
-                rend.material = nonVulnerableMat;
+            if (weakPoint)
+            {
+                rend.material.SetColor("_Color", Color.black);
+                //rend.material = nonVulnerableMat;
+            }
         }
     }
 }
