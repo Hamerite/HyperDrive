@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: T1_Tanks
   m_EditorClassIdentifier: 
   maxSpeed: 8
-  pointsValue: 4
   attributes: 010000000100000001000000
