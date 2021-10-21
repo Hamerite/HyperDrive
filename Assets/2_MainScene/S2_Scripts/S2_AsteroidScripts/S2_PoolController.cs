@@ -1,5 +1,6 @@
 ﻿//Created by Dylan LeClair
 //Last revised 19-09-20 (Dylan LeClair)
+//Modified 10/20/21 (Kyle Ennis)
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,8 +25,6 @@ public class S2_PoolController : MonoBehaviour {
 
     protected int RNG, arrayIndex;
     protected float speed = 75.0f, waitTime = 1.8f, benchedTime = 5.4f;
-    public int GetArrayIndex() { return arrayIndex; }
-
     protected readonly string[] obstacleDifficulty = { "Very Easy", "Easy", "Medium", "Hard", "Very Hard" };
 
     void Awake() {
@@ -77,12 +76,11 @@ public class S2_PoolController : MonoBehaviour {
 
     public void CheckForBehaviourChange() {
         int counterValue = S2_HUDUI.Instance.GetObstacleCounter();
-              
-        //change to lower for boss testing
-        if (counterValue % 5 == 0) {
+
+        if (counterValue % 90 == 0) {
             benched.Clear();
             S2_HUDUI.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
-            S2_BossManager.Instance.StartBoss(arrayIndex-1);
+            S2_EnemyManager.Instance.SetDifficulty(obstacleDifficulty[arrayIndex-1]);
             arrayIndex++;
         }
         else if (counterValue % 30 == 0) speed += 5.0f;
@@ -95,22 +93,14 @@ public class S2_PoolController : MonoBehaviour {
 
             InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime);
         }
+        else if(counterValue % 10 == 0)
+        {
+            S2_EnemyManager.Instance.AdaptiveGameplay();
+            S2_EnemyManager.Instance.GetPlayerShieldsAndHealth();
+            S2_EnemyManager.Instance.ResetEnemyCounter();
+        }
     }
 
     public float GetSpeed() { return speed; }
-
-    private void OnDisable()
-    {
-        CancelInvoke(nameof(ChooseObstacle));
-    }
-
-    public void StopAsteroids()
-    {
-        CancelInvoke(nameof(ChooseObstacle));
-    }
-
-    public void StartUpAsteroids()
-    {
-        InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime);
-    }
+    public float GetWaitTime() { return waitTime; }
 }

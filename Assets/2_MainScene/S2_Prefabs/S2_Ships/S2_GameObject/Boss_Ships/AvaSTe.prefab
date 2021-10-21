@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 8736140818865578580}
   - component: {fileID: 7235471301550582295}
   m_Layer: 0
-  m_Name: AvaSTe
+  m_Name: AVaSTE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
