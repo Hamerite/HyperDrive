@@ -11,7 +11,7 @@ public class S2_Boss_TempShield : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)

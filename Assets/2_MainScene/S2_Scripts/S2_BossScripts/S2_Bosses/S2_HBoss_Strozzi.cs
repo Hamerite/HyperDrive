@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class S2_HBoss_Strozzi : S2_BossBaseClass
@@ -116,6 +115,7 @@ public class S2_HBoss_Strozzi : S2_BossBaseClass
         
     }
 
+    WaitForEndOfFrame endFrame = new WaitForEndOfFrame();
     IEnumerator FollowFlourishPath(int pathNum)
     {
         //if (moveToNextF)
@@ -136,7 +136,7 @@ public class S2_HBoss_Strozzi : S2_BossBaseClass
             targetFPosition = Mathf.Pow(1 - tF, 3) * flourishPoints[0] + 3 * Mathf.Pow(1 - tF, 2) * tF * flourishPoints[1] + 3 * (1 - tF) * Mathf.Pow(tF, 2) * flourishPoints[2] + Mathf.Pow(tF, 3) * flourishPoints[3];
 
             childShip.transform.position = targetFPosition;
-            yield return new WaitForEndOfFrame();
+            yield return endFrame;
         }
 
         tF= 0;

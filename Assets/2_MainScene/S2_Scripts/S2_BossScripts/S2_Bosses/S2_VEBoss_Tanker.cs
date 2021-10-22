@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class S2_VEBoss_Tanker : S2_BossBaseClass

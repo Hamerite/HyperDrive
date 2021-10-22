@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class S2_MBoss_AVaSTE : S2_BossBaseClass

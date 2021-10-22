@@ -47,7 +47,7 @@ public class S2_BossBaseClass : MonoBehaviour
     Transform launchPoint;
     [SerializeField] Transform startLocation;
 
-    GameObject player;
+    //GameObject player;
 
     //for boss movement patterns, using splines
     [SerializeField]
@@ -62,8 +62,7 @@ public class S2_BossBaseClass : MonoBehaviour
 
     #region Setup
     public virtual void Start()
-    {
-        player = S2_PlayerController.Instance.gameObject;
+    {        
         //each boss will have set it's own behaviors using the setup behavior
         for(int i = 0; i < behaviorOrder.Length; i++)
         {
@@ -183,6 +182,7 @@ public class S2_BossBaseClass : MonoBehaviour
     {        
     }
 
+    WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
     //ienumerator used to follow the path
     IEnumerator FollowPath(int pathNum)
     {
@@ -202,7 +202,7 @@ public class S2_BossBaseClass : MonoBehaviour
             targetPosition = Mathf.Pow(1 - t, 3) * points[0] + 3 * Mathf.Pow(1 - t, 2) * t * points[1] + 3 * (1 - t) * Mathf.Pow(t, 2) * points[2] + Mathf.Pow(t, 3) * points[3];
 
             transform.position = targetPosition;
-            yield return new WaitForEndOfFrame();
+            yield return endOfFrame;
         }
 
         t = 0;
@@ -277,7 +277,7 @@ public class S2_BossBaseClass : MonoBehaviour
         if (bullet != null)
         {
             bullet.transform.position = launchPoint.position;
-            bullet.transform.LookAt(player.transform.position);
+            bullet.transform.LookAt(S2_PlayerController.Instance.gameObject.transform.position);
             bullet.SetActive(true);
         }
     }
@@ -327,7 +327,7 @@ public class S2_BossBaseClass : MonoBehaviour
                     x = Random.Range(-3, 3);
                     y = Random.Range(-2, 2);
                 }
-                bullet.transform.position = new Vector3(x, y, player.transform.position.z);
+                bullet.transform.position = new Vector3(x, y, S2_PlayerController.Instance.gameObject.transform.position.z);
                 bullet.SetActive(true);
             }
         }
