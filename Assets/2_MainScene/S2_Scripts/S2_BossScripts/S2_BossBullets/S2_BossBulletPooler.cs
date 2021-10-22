@@ -78,7 +78,7 @@ public class S2_BossBulletPooler : MonoBehaviour
 
         GameObject chaser = Instantiate(chasePrefab, transform);
         chaser.SetActive(false);
-        chaseBullets.Add(chaser);      
+        chaseBullets.Add(chaser);
         return chaser;
     }
 
@@ -111,5 +111,13 @@ public class S2_BossBulletPooler : MonoBehaviour
         coverageBullets.Add(coverage);
         return null;
     }
-    
+
+    private void OnEnable()
+    {
+        foreach(GameObject bullet in coverageBullets)
+        {
+            bullet.SetActive(false);
+        }    
+    }
+
 }

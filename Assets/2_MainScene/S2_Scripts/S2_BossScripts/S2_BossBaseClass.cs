@@ -231,15 +231,14 @@ public class S2_BossBaseClass : MonoBehaviour
     public virtual void OnStateChange()
     {
         StopCoroutine(followPath);
-        if (currentbehavior == behavior.chase) //need an intermediate state to move towards the starting point of the path
+        if (currentbehavior == behavior.chase) 
         {
-            InvokeRepeating(nameof(RapidFire), 2, 0.15f); //each boss will have it's own rapid fire rate            
+            InvokeRepeating(nameof(RapidFire), 2, 0.15f); //each boss will have it's own rapid fire rate
         }
         else
         {
             moveToNext = true;
             CancelInvoke(nameof(RapidFire));
-            //followPath = StartCoroutine(FollowPath(nextPath));
         }
 
         if(currentbehavior == behavior.lockOn)
@@ -279,7 +278,7 @@ public class S2_BossBaseClass : MonoBehaviour
             bullet.transform.position = launchPoint.position;
             bullet.transform.LookAt(S2_PlayerController.Instance.gameObject.transform.position);
             bullet.SetActive(true);
-        }
+        }       
     }
 
     public void HomingShots()

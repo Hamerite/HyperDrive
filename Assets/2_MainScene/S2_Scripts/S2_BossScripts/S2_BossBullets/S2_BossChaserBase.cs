@@ -20,12 +20,12 @@ public class S2_BossChaserBase : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke(nameof(StopDisableBullet), timeOnScreen);
         for (int i = 0; i < bulletTypes.Length; i++)
         { bulletTypes[i].SetActive(false); }
         SelectBullet(S2_BossManager.Instance.GetBossNum());
         speed = bulletStats[S2_BossManager.Instance.GetBossNum()].GetSpeed();
         timeOnScreen = bulletStats[S2_BossManager.Instance.GetBossNum()].GetTimeOnScreen();
+        Invoke(nameof(StopDisableBullet), timeOnScreen);
     }
 
     // Update is called once per frame
@@ -54,7 +54,9 @@ public class S2_BossChaserBase : MonoBehaviour
     {
         //play whatever effects needed here
         if(other.gameObject.layer != 9)
+        {
             gameObject.SetActive(false);
+        }
     }
 
 }

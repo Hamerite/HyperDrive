@@ -32,13 +32,15 @@ public class S2_BossDisruptorBase : MonoBehaviour
         { bulletTypes[i].SetActive(false); }
         //SelectBullet(S2_BossManager.Instance.GetBossNum());
         //////////////////////////
-        ShowWarning();
-        Invoke(nameof(ActivateBullets), warningTime);
-        Invoke(nameof(DeactivateBullets), warningTime + timeOnScreen);
         
 
         timeOnScreen = bulletStats[S2_BossManager.Instance.GetBossNum()].GetTimeOnScreen();
         warningTime = bulletStats[S2_BossManager.Instance.GetBossNum()].GetWarningTime();
+
+        ShowWarning();
+        Invoke(nameof(ActivateBullets), warningTime);
+        Invoke(nameof(DeactivateBullets), warningTime + timeOnScreen);
+
     }
 
 

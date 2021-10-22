@@ -23,13 +23,13 @@ public class S2_BossHomingBase : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke(nameof(DisableBullet), timeOnScreen);
         for (int i = 0; i < bulletTypes.Length; i++)
         { bulletTypes[i].SetActive(false); }
         SelectBullet(S2_BossManager.Instance.GetBossNum());
         speed = bulletStats[S2_BossManager.Instance.GetBossNum()].GetSpeed();
         lateralSpeed = bulletStats[S2_BossManager.Instance.GetBossNum()].GetLateralSpeed();
         timeOnScreen = bulletStats[S2_BossManager.Instance.GetBossNum()].GetTimeOnScreen();
+        Invoke(nameof(DisableBullet), timeOnScreen);
 
     }
 
