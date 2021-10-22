@@ -19,12 +19,11 @@ public class S2_BossWeakPoint : MonoBehaviour
     Material vulnerableMat = null;
     [SerializeField]
     Material nonVulnerableMat = null;
-    MeshRenderer rend;
+    [SerializeField]MeshRenderer rend;
 
     // Start is called before the first frame update
     void Awake()
     {
-        rend = gameObject.GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame

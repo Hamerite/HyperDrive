@@ -1351,7 +1351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2292531959689857156
 Transform:
   m_ObjectHideFlags: 0
@@ -1491,7 +1491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2292531959771843846
 Transform:
   m_ObjectHideFlags: 0
@@ -1813,7 +1813,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2292531960150079829
 Transform:
   m_ObjectHideFlags: 0
@@ -2272,7 +2272,9 @@ MonoBehaviour:
   currentHealth: 0
   maxTimePerCycle: 5
   disruptorNumber: 5
-  weakPoints: []
+  weakPoints:
+  - {fileID: 4158176540578769293}
+  - {fileID: 4158176539661585071}
   launchPoint: {fileID: 4158176539929633416}
   startLocation: {fileID: 4158176539201087063}
   paths:
@@ -2282,7 +2284,10 @@ MonoBehaviour:
   - {fileID: 2292531958856388943}
   - {fileID: 2292531958751959494}
   - {fileID: 2292531958675352913}
-  orbs: []
+  orbs:
+  - {fileID: 2292531960150079828}
+  - {fileID: 2292531959771843845}
+  - {fileID: 2292531959689857155}
   weakPointOpenTime: 5
   blastShield: {fileID: 2292531958654548166}
   flourishPaths:
@@ -2436,6 +2441,7 @@ MonoBehaviour:
   weakPoint: 1
   vulnerableMat: {fileID: 2100000, guid: 46a2de711d04f8a44ad7babe90728766, type: 2}
   nonVulnerableMat: {fileID: 2100000, guid: 413609a208ed91543b523f01e02eceff, type: 2}
+  rend: {fileID: 4158176539661585065}
 --- !u!1 &4158176539809991076
 GameObject:
   m_ObjectHideFlags: 0
@@ -2697,6 +2703,7 @@ MonoBehaviour:
   weakPoint: 0
   vulnerableMat: {fileID: 0}
   nonVulnerableMat: {fileID: 0}
+  rend: {fileID: 4158176540578769295}
 --- !u!1 &4158176540724884842
 GameObject:
   m_ObjectHideFlags: 0

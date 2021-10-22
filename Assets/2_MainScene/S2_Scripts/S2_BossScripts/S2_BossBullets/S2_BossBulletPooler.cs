@@ -21,33 +21,33 @@ public class S2_BossBulletPooler : MonoBehaviour
     void Start() 
     {       
         Instance = this; 
-        for(int i =0; i < 40; i++)
-        {
-            GameObject chaser = Instantiate(chasePrefab, transform);
-            chaser.SetActive(false);
-            chaseBullets.Add(chaser);            
-        }
+        //for(int i =0; i < 40; i++)
+        //{
+        //    GameObject chaser = Instantiate(chasePrefab, transform);
+        //    chaser.SetActive(false);
+        //    chaseBullets.Add(chaser);            
+        //}
 
-        for(int i = 0; i < 10; i++)
-        {
-            GameObject homer = Instantiate(lockOnPrefab, transform);
-            homer.SetActive(false);
-            lockOnBullets.Add(homer);
-        }
+        //for(int i = 0; i < 10; i++)
+        //{
+        //    GameObject homer = Instantiate(lockOnPrefab, transform);
+        //    homer.SetActive(false);
+        //    lockOnBullets.Add(homer);
+        //}
 
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject disruptor = Instantiate(disruptorPrefab, transform);
-            disruptor.SetActive(false);
-            disruptorBullets.Add(disruptor);
-        }
+        //for (int i = 0; i < 10; i++)
+        //{
+        //    GameObject disruptor = Instantiate(disruptorPrefab, transform);
+        //    disruptor.SetActive(false);
+        //    disruptorBullets.Add(disruptor);
+        //}
 
-        for(int i = 0; i < 10; i++)
-        {
-            GameObject coverage = Instantiate(coveragePrefab, transform);
-            coverage.SetActive(false);
-            coverageBullets.Add(coverage);
-        }
+        //for(int i = 0; i < 10; i++)
+        //{
+        //    GameObject coverage = Instantiate(coveragePrefab, transform);
+        //    coverage.SetActive(false);
+        //    coverageBullets.Add(coverage);
+        //}
     }
 
     public GameObject GetLockOnBullet()
@@ -59,7 +59,11 @@ public class S2_BossBulletPooler : MonoBehaviour
                 return lockOnBullets[i];
             }
         }
-        return null;
+
+        GameObject homer = Instantiate(lockOnPrefab, transform);
+        homer.SetActive(false);
+        lockOnBullets.Add(homer);
+        return homer;
     }
 
     public GameObject GetChaseBullet()
@@ -71,7 +75,11 @@ public class S2_BossBulletPooler : MonoBehaviour
                 return chaseBullets[i];
             }
         }
-        return null;
+
+        GameObject chaser = Instantiate(chasePrefab, transform);
+        chaser.SetActive(false);
+        chaseBullets.Add(chaser);      
+        return chaser;
     }
 
     public GameObject GetDisruptorBullet()
@@ -83,7 +91,10 @@ public class S2_BossBulletPooler : MonoBehaviour
                 return disruptorBullets[i];
             }
         }
-        return null;
+        GameObject disruptor = Instantiate(disruptorPrefab, transform);
+        disruptor.SetActive(false);
+        disruptorBullets.Add(disruptor);
+        return disruptor;
     }
 
     public GameObject GetCoverageBullet()
@@ -95,6 +106,9 @@ public class S2_BossBulletPooler : MonoBehaviour
                 return coverageBullets[i];
             }
         }
+        GameObject coverage = Instantiate(coveragePrefab, transform);
+        coverage.SetActive(false);
+        coverageBullets.Add(coverage);
         return null;
     }
 

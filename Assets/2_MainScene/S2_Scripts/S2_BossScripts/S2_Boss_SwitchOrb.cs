@@ -10,7 +10,7 @@ public class S2_Boss_SwitchOrb : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     private void OnEnable()

@@ -480,6 +480,7 @@ MonoBehaviour:
   weakPoint: 0
   vulnerableMat: {fileID: 0}
   nonVulnerableMat: {fileID: 0}
+  rend: {fileID: 85145419636233732}
 --- !u!1 &85145419671589995
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,6 +1341,7 @@ MonoBehaviour:
   weakPoint: 1
   vulnerableMat: {fileID: 2100000, guid: 46a2de711d04f8a44ad7babe90728766, type: 2}
   nonVulnerableMat: {fileID: 2100000, guid: 413609a208ed91543b523f01e02eceff, type: 2}
+  rend: {fileID: 1953254990715062711}
 --- !u!1 &1953254990736733224
 GameObject:
   m_ObjectHideFlags: 0
@@ -1454,6 +1456,7 @@ MonoBehaviour:
   weakPoint: 1
   vulnerableMat: {fileID: 2100000, guid: 46a2de711d04f8a44ad7babe90728766, type: 2}
   nonVulnerableMat: {fileID: 2100000, guid: 413609a208ed91543b523f01e02eceff, type: 2}
+  rend: {fileID: 1953254990736733220}
 --- !u!1 &1953254990769191065
 GameObject:
   m_ObjectHideFlags: 0
@@ -2266,6 +2269,7 @@ MonoBehaviour:
   weakPoint: 1
   vulnerableMat: {fileID: 2100000, guid: 46a2de711d04f8a44ad7babe90728766, type: 2}
   nonVulnerableMat: {fileID: 2100000, guid: 413609a208ed91543b523f01e02eceff, type: 2}
+  rend: {fileID: 1953254991685145355}
 --- !u!1 &1953254991709196112
 GameObject:
   m_ObjectHideFlags: 0
@@ -3192,6 +3196,7 @@ MonoBehaviour:
   weakPoint: 1
   vulnerableMat: {fileID: 2100000, guid: 46a2de711d04f8a44ad7babe90728766, type: 2}
   nonVulnerableMat: {fileID: 2100000, guid: 413609a208ed91543b523f01e02eceff, type: 2}
+  rend: {fileID: 2831081283174368985}
 --- !u!1 &2831081283196496322
 GameObject:
   m_ObjectHideFlags: 0

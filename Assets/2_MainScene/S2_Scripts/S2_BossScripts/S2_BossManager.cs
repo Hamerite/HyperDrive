@@ -9,6 +9,7 @@ public class S2_BossManager : MonoBehaviour
        
     [SerializeField]
     GameObject[] bosses;
+    [SerializeField] S2_BossBaseClass[] bossClasses;
     S2_BossBaseClass activeBoss;
     [SerializeField] int bossNum;
     public int GetBossNum(){ return bossNum; }
@@ -50,7 +51,7 @@ public class S2_BossManager : MonoBehaviour
     public void BossWait()
     {
         bosses[bossNum].SetActive(true);
-        activeBoss = bosses[bossNum].GetComponentInChildren<S2_BossBaseClass>();
+        activeBoss = bossClasses[bossNum];//.GetComponentInChildren<S2_BossBaseClass>();
         activeBoss.ResetBoss();
         bossCanvas.SetActive(true);
     }
