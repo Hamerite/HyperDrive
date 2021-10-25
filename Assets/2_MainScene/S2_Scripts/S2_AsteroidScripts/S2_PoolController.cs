@@ -19,6 +19,8 @@ using UnityEngine;
 public class S2_PoolController : MonoBehaviour {
     public static S2_PoolController Instance { get; private set; }
 
+    [SerializeField] private ParticleSystem[] particles;
+
     [SerializeField] protected AsteroidLevels[] asteroidLevels = null;
     protected readonly List<int> benched = new List<int>();
 
@@ -78,7 +80,7 @@ public class S2_PoolController : MonoBehaviour {
     public void CheckForBehaviourChange() {
         int counterValue = S2_HUDUI.Instance.GetObstacleCounter();
 
-        if (counterValue % 90 == 0) {
+        if (counterValue % 5 == 0) {
             benched.Clear();
             S2_HUDUI.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
             S2_EnemyManager.Instance.SetDifficulty(obstacleDifficulty[arrayIndex-1]);
@@ -106,10 +108,18 @@ public class S2_PoolController : MonoBehaviour {
     public void StopAsteroids()
     {
         CancelInvoke(nameof(ChooseObstacle));
+        for(int i = 0; i < particles.Length; i++)
+        {
+            particles[i].Stop();
+        }
     }
     public void StartUpAsteroids()
     {
         InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime);
+        for (int i = 0; i < particles.Length; i++)
+        {
+            particles[i].Play();
+        }
     }
 
     public float GetSpeed() { return speed; }

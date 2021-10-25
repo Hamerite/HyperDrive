@@ -49,7 +49,7 @@ public class S2_BossBaseClass : MonoBehaviour
 
     //GameObject player;
 
-    //for boss movement patterns, using splines
+    //for boss movement patterns (paths), using splines
     [SerializeField]
     Transform[] paths; //multiple spline paths required to make a pattern
     private int nextPath;
@@ -82,11 +82,11 @@ public class S2_BossBaseClass : MonoBehaviour
         transform.position = startLocation.position;
         currentbehavior = behavior.enter;
 
+        S2_BossManager.Instance.UpdateText(health, shields);
         //following paths
         nextPath = 0;
         t = 0;
         moveToNext = false;
-        S2_BossManager.Instance.UpdateText(health, shields);
     }
 
     public virtual void SetUpBehaviors(int x, behavior b1, behavior b2, behavior b3, behavior b4)
