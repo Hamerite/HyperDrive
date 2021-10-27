@@ -7,9 +7,10 @@ public class S2_ShootingController : MonoBehaviour {
 
     [SerializeField] protected AudioSource audioSource = null;
     [SerializeField] protected Texture2D crosshairs = null;
+    [SerializeField] private LayerMask mask;
 
     protected Vector2 cursorPosition, crosshairPosition;
-    protected Vector3 mousePos;
+    protected Vector3 mousePos, targetPos;
 
     protected bool canShoot = true, usingGamepad = true, wasUsingMouse, introFinished;
 
@@ -73,6 +74,23 @@ public class S2_ShootingController : MonoBehaviour {
         GUI.DrawTexture(new Rect(cursorPosition.x - 10, Screen.height - cursorPosition.y - 10, 20, 20), crosshairs);
 
         crosshairPosition = new Vector3(cursorPosition.x, cursorPosition.y, 0);
+
+        //Vector3 worldPos = Camera.main.ViewportToWorldPoint(new Vector3(crosshairPosition.x, crosshairPosition.y, 30));
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(crosshairPosition.x, crosshairPosition.y, 75));
+
+        RaycastHit hit;
+        Vector3 screenPos = Camera.main.ScreenToWorldPoint(crosshairPosition);
+        bool castHit = Physics.Raycast(screenPos, (worldPos - screenPos).normalized, out hit, 75, mask);
+
+        //Debug.DrawLine(screenPos, worldPos, Color.cyan, 5);
+
+        if (castHit)
+        {
+            targetPos = hit.point;
+        }
+        else
+            targetPos = worldPos;
+
     }
 
     void ToggleIntroFinished() { introFinished = true; }
@@ -83,6 +101,11 @@ public class S2_ShootingController : MonoBehaviour {
     }
 
     public Vector3 GetCrosshairPosition() { return crosshairPosition; }
+    public Vector3 GetTargetPos() 
+    {
+        print(targetPos);    
+        return targetPos; 
+    }
 
     public bool GetIntroFinished() { return introFinished; }
 }

@@ -16,7 +16,7 @@ public class S2_PlayerBullet : MonoBehaviour {
         if (plane.Raycast(ray, out distance)) worldPosition = ray.GetPoint(distance);
 
         rigidbody.velocity = Vector3.zero;
-        transform.LookAt(worldPosition);
+        transform.LookAt(S2_ShootingController.Instance.GetTargetPos());
         Invoke(nameof(TimedOut), 7);
     }
 
