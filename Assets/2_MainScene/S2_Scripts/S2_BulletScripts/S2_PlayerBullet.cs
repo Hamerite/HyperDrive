@@ -9,11 +9,11 @@ public class S2_PlayerBullet : MonoBehaviour {
     protected Vector3 offset = new Vector3(0, 0, -5);
 
     void OnEnable() {
-        Plane plane = new Plane(Vector3.back, 25);
-        Ray ray = Camera.main.ScreenPointToRay(S2_ShootingController.Instance.GetCrosshairPosition());
-        float distance;
+        //Plane plane = new Plane(Vector3.back, 25);
+        //Ray ray = Camera.main.ScreenPointToRay(S2_ShootingController.Instance.GetCrosshairPosition());
+        //float distance;
 
-        if (plane.Raycast(ray, out distance)) worldPosition = ray.GetPoint(distance);
+        //if (plane.Raycast(ray, out distance)) worldPosition = ray.GetPoint(distance);
 
         rigidbody.velocity = Vector3.zero;
         transform.LookAt(S2_ShootingController.Instance.GetTargetPos());

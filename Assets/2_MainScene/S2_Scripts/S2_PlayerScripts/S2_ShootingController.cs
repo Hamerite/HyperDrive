@@ -75,8 +75,7 @@ public class S2_ShootingController : MonoBehaviour {
 
         crosshairPosition = new Vector3(cursorPosition.x, cursorPosition.y, 0);
 
-        //Vector3 worldPos = Camera.main.ViewportToWorldPoint(new Vector3(crosshairPosition.x, crosshairPosition.y, 30));
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(crosshairPosition.x, crosshairPosition.y, 85));
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(crosshairPosition.x, crosshairPosition.y, 75));
 
         RaycastHit hit;
         Vector3 screenPos = Camera.main.ScreenToWorldPoint(crosshairPosition);
@@ -101,11 +100,6 @@ public class S2_ShootingController : MonoBehaviour {
     }
 
     public Vector3 GetCrosshairPosition() { return crosshairPosition; }
-    public Vector3 GetTargetPos() 
-    {
-        //print(targetPos);    
-        return targetPos; 
-    }
-
+    public Vector3 GetTargetPos(){ return targetPos; }
     public bool GetIntroFinished() { return introFinished; }
 }
