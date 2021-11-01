@@ -2534,7 +2534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4158176540065038549}
   m_Layer: 0
-  m_Name: S2_HBoss_Container
+  m_Name: S2_Strozzi_Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

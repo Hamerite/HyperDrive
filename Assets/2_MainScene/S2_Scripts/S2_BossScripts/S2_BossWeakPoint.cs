@@ -24,13 +24,7 @@ public class S2_BossWeakPoint : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    }   
 
     private void OnTriggerEnter(Collider other)
     {

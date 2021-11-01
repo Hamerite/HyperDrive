@@ -300,7 +300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 71035373715621784}
   m_Layer: 0
-  m_Name: S2_MBoss_Container
+  m_Name: S2_AVaSTE_Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

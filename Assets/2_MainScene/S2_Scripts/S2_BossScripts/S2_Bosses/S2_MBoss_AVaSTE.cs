@@ -69,9 +69,9 @@ public class S2_MBoss_AVaSTE : S2_BossBaseClass
             weakPoints[1].SetVulnerablility(false);
             weakPoints[2].SetVulnerablility(true);
             weakPoints[3].SetVulnerablility(true);
-            if(leftDmg > 7)
+            if(leftDmg > 8)
                 weakPoints[2].SetVulnerablility(false);
-            if(rightDmg > 7)
+            if(rightDmg > 8)
                 weakPoints[3].SetVulnerablility(false);
         }
         else if(currentHealth == healthState.half)
@@ -118,7 +118,7 @@ public class S2_MBoss_AVaSTE : S2_BossBaseClass
             if (weakPoint == weakPoints[2] && weak)
             {
                 leftDmg++;
-                if (leftDmg > 7)
+                if (leftDmg > 8)
                 {
                     weakPoints[2].SetVulnerablility(false);
                 }
@@ -126,7 +126,7 @@ public class S2_MBoss_AVaSTE : S2_BossBaseClass
             if (weakPoint == weakPoints[3] && weak)
             {
                 rightDmg++;
-                if (rightDmg > 7)
+                if (rightDmg > 8)
                 {
                     weakPoints[3].SetVulnerablility(false);
                 }

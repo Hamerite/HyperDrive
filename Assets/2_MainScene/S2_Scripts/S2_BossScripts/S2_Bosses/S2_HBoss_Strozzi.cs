@@ -110,9 +110,7 @@ public class S2_HBoss_Strozzi : S2_BossBaseClass
         if(moveToNextF)
         {
             followFPath = StartCoroutine(FollowFlourishPath(nextFPath));
-        }
-
-        
+        }        
     }
 
     WaitForEndOfFrame endFrame = new WaitForEndOfFrame();
@@ -159,22 +157,14 @@ public class S2_HBoss_Strozzi : S2_BossBaseClass
         if(currentHealth == healthState.full && currentbehavior == behavior.disruptor && index >= 5)
         {
             weakPoints[1].SetVulnerablility(true);
-        }
-      
-    }
-
-
-
-   
+        }      
+    }   
 
     public override void TakeDamage(int dmg, bool weak, S2_BossWeakPoint weakPoint)
     {
         base.TakeDamage(dmg, weak, weakPoint);
         
     }
-
-    
-
 
     public override void ResetBoss()
     {

@@ -303,23 +303,23 @@ public class S2_BossBaseClass : MonoBehaviour
                 int y = 0;
                 if(i == 0)
                 {
-                    x = Random.Range(-12, 1);
-                    y = Random.Range(1, 5);
+                    x = Random.Range(-15, -3);
+                    y = Random.Range(2, 7);
                 }
                 else if(i == 1)
                 {
-                    x = Random.Range(1, 12);
-                    y = Random.Range(1, 5);
+                    x = Random.Range(3, 15);
+                    y = Random.Range(2, 7);
                 }
                 else if (i == 2)
                 {
-                    x = Random.Range(-12, 1);
-                    y = Random.Range(-5, -1);
+                    x = Random.Range(-15, -3);
+                    y = Random.Range(-7, -2);
                 }
                 else if (i == 3)
                 {
-                    x = Random.Range(1, 12);
-                    y = Random.Range(-5, -1);
+                    x = Random.Range(3, 15);
+                    y = Random.Range(-7, -2);
                 }
                 else if (i == 4)
                 {
@@ -415,7 +415,7 @@ public class S2_BossBaseClass : MonoBehaviour
 
     public void AddScore()
     {
-        //S2_HUDUI.Instance.EnemyKilled(stats.GetPointsValue()); commeented out until merge
+        S2_HUDUI.Instance.EnemyKilled(Mathf.RoundToInt(stats.GetPointValue()));// commeented out until merge
     }
     #endregion
 

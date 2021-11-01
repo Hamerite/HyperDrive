@@ -862,7 +862,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5641755012535212034}
   m_Layer: 0
-  m_Name: S2_EBoss_Container
+  m_Name: S2_Agnes_Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
