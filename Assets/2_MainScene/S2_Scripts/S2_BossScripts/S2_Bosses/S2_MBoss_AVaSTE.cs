@@ -113,60 +113,65 @@ public class S2_MBoss_AVaSTE : S2_BossBaseClass
     public override void TakeDamage(int dmg, bool weak, S2_BossWeakPoint weakPoint)
     {
         base.TakeDamage(dmg, weak, weakPoint);
-        if (currentHealth == healthState.threeQuater)
+        if (!weak)
+            return;
+        else
         {
-            if (weakPoint == weakPoints[2] && weak)
+            if (currentHealth == healthState.threeQuater)
             {
-                leftDmg++;
-                if (leftDmg > 8)
+                if (weakPoint == weakPoints[2])
                 {
-                    weakPoints[2].SetVulnerablility(false);
+                    leftDmg++;
+                    if (leftDmg > 8)
+                    {
+                        weakPoints[2].SetVulnerablility(false);
+                    }
+                }
+                if (weakPoint == weakPoints[3])
+                {
+                    rightDmg++;
+                    if (rightDmg > 8)
+                    {
+                        weakPoints[3].SetVulnerablility(false);
+                    }
                 }
             }
-            if (weakPoint == weakPoints[3] && weak)
+            else if (currentHealth == healthState.half)
             {
-                rightDmg++;
-                if (rightDmg > 8)
+                if (weakPoint == weakPoints[1])
                 {
-                    weakPoints[3].SetVulnerablility(false);
+                    eyeDmg++;
+                    if (eyeDmg >= maxEyeDmg)
+                    {
+                        eyeVulnerable = false;
+                        weakPoints[1].SetVulnerablility(false);
+                        Invoke(nameof(EyeSwitch), 5);
+                    }
                 }
             }
-        }
-        else if (currentHealth == healthState.half)
-        {
-            if (weakPoint == weakPoints[1] && weak)
+            else if (currentHealth == healthState.quater)
             {
-                eyeDmg++;
-                if (eyeDmg >= maxEyeDmg)
+                if (weakPoint == weakPoints[2])
                 {
-                    eyeVulnerable = false;
-                    weakPoints[1].SetVulnerablility(false);
-                    Invoke(nameof(EyeSwitch), 5);
+                    ltDmg++;
+                    if (ltDmg >= 3)
+                    {
+                        weakPoints[2].SetVulnerablility(false);
+                        weakPoints[3].SetVulnerablility(true);
+                        ltDmg = 0;
+                        rtDmg = 0;
+                    }
                 }
-            }
-        }
-        else if (currentHealth == healthState.quater)
-        {
-            if (weakPoint == weakPoints[2] && weak)
-            {
-                ltDmg++;
-                if(ltDmg >= 3)
+                else if (weakPoint == weakPoints[3])
                 {
-                    weakPoints[2].SetVulnerablility(false);
-                    weakPoints[3].SetVulnerablility(true);
-                    ltDmg = 0;
-                    rtDmg = 0;
-                }
-            }
-            else if(weakPoint == weakPoints[3] && weak)
-            {
-                rtDmg++;
-                if (rtDmg >= 3)
-                {
-                    weakPoints[2].SetVulnerablility(true);
-                    weakPoints[3].SetVulnerablility(false);
-                    rtDmg = 0;
-                    ltDmg = 0;
+                    rtDmg++;
+                    if (rtDmg >= 3)
+                    {
+                        weakPoints[2].SetVulnerablility(true);
+                        weakPoints[3].SetVulnerablility(false);
+                        rtDmg = 0;
+                        ltDmg = 0;
+                    }
                 }
             }
         }

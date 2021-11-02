@@ -415,7 +415,7 @@ public class S2_BossBaseClass : MonoBehaviour
 
     public void AddScore()
     {
-        S2_HUDUI.Instance.EnemyKilled(Mathf.RoundToInt(stats.GetPointValue()));// commeented out until merge
+        S2_HUDUI.Instance.EnemyKilled(stats.GetPointValue());
     }
     #endregion
 
