@@ -41,14 +41,14 @@ public class S2_BossCoverageBase : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Movement();
     }
 
     void Movement()
     {
-        transform.position += transform.forward * speed * Time.deltaTime;
+        transform.position += transform.forward * speed * Time.fixedDeltaTime;
     }
 
     void Deactivate()
@@ -57,8 +57,6 @@ public class S2_BossCoverageBase : MonoBehaviour
             gameObject.SetActive(false);
     }
 
-
-    //chave this for coverage
     public void SelectBullet(int i)
     {
         for (int j = 0; j < waves.Length; j++ )

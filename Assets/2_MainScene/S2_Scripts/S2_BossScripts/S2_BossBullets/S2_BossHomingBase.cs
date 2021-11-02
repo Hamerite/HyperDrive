@@ -34,16 +34,16 @@ public class S2_BossHomingBase : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Movement();
     }
 
     public void Movement()
     {
-        transform.position += transform.forward * speed * Time.deltaTime;
+        transform.position += transform.forward * speed * Time.fixedDeltaTime;
         Vector3 lateralPos = new Vector3(player.position.x, player.position.y, transform.position.z);
-        transform.position = Vector3.MoveTowards(transform.position, lateralPos, lateralSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, lateralPos, lateralSpeed * Time.fixedDeltaTime);
         if (transform.position.z > player.position.z)
         {
             bulletTypes[S2_BossManager.Instance.GetBossNum()].transform.LookAt(player.position);
