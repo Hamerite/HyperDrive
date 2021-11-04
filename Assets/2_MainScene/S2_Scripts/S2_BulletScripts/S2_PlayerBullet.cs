@@ -52,6 +52,7 @@ public class S2_PlayerBullet : MonoBehaviour {
         newExplosion.time = 0;
         newExplosion.Play();
         newExplosion.gameObject.SetActive(true);
+        newExplosion.transform.parent = other.transform;
 
         gameObject.SetActive(false);
     }

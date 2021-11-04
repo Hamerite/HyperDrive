@@ -17,10 +17,15 @@ public class HitExplosionCleanup : MonoBehaviour {
 
     void Update() { 
         if (!hitObstacle) return; 
-        transform.Translate(Vector3.back * S2_PoolController.Instance.GetSpeed() * Time.deltaTime); 
+        //transform.Translate(Vector3.back * S2_PoolController.Instance.GetSpeed() * Time.deltaTime); 
     }
 
-    void OnParticleSystemStopped() { gameObject.SetActive(false); }
+    void OnParticleSystemStopped() 
+    {
+        //print("stop particles");
+        transform.parent = null;
+        gameObject.SetActive(false); 
+    }
 
     public void ToggleHitObstacle() { hitObstacle = !hitObstacle; }
 }

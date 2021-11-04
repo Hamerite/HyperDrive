@@ -18,7 +18,7 @@ public class S2_HitExplosionPooler : MonoBehaviour {
             }
 
 
-        ParticleSystem effect = Instantiate(explosionPrefab);
+        ParticleSystem effect = Instantiate(explosionPrefab, transform);
         effect.gameObject.SetActive(false);
         explosions.Add(effect);
         return effect;
