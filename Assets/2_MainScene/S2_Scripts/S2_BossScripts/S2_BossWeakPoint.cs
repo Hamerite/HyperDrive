@@ -19,18 +19,7 @@ public class S2_BossWeakPoint : MonoBehaviour
     Material vulnerableMat = null;
     [SerializeField]
     Material nonVulnerableMat = null;
-    [SerializeField]MeshRenderer rend;
-
-    // Start is called before the first frame update
-    void Awake()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]MeshRenderer rend;   
 
     private void OnTriggerEnter(Collider other)
     {

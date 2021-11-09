@@ -4,25 +4,39 @@ using UnityEngine;
 
 public class S2_PlayerBullet : MonoBehaviour {
     [SerializeField] protected new Rigidbody rigidbody = null;
+    [SerializeField] private LayerMask mask;
 
     protected Vector3 worldPosition;
     protected Vector3 offset = new Vector3(0, 0, -5);
 
     void OnEnable() {
-        Plane plane = new Plane(Vector3.back, 25);
-        Ray ray = Camera.main.ScreenPointToRay(S2_ShootingController.Instance.GetCrosshairPosition());
-        float distance;
+      
+        Vector3 screenPos = S2_ShootingController.Instance.GetScreenPos();
+        Vector3 worldPos = S2_ShootingController.Instance.GetWorldPos();
 
-        if (plane.Raycast(ray, out distance)) worldPosition = ray.GetPoint(distance);
+        RaycastHit hit;
+        Vector3 checkStart = (worldPos - screenPos).normalized;
+        bool castHit = Physics.Raycast(screenPos + (checkStart * 15), checkStart, out hit, 35, mask); 
+        
+        //Debug.DrawLine(screenPos + (checkStart * 15), worldPos, Color.cyan, 5);
+        //Debug.DrawLine(screenPos, worldPos, Color.red, 5);
+
+        Vector3 targetPos;
+        if (castHit)
+        {
+            targetPos = hit.point;
+        }
+        else
+            targetPos = worldPos;
 
         rigidbody.velocity = Vector3.zero;
-        transform.LookAt(worldPosition);
-        Invoke(nameof(TimedOut), 7);
+        transform.LookAt(targetPos);
+        Invoke(nameof(TimedOut), 8);
     }
 
     void FixedUpdate() { rigidbody.position += (transform.forward) * (100 * Time.deltaTime); }
 
-    void TimedOut() { gameObject.SetActive(false); }
+    void TimedOut() { CancelInvoke(nameof(TimedOut)); gameObject.SetActive(false); }
 
     void OnTriggerEnter(Collider other) {
         bool hitObstacle = false;
@@ -38,6 +52,7 @@ public class S2_PlayerBullet : MonoBehaviour {
         newExplosion.time = 0;
         newExplosion.Play();
         newExplosion.gameObject.SetActive(true);
+        newExplosion.transform.parent = other.transform.parent;
 
         gameObject.SetActive(false);
     }

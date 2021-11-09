@@ -66,7 +66,7 @@ public class S2_BossManager : MonoBehaviour
         bulletPooler.SetActive(false);
     }
 
-    public void UpdateText(float health, float shield)
+    public void UpdateText(float health, float shield) //update this to healbars once assets come in
     {
         healthText.text = health.ToString();
         shieldTest.text = shield.ToString();

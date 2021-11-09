@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 4480217780719380798}
+  mask:
+    serializedVersion: 2
+    m_Bits: 33280
 --- !u!54 &4480217780719380798
 Rigidbody:
   m_ObjectHideFlags: 0
