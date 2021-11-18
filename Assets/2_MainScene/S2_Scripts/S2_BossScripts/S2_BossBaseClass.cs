@@ -12,17 +12,20 @@ public class S2_BossBaseClass : MonoBehaviour
     protected S2_BossStats stats = null;
     [SerializeField]
     float health;
+    public float GetHealth() { return health; }
+    public float GetMaxHealth() { return stats.GetAttributes()[3]; }
     [SerializeField]
     float shields;
+    public float GetShields() { return shields; }
+    public float GetMaxShields() { return stats.GetAttributes()[2]; }
     [SerializeField]
     float speed;
 
     [SerializeField]
     public GameObject childShip;
-    
-    
+
     //for boss behaviors
-    public enum behavior { enter, coverage, lockOn, chase, disruptor}
+    public enum behavior { enter, coverage, lockOn, chase, disruptor, exiting }
     public behavior currentbehavior;
     public enum healthState { full, threeQuater, half, quater }
     public healthState currentHealth;
@@ -36,16 +39,24 @@ public class S2_BossBaseClass : MonoBehaviour
     float maxTimePerCycle;
     float timer;
 
-
     [SerializeField]
     int disruptorNumber = 5;
-    
-    
+
     [SerializeField]
     protected S2_BossWeakPoint[] weakPoints;
     [SerializeField]
     Transform launchPoint;
     [SerializeField] Transform startLocation;
+
+    //for boss animations
+    [SerializeField] private GameObject[] destroyables;
+    GameObject destroyablePiece;
+    int destroyCount = 0;
+    [SerializeField] ParticleSystem destroyParticles;
+    [SerializeField] GameObject shieldEffect;
+    [SerializeField] ParticleSystem[] deathParticles;
+    private int explosionCount;
+    private Vector3 endPosition;
 
     //GameObject player;
 
@@ -79,14 +90,32 @@ public class S2_BossBaseClass : MonoBehaviour
         shields = stats.GetAttributes()[2];
         speed = stats.GetMaxSpeed();
         currentHealth = healthState.full;
-        transform.position = startLocation.position;
+        childShip.transform.position = startLocation.position;
         currentbehavior = behavior.enter;
+        Invoke(nameof(SetWeakPoints), 0.1f);
+        for(int i=0; i<destroyables.Length; i++)
+        {
+            destroyables[i].SetActive(true);
+        }
+        explosionCount = 0;
+        for(int i = 0; i < deathParticles.Length; i++)
+        {
+            deathParticles[i].gameObject.SetActive(false);
+        }
 
-        S2_BossManager.Instance.UpdateText(health, shields);
+        //S2_BossManager.Instance.UpdateText(health, shields);
         //following paths
         nextPath = 0;
         t = 0;
         moveToNext = false;
+    }
+
+    public void SetWeakPoints()
+    {
+        for (int i = 0; i < weakPoints.Length; i++)
+        {
+            weakPoints[i].SetVulnerablility(false);
+        }
     }
 
     public virtual void SetUpBehaviors(int x, behavior b1, behavior b2, behavior b3, behavior b4)
@@ -126,6 +155,9 @@ public class S2_BossBaseClass : MonoBehaviour
             case behavior.disruptor:
                 Disruptor();
                 break;
+            case behavior.exiting:
+                Exiting();
+                break;
         }
 
         if (moveToNext)
@@ -134,7 +166,7 @@ public class S2_BossBaseClass : MonoBehaviour
         }
 
         //timer to change which behavior is active
-        if (currentbehavior != behavior.enter)
+        if (currentbehavior != behavior.enter && currentbehavior != behavior.exiting)
         {
             timer += Time.deltaTime;
             if (timer >= maxTimePerCycle)
@@ -161,12 +193,17 @@ public class S2_BossBaseClass : MonoBehaviour
 
     public virtual void Entre()
     {
-        transform.position = Vector3.MoveTowards(transform.position, paths[0].GetChild(0).position, speed * 1.5f * Time.deltaTime);
-        if(Vector3.Distance(transform.position, paths[0].GetChild(0).position) < 0.5f)
+        childShip.transform.position = Vector3.MoveTowards(childShip.transform.position, paths[0].GetChild(0).position, speed * 1.5f * Time.deltaTime);
+        if(Vector3.Distance(childShip.transform.position, paths[0].GetChild(0).position) < 0.5f)
         {
             currentbehavior = behaviorOrder[orderNo][cycleNo];
             moveToNext = true;
+            SetWeaknesses();
         }
+    }
+
+    public virtual void SetWeaknesses()
+    {
     }
 
     public virtual void Coverage() 
@@ -181,6 +218,11 @@ public class S2_BossBaseClass : MonoBehaviour
     public virtual void Disruptor() 
     {        
     }
+
+    public virtual void Exiting()
+    {        
+        childShip.transform.position = Vector3.MoveTowards(childShip.transform.position, endPosition, speed * 1.5f * Time.deltaTime);
+    }    
 
     WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
     //ienumerator used to follow the path
@@ -201,7 +243,7 @@ public class S2_BossBaseClass : MonoBehaviour
             //bezier curve
             targetPosition = Mathf.Pow(1 - t, 3) * points[0] + 3 * Mathf.Pow(1 - t, 2) * t * points[1] + 3 * (1 - t) * Mathf.Pow(t, 2) * points[2] + Mathf.Pow(t, 3) * points[3];
 
-            transform.position = targetPosition;
+            childShip.transform.position = targetPosition;
             yield return endOfFrame;
         }
 
@@ -263,7 +305,6 @@ public class S2_BossBaseClass : MonoBehaviour
         {
             CancelInvoke(nameof(CoverageShot));
         }
-
 
         followPath = StartCoroutine(FollowPath(nextPath));        
     }
@@ -357,8 +398,9 @@ public class S2_BossBaseClass : MonoBehaviour
                 health -= Mathf.Abs(shields);
                 shields = 0;
             }
+            ShowSheildieldDamage();
         }
-        else { health -= dmg; }
+        else { health -= dmg; ShowHealthDamage(); }        
 
         if (health <= 0.25f * stats.GetAttributes()[3])
         {
@@ -366,6 +408,7 @@ public class S2_BossBaseClass : MonoBehaviour
             {
                 orderNo = 3;
                 cycleNo = 0;
+                RemovePieces();
                 currentHealth = healthState.quater;
             }
             //currentbehavior = behaviorOrder[orderNo][cycleNo];
@@ -378,6 +421,7 @@ public class S2_BossBaseClass : MonoBehaviour
             {
                 orderNo = 2;
                 cycleNo = 0;
+                RemovePieces();
                 currentHealth = healthState.half;
             }
             //currentbehavior = behaviorOrder[orderNo][cycleNo];
@@ -390,6 +434,7 @@ public class S2_BossBaseClass : MonoBehaviour
             {
                 orderNo = 1;
                 cycleNo = 0;
+                RemovePieces();
                 currentHealth = healthState.threeQuater;
             }
             //currentbehavior = behaviorOrder[orderNo][cycleNo];
@@ -399,11 +444,95 @@ public class S2_BossBaseClass : MonoBehaviour
 
         if(health <= 0)
         {
-            S2_BossManager.Instance.EndBoss();
+            DestroyBoss();
         }
 
-        //updates the UI. will change this to a bar once we get assets in
-        S2_BossManager.Instance.UpdateText(health, shields);
+        //updates the UI
+        S2_BossManager.Instance.UpdateHealthBars(health, shields);
+    }
+
+    public virtual void DestroyBoss()
+    {
+        moveToNext = false;
+        StopCoroutine(followPath);
+        currentbehavior = behavior.exiting;
+        endPosition = new Vector3(childShip.transform.position.x - 5, childShip.transform.position.y - 15, childShip.transform.position.z);
+        for(int i = 0; i < weakPoints.Length; i++)
+        {
+            weakPoints[i].SetVulnerablility(false);
+        }
+        Invoke(nameof(EndBoss), 3);
+        Invoke(nameof(BossExplosion), 0.5f);
+    }
+
+    public virtual void EndBoss()
+    {
+        S2_BossManager.Instance.EndBoss();
+    }
+
+    public virtual void BossExplosion()
+    {
+        if(explosionCount >= deathParticles.Length) { return; }
+
+        deathParticles[explosionCount].gameObject.SetActive(true);
+        int randX = Random.Range(-5, 5);
+        int randY = Random.Range(-5, 5);
+        int randZ = Random.Range(-5, 5);
+        deathParticles[explosionCount].transform.position = new Vector3(childShip.transform.position.x + randX, childShip.transform.position.y + randY, childShip.transform.position.z + randZ);
+        
+        explosionCount++;
+        Invoke(nameof(BossExplosion), 0.5f);
+    }
+
+    public void ShowHealthDamage()
+    {
+        if(weakPoints[0].GetMesh().material.color != weakPoints[0].GetColor()) { return; }
+
+        for(int i = 0; i<weakPoints.Length; i++)
+        {
+            weakPoints[i].GetMesh().material.color = Color.red;
+        }
+        Invoke(nameof(ResetColours), 0.2f);
+    }
+
+    public void ShowSheildieldDamage()
+    {
+        if (weakPoints[0].GetMesh().material.color != weakPoints[0].GetColor()) { return; }
+
+        shieldEffect.SetActive(true);
+        for (int i = 0; i < weakPoints.Length; i++)
+        {
+            weakPoints[i].GetMesh().material.color = Color.blue;
+        }
+        Invoke(nameof(ResetColours), 0.2f);
+    }
+
+    public void ResetColours()
+    {
+        for (int i = 0; i < weakPoints.Length; i++)
+        {           
+            weakPoints[i].GetMesh().material.color = weakPoints[i].GetColor();
+            shieldEffect.SetActive(false);
+        }
+    }   
+
+    public void RemovePieces()
+    {
+        if (destroyables[destroyCount])
+        {
+            destroyablePiece = destroyables[destroyCount];
+            //play fx/anims here
+            destroyParticles.gameObject.SetActive(true);
+            destroyParticles.transform.position = destroyablePiece.transform.position;
+            Invoke(nameof(DestroyPiece), 1f);
+            destroyCount++;
+        }
+    }
+
+    public void DestroyPiece()
+    {
+        destroyablePiece.SetActive(false);
+        destroyParticles.gameObject.SetActive(false);
     }
 
     private void OnDisable()
