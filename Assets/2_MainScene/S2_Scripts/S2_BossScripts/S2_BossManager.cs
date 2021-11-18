@@ -146,31 +146,23 @@ public class S2_BossManager : MonoBehaviour
         shieldBar.gameObject.SetActive(false);
         warningObject.SetActive(true);
         warningText.SetActive(true);
-        StartCoroutine(WarningFlash());
+        flashCounter = 0;
+        InvokeRepeating(nameof(Flash), 0, 0.5f);
     }
 
-    WaitForSeconds waitTime = new WaitForSeconds(0.5f);
-    IEnumerator WarningFlash()
+    int flashCounter;
+
+    public void Flash()
     {
-        yield return waitTime;
-        warningObject.SetActive(false);
-        warningText.SetActive(false);
-        yield return waitTime;
-        warningObject.SetActive(true);
-        warningText.SetActive(true);
-        yield return waitTime;
-        warningObject.SetActive(false);
-        warningText.SetActive(false);
-        yield return waitTime;
-        warningObject.SetActive(true);
-        warningText.SetActive(true);
-        yield return waitTime;
-        warningObject.SetActive(false);
-        warningText.SetActive(false);
-        yield return waitTime;
-        warningObject.SetActive(true);
-        warningText.SetActive(true);
-    }
-    
+        if (flashCounter >= 7)
+        {
+            CancelInvoke(nameof(Flash));
+            return;
+        }
+
+        flashCounter++;
+        warningObject.SetActive(!warningObject.activeSelf);
+        warningText.SetActive(!warningText.activeSelf);
+    }  
 
 }
