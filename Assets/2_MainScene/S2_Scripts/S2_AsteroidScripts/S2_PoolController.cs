@@ -19,12 +19,14 @@ using UnityEngine;
 public class S2_PoolController : MonoBehaviour {
     public static S2_PoolController Instance { get; private set; }
 
+    [SerializeField] private ParticleSystem[] particles;
+
     [SerializeField] protected AsteroidLevels[] asteroidLevels = null;
     protected readonly List<int> benched = new List<int>();
 
     protected GameObject startObstalce;
 
-    protected int RNG, arrayIndex;
+    protected int RNG, arrayIndex, bossIndex;
     protected float speed = 75.0f, waitTime = 1.8f, benchedTime = 5.4f;
     protected readonly string[] obstacleDifficulty = { "Very Easy", "Easy", "Medium", "Hard", "Very Hard" };
 
@@ -82,7 +84,9 @@ public class S2_PoolController : MonoBehaviour {
             benched.Clear();
             S2_HUDUI.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
             S2_EnemyManager.Instance.SetDifficulty(obstacleDifficulty[arrayIndex-1]);
-            S2_BossManager.Instance.StartBoss(arrayIndex - 1);
+            //S2_BossManager.Instance.StartBoss(arrayIndex - 1);
+            bossIndex = arrayIndex - 1;
+            StopAsteroids(true);
             arrayIndex++;
         }
         else if (counterValue % 30 == 0) speed += 5.0f;
@@ -103,13 +107,42 @@ public class S2_PoolController : MonoBehaviour {
         }
     }
 
-    public void StopAsteroids()
+    public void StopAsteroids(bool bossWave)
     {
         CancelInvoke(nameof(ChooseObstacle));
+        for(int i = 0; i < particles.Length; i++)
+        {
+            particles[i].Stop();
+        }
+        //player warning sfx/sounds as the ship exits warp
+        if (bossWave)
+        {
+            Invoke(nameof(ShowBossWarning), 1.5f);
+            Invoke(nameof(SpawnBoss), 5);
+        }
     }
+
+    public void SpawnBoss()
+    {
+        S2_BossManager.Instance.StartBoss(bossIndex);
+    }
+
+    public void ShowBossWarning()
+    {
+        S2_BossManager.Instance.DisplayWarning();
+    }
+
+    public void StartParicles()
+    {
+        for (int i = 0; i < particles.Length; i++)
+        {
+            particles[i].Play();
+        }
+    }
+
     public void StartUpAsteroids()
     {
-        InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime);
+        InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime);        
     }
 
     public float GetSpeed() { return speed; }

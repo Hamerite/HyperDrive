@@ -43,7 +43,7 @@ public class S2_PlayerBullet : MonoBehaviour {
         if (other.gameObject.layer == 9) hitObstacle = true;
         ParticleSystem newExplosion = S2_HitExplosionPooler.Instance.GetHitExplosion(hitObstacle);
 
-        if(other.gameObject.layer == 9)
+        if (other.gameObject.layer == 9)
             newExplosion.transform.position = transform.position + offset;
         else
             newExplosion.transform.position = transform.position;
@@ -52,7 +52,10 @@ public class S2_PlayerBullet : MonoBehaviour {
         newExplosion.time = 0;
         newExplosion.Play();
         newExplosion.gameObject.SetActive(true);
-        newExplosion.transform.parent = other.transform.parent;
+        if(other.gameObject.layer == 9)
+            newExplosion.transform.parent = other.transform.parent;
+        else
+            newExplosion.transform.parent = null;
 
         gameObject.SetActive(false);
     }

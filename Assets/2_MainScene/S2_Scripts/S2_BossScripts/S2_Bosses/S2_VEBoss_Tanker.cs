@@ -9,11 +9,7 @@ public class S2_VEBoss_Tanker : S2_BossBaseClass
         SetUpBehaviors(0, behavior.coverage, behavior.lockOn, behavior.chase, behavior.disruptor);
         SetUpBehaviors(1, behavior.coverage, behavior.lockOn, behavior.chase, behavior.disruptor);
         SetUpBehaviors(2, behavior.coverage, behavior.lockOn, behavior.chase, behavior.disruptor);
-        SetUpBehaviors(3, behavior.coverage, behavior.lockOn, behavior.chase, behavior.disruptor);
-        foreach (S2_BossWeakPoint wp in weakPoints)
-        {
-            wp.SetVulnerablility(true);
-        }
+        SetUpBehaviors(3, behavior.coverage, behavior.lockOn, behavior.chase, behavior.disruptor);        
     }
 
     public override void Update()
@@ -65,6 +61,15 @@ public class S2_VEBoss_Tanker : S2_BossBaseClass
     {
         hasTarget = false;
         waiting = false;
+    }
+
+    public override void SetWeaknesses()
+    {
+        base.SetWeaknesses();
+        for(int i =0; i < weakPoints.Length; i++)
+        {
+            weakPoints[i].SetVulnerablility(true);
+        }
     }
 
     public override void OnStateChange()
