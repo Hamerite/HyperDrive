@@ -50,10 +50,10 @@ public class S2_HUDUI : MonoBehaviour {
         textElements[0].text = "Score: " + runInfo[0].ToString();
 
         # region Calls to S2_EnemyManager
-        S2_EnemyManager.Instance.SetEnemiesLive();
-        if(S2_EnemyManager.Instance.GetEnemiesLive() <= 0)
+        S2_EnemySpawnManager.Instance.SetEnemiesLive();
+        if(S2_EnemySpawnManager.Instance.GetEnemiesLive() <= 0)
         {
-            S2_EnemyManager.Instance.EndWave();
+            S2_EnemySpawnManager.Instance.EndWave();
         }
         #endregion
 

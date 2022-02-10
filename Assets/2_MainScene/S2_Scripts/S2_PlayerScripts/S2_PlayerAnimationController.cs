@@ -39,6 +39,10 @@ public class S2_PlayerAnimationController : MonoBehaviour {
         thrust++;
         S2_HUDUI.Instance.SetAttributes(2, 1);
     }
+    public void ResetZRotation()
+    {
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+    }
 
     public bool GetIsRolling() { return isRolling; }
 

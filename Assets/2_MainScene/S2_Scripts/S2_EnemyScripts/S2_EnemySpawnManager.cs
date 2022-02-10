@@ -4,19 +4,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class S2_EnemyManager : MonoBehaviour
+public class S2_EnemySpawnManager : MonoBehaviour
 {
-    public static S2_EnemyManager Instance { private set; get; }
+    public static S2_EnemySpawnManager Instance { private set; get; }
     [SerializeField] protected List<Transform> spawnPoint = new List<Transform>();
-    [SerializeField] protected List<S2_EnemyStats> enemies = new List<S2_EnemyStats>();
-    protected List<S2_EnemyStats> enemiesInWave = new List<S2_EnemyStats>();
+    [SerializeField] protected List<S2_EnemyBaseClass> enemies = new List<S2_EnemyBaseClass>();
+    protected List<S2_EnemyBaseClass> enemiesInWave = new List<S2_EnemyBaseClass>();
    
     private bool waveComplete = false;
     
     private int
         waveCount, waveTime,
         topUpTime, upgradeTime,
-        enemyCount, numberOfLiveEnemies,
+        enemyCount = 3, numberOfLiveEnemies,
         enemiesKilled, enemiesKilledTotal,
         scaleDifficulty;
 
@@ -55,13 +55,12 @@ public class S2_EnemyManager : MonoBehaviour
     public void ResetEnemyCounter() { enemiesKilled = 0; }
     public void SetEnemiesLive() { enemiesKilledTotal++; enemiesKilled++; numberOfLiveEnemies--; }
     public int GetEnemiesLive() { return numberOfLiveEnemies; }
-    public void RemoveFromEnemiesInWave(S2_EnemyStats x) { enemiesInWave.Remove(x); }
+    public void RemoveFromEnemiesInWave(S2_EnemyBaseClass x) { enemiesInWave.Remove(x); }
 
     void Awake()
     {
         Instance = this;
         for (int i = 0; i < enemies.Count; i++) { enemies[i].gameObject.SetActive(false); }
-        Invoke(nameof(SpawnWave), 10);
         GetPlayerShieldsAndHealth();
     }
     public void GetPlayerShieldsAndHealth()
@@ -240,9 +239,10 @@ public class S2_EnemyManager : MonoBehaviour
             Invoke(nameof(TopUpEnemies), topUpTime);
         }
     }
-    void SpawnWave()
+    public void SpawnWave()
     {
         waveComplete = false;
+        S2_PoolController.Instance.StopAsteroids(false);
         for (int i = 0; i < enemyCount; i++) { EnemySpawnDifficultyAdjuster(scaleDifficulty); }
         Invoke(nameof(TopUpEnemies), topUpTime);
         Invoke(nameof(UpgradeEnemies), upgradeTime);
@@ -250,60 +250,26 @@ public class S2_EnemyManager : MonoBehaviour
     }
     void SpawnEnemy(int x)
     {
-        S2_EnemyStats newEnemy = Instantiate(enemies[x], spawnPoint[Random.Range(0, spawnPoint.Count)].position, Quaternion.identity);
+        S2_EnemyBaseClass newEnemy = Instantiate(enemies[x], spawnPoint[Random.Range(0, spawnPoint.Count)].position, Quaternion.identity);
         newEnemy.gameObject.SetActive(true);
         enemiesInWave.Add(newEnemy);
         numberOfLiveEnemies++;
-
-        //newEnemy.SetTarget(ChooseNearest(newEnemy.transform.position, S2_PointsPlanesCheckIn.Instance.GetUpNext()));
-        //Invoke(nameof(SetNewTarget), S2_PoolController.Instance.GetWaitTime());
     }
 
     public void EndWave()
     {
         waveComplete = true;
         CancelInvoke();
-        print("End Of Wave " + waveCount);
-        Invoke(nameof(SpawnWave), waveTime);
+        
+        if (waveCount % 3 == 0) CancelWave();
+        else
+            Invoke(nameof(SpawnWave), waveTime);
     }
 
     public void CancelWave()
     {
         waveComplete = true;
+        S2_PoolController.Instance.StartUpAsteroids();
         CancelInvoke();
     }
-    // void SetNewTarget()
-    //{
-    //    if (enemyCount > 0)
-    //    {
-    //        for (int i = 0; i < enemiesInWave.Count; i++)
-    //        {
-    //            if (enemiesInWave[i].isActiveAndEnabled)
-    //            {
-    //                GameObject nextPoint = ChooseNearest(enemiesInWave[i].transform.position, S2_PointsPlanesCheckIn.Instance.GetUpNext());
-    //                enemiesInWave[i].SetTarget(nextPoint);
-    //                enemiesInWave[i].GetComponent<S2_EnemyStats>().isMoving = true;
-    //            }
-    //        }
-    //    }
-    //    Invoke(nameof(SetNewTarget), S2_PoolController.Instance.GetWaitTime());
-    //}
-
-    //public GameObject ChooseNearest(Vector3 location, List<GameObject> destinations)
-    //{
-    //    float nearestSqrMag = float.PositiveInfinity;
-    //    GameObject nearestVector3 = null;
-
-    //    foreach (GameObject item in destinations)
-    //    {
-    //        float sqrMag = (item.transform.position - location).sqrMagnitude;
-
-    //        if (sqrMag < nearestSqrMag)
-    //        {
-    //            nearestSqrMag = sqrMag;
-    //            nearestVector3 = item;
-    //        }
-    //    }
-    //    return nearestVector3;
-    //}
 }

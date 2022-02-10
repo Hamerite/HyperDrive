@@ -80,17 +80,24 @@ public class S2_PoolController : MonoBehaviour {
     public void CheckForBehaviourChange() {
         int counterValue = S2_HUDUI.Instance.GetObstacleCounter();
 
-        if (counterValue % 90 == 0) {
+        if (counterValue % 90 == 0)
+        {
             benched.Clear();
             S2_HUDUI.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
-            S2_EnemyManager.Instance.SetDifficulty(obstacleDifficulty[arrayIndex-1]);
-            //S2_BossManager.Instance.StartBoss(arrayIndex - 1);
+          //  S2_BossManager.Instance.StartBoss(arrayIndex - 1);
+
             bossIndex = arrayIndex - 1;
             StopAsteroids(true);
+            S2_EnemySpawnManager.Instance.SetDifficulty(obstacleDifficulty[arrayIndex - 1]);
             arrayIndex++;
         }
-        else if (counterValue % 30 == 0) speed += 5.0f;
-        else if (counterValue % 15 == 0) {
+        else if (counterValue % 5 == 0)
+        {
+            S2_EnemySpawnManager.Instance.SpawnWave();
+            speed += 5.0f;
+        }
+        else if (counterValue % 15 == 0)
+        {
             CancelInvoke(nameof(ChooseObstacle));
             CancelInvoke(nameof(BringBackBenched));
 
@@ -99,11 +106,11 @@ public class S2_PoolController : MonoBehaviour {
 
             InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime);
         }
-        else if(counterValue % 10 == 0)
+        else if (counterValue % 10 == 0)
         {
-            S2_EnemyManager.Instance.AdaptiveGameplay();
-            S2_EnemyManager.Instance.GetPlayerShieldsAndHealth();
-            S2_EnemyManager.Instance.ResetEnemyCounter();
+            S2_EnemySpawnManager.Instance.AdaptiveGameplay();
+            S2_EnemySpawnManager.Instance.GetPlayerShieldsAndHealth();
+            S2_EnemySpawnManager.Instance.ResetEnemyCounter();
         }
     }
 

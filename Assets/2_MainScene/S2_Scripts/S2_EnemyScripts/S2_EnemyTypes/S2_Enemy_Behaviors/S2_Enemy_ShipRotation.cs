@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class S2_Enemy_ShipRotation : MonoBehaviour
 {
-    [SerializeField] S2_EnemyStats parentShip = null;
+    [SerializeField] S2_EnemyBaseClass parentShip = null;
     float angleY = 0;
     // Update is called once per frame
     void Update()
