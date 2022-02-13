@@ -15,9 +15,7 @@ public class Music_ButtonController : MonoBehaviour {
 
     void Start() {
         MenusManager.Instance.SetSelectedButton(songPlayButtons[index], null, false);
-
         verticalPos = 1.0f;
-        foreach (Button item in songPlayButtons) item.onClick.AddListener(() => PlayTrack(System.Array.IndexOf(songPlayButtons, item)));
     }
 
     void Update(){
@@ -52,9 +50,7 @@ public class Music_ButtonController : MonoBehaviour {
         musicPlayer.PlaySong(index);
     }
 
-    public void ButtonSelected() {
-        AudioManager.Instance.PlayInteractionSound(0);
-    }
+    public void ButtonSelected() { AudioManager.Instance.PlayInteractionSound(0); }
 
     public void MainMenuButton() {
         AudioManager.Instance.PlayInteractionSound(1);
