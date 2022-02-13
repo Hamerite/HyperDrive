@@ -11,14 +11,12 @@ public class IntroController : MonoBehaviour {
         Application.targetFrameRate = 60;
     }
 
-    void Start() { 
-        LogoFadeIn();
+    void Start() {
+        canvasGroup.LeanAlpha(1.0f, 7.0f).setOnComplete(() => GameManager.Instance.TraverseScenes("StartScreen"));
         Invoke(nameof(StartAudio), 0.5f);
     }
 
     void Update() { if (Input.anyKeyDown) GameManager.Instance.TraverseScenes("StartScreen"); }
-
-    void LogoFadeIn() { canvasGroup.LeanAlpha(1.0f, 7.0f).setOnComplete(() => GameManager.Instance.TraverseScenes("StartScreen")); }
 
     void StartAudio() { AudioManager.Instance.GetAudioSources()[2].PlayOneShot(introAudio); }
 }

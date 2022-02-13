@@ -302,17 +302,17 @@ PrefabInstance:
     - target: {fileID: 436674177227452191, guid: 34ee5c4e3375f2749ba3dc6dd6031d2f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 704.408
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 436674177227452191, guid: 34ee5c4e3375f2749ba3dc6dd6031d2f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 236.58328
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 436674177227452191, guid: 34ee5c4e3375f2749ba3dc6dd6031d2f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 74.50873
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 436674177227452191, guid: 34ee5c4e3375f2749ba3dc6dd6031d2f,
         type: 3}
@@ -414,7 +414,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -491,7 +491,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: b6f1aa55ace19684a9779892b53475e3, type: 3}
+  m_Texture: {fileID: 2800000, guid: d6a75c243dd1f7a4488601154baaa53d, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0

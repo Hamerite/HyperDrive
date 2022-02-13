@@ -17,10 +17,6 @@ public class S2_BossWeakPoint : MonoBehaviour
     public bool GetWeakPoint() { return weakPoint; }
     [SerializeField] GameObject weakPoint_PS;
 
-    [SerializeField]
-    Material vulnerableMat = null;
-    [SerializeField]
-    Material nonVulnerableMat = null;
     [SerializeField] MeshRenderer rend;
     public MeshRenderer GetMesh() { return rend; }
     private Color normalColor;
