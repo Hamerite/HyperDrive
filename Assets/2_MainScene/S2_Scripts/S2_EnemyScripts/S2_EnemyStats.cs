@@ -28,10 +28,10 @@ public class S2_EnemyStats : MonoBehaviour
     }
 
     public LayerMask enemyLayer;
-    bool spawned = false, canShoot = true, hasCharged = false;
+    bool canShoot = true;
     public bool isMoving = false;
-    float shotTime = 1.0f, zPos = 10, checkRadius = 2.5f;
-    int shotMultiple = 0, life = 1, maxLife = 1;
+    float shotTime = 1.0f;
+    int life = 1, maxLife = 1;
     public void TopUp()
     {
         life = maxLife;
@@ -171,8 +171,6 @@ public class S2_EnemyStats : MonoBehaviour
 
     void EndShot()
     {
-        shotMultiple = 0;
-        hasCharged = false;
         canShoot = true;
         return;
     }
