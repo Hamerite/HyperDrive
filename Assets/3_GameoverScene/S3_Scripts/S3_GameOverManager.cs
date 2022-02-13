@@ -10,9 +10,11 @@ public class S3_GameOverManager : MonoBehaviour {
     [SerializeField] protected TextMeshProUGUI[] textElements = null; //{ Score, NewHighScore, HighScore }
     [SerializeField] protected TextMeshProUGUI coinsGain = null;
 
-    protected int highScore, score, coins;
+    protected int score, coins;
     protected float preAddedCoins, addedCoins, gameTime, addRate = 300.0f;
-    protected string champName;
+
+    public int HighScore { get; private set; }
+    public string ChampName { get; private set; }
 
     void Awake() { 
         Instance = this;
@@ -20,8 +22,8 @@ public class S3_GameOverManager : MonoBehaviour {
         SSD data = SDSM.LoadData();
         if (data == null) return;
 
-        highScore = data.highScore;
-        champName = data.champName;  
+        HighScore = data.highScore;
+        ChampName = data.champName;  
     }
 
     void Start() {
@@ -29,7 +31,7 @@ public class S3_GameOverManager : MonoBehaviour {
         coins = GameManager.Instance.GetCoinAmount();
 
         textElements[0].text = "Score: " + score.ToString();
-        textElements[2].text = "High Score: " + champName + " : " + highScore;
+        textElements[2].text = "High Score: " + ChampName + " : " + HighScore;
 
         preAddedCoins = coins;
         coinsGain.text = "Coins: " + preAddedCoins;
@@ -40,8 +42,8 @@ public class S3_GameOverManager : MonoBehaviour {
         gameTime = Time.time;
         Invoke(nameof(AddCoins), 0.7f);
 
-        if (highScore >= score) return;
-        highScore = score;
+        if (HighScore >= score) return;
+        HighScore = score;
 
         textElements[1].gameObject.SetActive(true);
         InvokeRepeating(nameof(FlashingLetters), 0.15f, 0.15f);
@@ -80,17 +82,11 @@ public class S3_GameOverManager : MonoBehaviour {
     }
 
     public void SetChampName(string name) {
-        champName = name;
+        ChampName = name;
         textElements[1].gameObject.SetActive(false);
-        textElements[2].text = "High Score: " + name + "  " + highScore;
-        SaveScoreData();
+        textElements[2].text = "High Score: " + name + "  " + HighScore;
+        SDSM.SaveData(this);
 
         S3_ButtonsController.Instance.Start();
     }
-
-    void SaveScoreData() { SDSM.SaveData(this); }
-
-    public int GetHighScore() { return highScore; }
-
-    public string GetChampName() { return champName; }
 }

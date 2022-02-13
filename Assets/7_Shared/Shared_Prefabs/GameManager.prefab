@@ -124,10 +124,10 @@ MonoBehaviour:
   interactionSoundClips:
   - {fileID: 8300000, guid: 6df9955fb15d2a248b7da19c9a0e1911, type: 3}
   - {fileID: 8300000, guid: 5abf20370a724b14aae9d01333c0cc03, type: 3}
-  - {fileID: 8300000, guid: 38af4124d4dc9704a88040c5d84b52ae, type: 3}
+  - {fileID: 8300000, guid: da9f6544c867fdd49b8be462469dc6a4, type: 3}
   - {fileID: 8300000, guid: 76f9753eaf237ec45b401bfdf3961fc4, type: 3}
   - {fileID: 8300000, guid: 51a8c3c6ba18d3543bb2237ca4b4f662, type: 3}
-  - {fileID: 8300000, guid: 57dc41d0b7b3d1043ad6b260175bd8ed, type: 3}
+  - {fileID: 8300000, guid: fecb43c501aa79849b00fb1f62f52e01, type: 3}
   - {fileID: 8300000, guid: f4f6516f141a377418f38582e88c32aa, type: 3}
   - {fileID: 8300000, guid: f9d387bd49596de49940cc6bf3b87669, type: 3}
 --- !u!82 &3135667942417822392
