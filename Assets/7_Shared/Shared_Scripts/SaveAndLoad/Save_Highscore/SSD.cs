@@ -6,7 +6,7 @@ public class SSD {
     public string champName;
 
     public SSD(S3_GameOverManager s3_GameOverManager) {
-        highScore = s3_GameOverManager.GetHighScore();
-        champName = s3_GameOverManager.GetChampName();
+        highScore = s3_GameOverManager.HighScore;
+        champName = s3_GameOverManager.ChampName;
     }
 }

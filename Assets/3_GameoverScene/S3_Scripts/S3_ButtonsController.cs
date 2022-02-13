@@ -23,7 +23,7 @@ public class S3_ButtonsController : MonoBehaviour {
         GameManager.Instance.TraverseScenes("StartScreen");
     }
 
-    public void ButtonsInteractability() { foreach (Button item in buttons) item.interactable = !item.interactable; }
+    public void ButtonsInteractability() { for (int i = 0; i < buttons.Length; i++) { buttons[i].interactable = !buttons[i].interactable; } }
 
     public void ButtonSelected() {
         if (!buttons[0].interactable) return;
