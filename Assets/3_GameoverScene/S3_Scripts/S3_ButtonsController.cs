@@ -34,8 +34,6 @@ public class S3_ButtonsController : MonoBehaviour {
     public void SetName() {
         AudioManager.Instance.PlayInteractionSound(2);
         S3_GameOverManager.Instance.SetChampName(nameInput.text);
-
-        ButtonsInteractability();
         MenusManager.Instance.InputingHighscore = false;
 
         nameInput.enabled = false;
