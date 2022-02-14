@@ -11,7 +11,7 @@ public class S1_Options : MonoBehaviour {
     [SerializeField] protected GameObject stats;
     [SerializeField] protected GameObject resetCheck;
 
-    [SerializeField] protected Button selectedButton;
+    [SerializeField] protected Button selectedButton; //Cancel button
     [SerializeField] protected Button[] buttonsToToggle;
     [SerializeField] protected Toggle[] mutes; // { All, Menu }
     [SerializeField] protected Slider[] volumeSliders; // { Master, Music, SFX }
@@ -38,7 +38,7 @@ public class S1_Options : MonoBehaviour {
     void Update() {
         if (!resetCheck.activeInHierarchy) return;
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1)) {
-            DeactivateResetCheck();
+            DeactivateResetCheck(false);
             S1_ButtonsController.Instance.SetPanelChange();
             MenusManager.Instance.SetSelectedButton(buttonsToToggle[0], null, false);
         }
@@ -57,29 +57,22 @@ public class S1_Options : MonoBehaviour {
 
     public void ResetHighScores() {
         AudioManager.Instance.PlayInteractionSound(1);
-        resetCheck.SetActive(true);
         S1_ButtonsController.Instance.SetPanelChange();
 
         ToggleInteractables(false);
+        resetCheck.SetActive(true);
         MenusManager.Instance.SetSelectedButton(selectedButton, null, false);
     }
 
-    public void DeleteButton() {
-        AudioManager.Instance.PlayInteractionSound(3);
-        FeedbackMessageController.Instance.SetMessage("SAVE DELETED", Color.red);
+    public void DeactivateResetCheck(bool deleted) {
+        if (deleted) { //Delete button
+            AudioManager.Instance.PlayInteractionSound(3);
+            FeedbackMessageController.Instance.SetMessage("SAVE DELETED", Color.red);
+            SDSM.DeleteData();
+        }
+        else { AudioManager.Instance.PlayInteractionSound(1); } //Cancel Button
 
-        SDSM.DeleteData();
-        DeactivateResetCheck();
-    }
-
-    public void CancelButton() {
-        AudioManager.Instance.PlayInteractionSound(1);
-        DeactivateResetCheck();
-    }
-
-    void DeactivateResetCheck() {
         ToggleInteractables(true);
-
         resetCheck.SetActive(false);
         MenusManager.Instance.SetSelectedButton(buttonsToToggle[0], null, false);
     }

@@ -1,7 +1,6 @@
 ﻿//Created by Dylan LeClair
 //Last revised 11-08-21 (Dylan LeClair)
 using UnityEngine;
-using TMPro;
 
 public class S1_ButtonsController : MonoBehaviour {
     public static S1_ButtonsController Instance { get; private set; }

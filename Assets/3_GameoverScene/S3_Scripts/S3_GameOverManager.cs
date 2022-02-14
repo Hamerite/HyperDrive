@@ -7,8 +7,8 @@ using TMPro;
 public class S3_GameOverManager : MonoBehaviour {
     public static S3_GameOverManager Instance { get; private set; }
 
-    [SerializeField] protected TextMeshProUGUI[] textElements = null; //{ Score, NewHighScore, HighScore }
-    [SerializeField] protected TextMeshProUGUI coinsGain = null;
+    [SerializeField] protected TextMeshProUGUI[] textElements; //{ Score, NewHighScore, HighScore }
+    [SerializeField] protected TextMeshProUGUI coinsGain;
 
     protected int score, coins;
     protected float preAddedCoins, addedCoins, gameTime, addRate = 300.0f;
