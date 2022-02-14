@@ -12,13 +12,11 @@ public class S2_ShootingController : MonoBehaviour {
     protected Vector2 cursorPosition, crosshairPosition;
     protected Vector3 mousePos, targetPos, screenPos, worldPos;
 
-    protected bool canShoot = true, usingGamepad = true, wasUsingMouse, introFinished;
+    protected bool canShoot = true, usingGamepad = true, introFinished;
 
     void Awake() { Instance = this; }
 
     void Start() {
-        wasUsingMouse = Cursor.visible;
-        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
         mousePos = Input.mousePosition;
@@ -81,7 +79,7 @@ public class S2_ShootingController : MonoBehaviour {
     void ToggleIntroFinished() { introFinished = true; }
 
     void OnDestroy() {
-        Cursor.visible = wasUsingMouse;
+        Cursor.visible = MenusManager.Instance.UsingMouse;
         Cursor.lockState = CursorLockMode.None;
     }
 

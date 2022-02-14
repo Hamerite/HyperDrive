@@ -5,38 +5,30 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LoadingSceneController : MonoBehaviour {
-    [SerializeField] protected GameObject[] shipChoice = null;
+    [SerializeField] protected GameObject[] shipChoice;
 
-    protected WaitForSeconds waitForSeconds = new WaitForSeconds(0.1f);
-
-    protected bool wasVisible;
     protected int index;
     protected float timer = 0;
 
     void Awake() {
-        wasVisible = Cursor.visible;
+        MenusManager.Instance.UsingMouse = Cursor.visible;
         Cursor.visible = false;
 
         SPD data = PDSM.LoadData();
         if (data != null) index = data.shipSelected;
 
         shipChoice[index].SetActive(true);
-
-        StartCoroutine(LoadScene());
     }
 
+    void Start() { StartCoroutine(LoadScene()); }
+
     IEnumerator LoadScene() {
-        yield return waitForSeconds;
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("MainScene");
         asyncOperation.allowSceneActivation = false;
 
         while (!asyncOperation.isDone || timer <= 2) {
             timer += Time.deltaTime;
-
-            if(asyncOperation.progress >= 0.9f && timer >= 2) {
-                Cursor.visible = wasVisible;
-                asyncOperation.allowSceneActivation = true;
-            }
+            if(asyncOperation.progress >= 0.9f && timer >= 2) { asyncOperation.allowSceneActivation = true; }
 
             yield return null;
         }
