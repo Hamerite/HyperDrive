@@ -18,6 +18,8 @@ public class S1_Options : MonoBehaviour {
 
     [SerializeField] protected TextMeshProUGUI statsToggleText;
 
+    public bool GetResetCheck { get { return resetCheck.activeInHierarchy; } }
+
     void Awake() { Instance = this; }
 
     void OnEnable() {
@@ -84,8 +86,6 @@ public class S1_Options : MonoBehaviour {
             volumeSliders[i].interactable = status;
         }
     }
-
-    public bool GetResetCheck() { return resetCheck.activeInHierarchy; }
 
     #region On Value Change
     public void Mute(bool value) { 
