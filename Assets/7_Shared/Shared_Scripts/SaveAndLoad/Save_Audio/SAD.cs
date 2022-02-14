@@ -6,7 +6,7 @@ public class SAD {
     public float[] volumes;
 
     public SAD(AudioManager audioManager) {
-        mutes = audioManager.GetMutes();
-        volumes = audioManager.GetVolumes();
+        mutes = audioManager.Mutes;
+        volumes = audioManager.Volumes;
     }
 }

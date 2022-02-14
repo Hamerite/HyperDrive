@@ -35,7 +35,7 @@ public class S5_ShipSelect : MonoBehaviour {
 
         if (index == 0) price.text = "";
 
-        playerCoins = GameManager.Instance.GetCoinAmount();
+        playerCoins = GameManager.Instance.ScoringStats[4];
         coinCount.text = "Coins: " + playerCoins.ToString();
 
         S5_ButtonsController.Instance.Invoke(nameof(S5_ButtonsController.Instance.SetButtonsInteractable), 3);
@@ -89,7 +89,7 @@ public class S5_ShipSelect : MonoBehaviour {
 
         wasPurchased[index] = true;
         playerCoins -= prices[index];
-        GameManager.Instance.SetCoinAmount(playerCoins);
+        GameManager.Instance.ScoringStats[4] = playerCoins;
         SavePurchaseData();
 
         coinCount.color = Color.red;

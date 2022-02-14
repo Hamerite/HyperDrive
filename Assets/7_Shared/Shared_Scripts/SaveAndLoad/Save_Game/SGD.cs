@@ -4,5 +4,5 @@
 public class SGD{
     public int coins;
 
-    public SGD(GameManager gameManager) { coins = gameManager.GetCoinAmount(); }
+    public SGD(GameManager gameManager) { coins = gameManager.ScoringStats[4]; }
 }

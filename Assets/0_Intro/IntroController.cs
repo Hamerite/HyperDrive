@@ -1,5 +1,6 @@
 ﻿//Created by Dylan LeClair
 //Last revised 23-08-21 (Dylan LeClair)
+using System.IO;
 using UnityEngine;
 
 public class IntroController : MonoBehaviour {
@@ -9,6 +10,8 @@ public class IntroController : MonoBehaviour {
     void Awake() {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
+        Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "HDSD"));
+        print(Application.persistentDataPath);
     }
 
     void Start() {

@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Music_ButtonController : MonoBehaviour {
-    [SerializeField] protected MusicPlayer musicPlayer = null;
-    [SerializeField] protected Button mainMenuButton = null;
-    [SerializeField] protected Button[] songPlayButtons = null;
-    [SerializeField] protected ScrollRect scrollRect = null;
+    [SerializeField] protected MusicPlayer musicPlayer;
+    [SerializeField] protected Button mainMenuButton;
+    [SerializeField] protected Button[] songPlayButtons;
+    [SerializeField] protected ScrollRect scrollRect;
 
     protected bool canScroll = true;
     protected int index;

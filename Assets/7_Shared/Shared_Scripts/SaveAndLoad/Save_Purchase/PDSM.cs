@@ -6,27 +6,23 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class PDSM : MonoBehaviour {
     public static void SaveData(S5_ShipSelect s5_ShipSelect) {
-        BinaryFormatter formatter = new BinaryFormatter();
-        FileStream stream = File.Create(GetPath());
-
-        formatter.Serialize(stream, new SPD(s5_ShipSelect));
-        stream.Close();
+        using(FileStream stream = new FileStream(GetPath(), FileMode.OpenOrCreate)) {
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(stream, new SPD(s5_ShipSelect));
+        }
     }
 
     public static SPD LoadData() {
-        if (File.Exists(GetPath())) {
+        if (!File.Exists(GetPath())) return null;
+
+        using (FileStream stream = new FileStream(GetPath(), FileMode.Open)) {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(GetPath(), FileMode.Open);
-
             SPD data = formatter.Deserialize(stream) as SPD;
-            stream.Close();
-
             return data;
         }
-        else return null;
     }
 
     public static void DeleteData() { if (File.Exists(GetPath())) File.Delete(GetPath()); }
 
-    static string GetPath() { return Application.persistentDataPath + "/PDS"; }
+    static string GetPath() { return Path.Combine(Path.Combine(Application.persistentDataPath, "HDSD"), "PSD"); }
 }

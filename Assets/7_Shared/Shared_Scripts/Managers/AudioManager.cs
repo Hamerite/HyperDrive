@@ -6,76 +6,61 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour {
     public static AudioManager Instance { get; private set; }
 
-    [SerializeField] protected AudioSource[] audioSource = null; // { Music, SFX, MenuSounds }
-    [SerializeField] protected AudioMixer audioMixer = null;
-    [SerializeField] protected AudioClip[] interactionSoundClips = null; // { MousedOver, Pressed, saveHighScore, deleteHighScore, DenySelection, Coins, Purchased, GoBack }
+    [SerializeField] protected AudioSource[] audioSource; // { Music, SFX, MenuSounds }
+    [SerializeField] protected AudioMixer audioMixer;
+    [SerializeField] protected AudioClip[] interactionSoundClips; // { MousedOver, Pressed, saveHighScore, deleteHighScore, DenySelection, Coins, Purchased, GoBack }
 
-    protected bool[] mutes = { false, false }; // { All, Menues }
-    protected float[] volumes = { .5f, .5f, .5f }; // { Master, Music, SFX }
+    public AudioSource[] GetAudioSources() { return audioSource; }
+
+    public bool[] Mutes { get; protected set; }
+    public float[] Volumes { get; protected set; }
 
     void Awake() { 
         Instance = this;
 
+        Mutes = new bool[2];
+        Volumes = new float[3] { .5f, .5f, .5f };
         SAD data = ADSM.LoadData();
         if (data == null) return;
 
-        mutes = data.mutes;
-        volumes = data.volumes;
+        Mutes = data.mutes;
+        Volumes = data.volumes;
     }
 
     void Start() {
-        AudioListener.pause = mutes[0];
-        if (mutes[1]) audioMixer.SetFloat("MixerMenu", 0);
+        AudioListener.pause = Mutes[0];
+        audioMixer.SetFloat("MixerMenu", Mutes[1] ? 0 : 1);
 
-        audioMixer.SetFloat("MixerMaster", Mathf.Log10(volumes[0]) * 20);
-        audioMixer.SetFloat("MixerMusic", Mathf.Log10(volumes[1]) * 20);
-        audioMixer.SetFloat("MixerSFX", Mathf.Log10(volumes[2]) * 20);
+        audioMixer.SetFloat("MixerMaster", Mathf.Log10(Volumes[0] > 0 ? Volumes[0] : 0.5f) * 20);
+        audioMixer.SetFloat("MixerMusic", Mathf.Log10(Volumes[1] > 0 ? Volumes[1] : 0.5f) * 20);
+        audioMixer.SetFloat("MixerSFX", Mathf.Log10(Volumes[2] > 0 ? Volumes[2] : 0.5f) * 20);
     }
 
-    public void SetMute(bool value) {
-        AudioListener.pause = value;
-        mutes[0] = value;
+    public void SetMutes(string key, bool status, int index) {
+        Mutes[index] = status;
+
+        if(key == null) { AudioListener.pause = status; }
+        else { audioMixer.SetFloat(key, status ? 0 : 1); }
     }
 
-    public void SetMenuMute(bool value){
-        audioMixer.SetFloat("MixerMenu", value ? 0 : 1);
-        mutes[1] = value;
-    }
-
-    public void SetMasterVolume(float value) {
-        audioMixer.SetFloat("MixerMaster", Mathf.Log10(value) * 20);
-        volumes[0] = value;
-    }
-
-    public void SetMusicVolume(float value) {
-        audioMixer.SetFloat("MixerMusic", Mathf.Log10(value) * 20);
-        volumes[1] = value;
-    }
-
-    public void SetSFXVolume(float value) {
-        audioMixer.SetFloat("MixerSFX", Mathf.Log10(value) * 20);
-        volumes[2] = value;
+    public void SetVolume(string key, float value, int index) {
+        Volumes[index] = value;
+        audioMixer.SetFloat(key, Mathf.Log10(value) * 20);
     }
 
     public void SaveAudioSettings() { ADSM.SaveData(this); }
 
     public void PlayInteractionSound(int index) { audioSource[2].PlayOneShot(interactionSoundClips[index]); }
 
-    public void PlayLoopingAudio(int index) {
-        audioSource[1].loop = true;
-        audioSource[1].clip = interactionSoundClips[index];
-        audioSource[1].Play();
+    public void ToggleLoopingAudio(bool status, int index) {
+        audioSource[1].loop = status;
+        if (status) {
+            audioSource[1].clip = interactionSoundClips[index];
+            audioSource[1].Play();
+        }
+        else {
+            audioSource[1].Stop();
+            audioSource[1].clip = null;
+        }
     }
-
-    public void StopLoopingAudio() {
-        audioSource[1].loop = false;
-        audioSource[1].clip = null;
-        audioSource[1].Stop();
-    }
-
-    public AudioSource[] GetAudioSources() { return audioSource; }
-
-    public bool[] GetMutes() { return mutes; }
-
-    public float[] GetVolumes() { return volumes; }
 }

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
 
-    protected int[] scoringStats = new int[5]; //{ Score, Counter, enemiesKilled, Difficulty, Coins }
+    public int[] ScoringStats { get; set; } //{ Score, Counter, enemiesKilled, Difficulty, Coins }
 
     void Awake() {
         if (Instance != null && Instance != this) DestroyImmediate(gameObject);
@@ -15,26 +15,19 @@ public class GameManager : MonoBehaviour {
             DontDestroyOnLoad(gameObject);
         }
 
+        ScoringStats = new int[5];
         SGD data = GDSM.LoadData();
         if (data == null) return;
 
-        scoringStats[4] = data.coins;
+        ScoringStats[4] = data.coins;
     }
 
-    public void SetScoreVariables(int[] runValues) { for (int i = 0; i < runValues.Length - 2; i++) scoringStats[i] = runValues[i]; }
+    public void SetScoreVariables(int[] runValues) { for (int i = 0; i < runValues.Length - 2; i++) ScoringStats[i] = runValues[i]; }
 
     public void CalculateCoins() {
-        scoringStats[4] += (scoringStats[0] * scoringStats[3]) + (scoringStats[1] * 2) + (scoringStats[2] * 2);
-        SaveGameManager();
+        ScoringStats[4] += (ScoringStats[0] * ScoringStats[3]) + (ScoringStats[1] * 2) + (ScoringStats[2] * 2);
+        GDSM.SaveData(this);
     }
-
-    void SaveGameManager() { GDSM.SaveData(this); }
-
-    public void SetCoinAmount(int amount) { scoringStats[4] = amount; }
-
-    public int GetCoinAmount() { return scoringStats[4]; }
-
-    public int GetScoreAmount() { return scoringStats[0]; }
 
     public void TraverseScenes(string sceneName) { SceneManager.LoadScene(sceneName, LoadSceneMode.Single); }
 }

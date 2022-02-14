@@ -6,27 +6,23 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class SDSM : MonoBehaviour {
     public static void SaveData(S3_GameOverManager S3_GameOverManager) {
-        BinaryFormatter formatter = new BinaryFormatter();
-        FileStream stream = File.Create(GetPath());
-
-        formatter.Serialize(stream, new SSD(S3_GameOverManager));
-        stream.Close();
+        using(FileStream stream = new FileStream(GetPath(), FileMode.OpenOrCreate)) {
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(stream, new SSD(S3_GameOverManager));
+        }
     }
 
     public static SSD LoadData() {
-        if (File.Exists(GetPath())) {
+        if (!File.Exists(GetPath())) return null;
+
+        using (FileStream stream = new FileStream(GetPath(), FileMode.Open)) {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(GetPath(), FileMode.Open);
-
             SSD data = formatter.Deserialize(stream) as SSD;
-            stream.Close();
-
             return data;
         }
-        else return null;
     }
 
     public static void DeleteData() { if (File.Exists(GetPath())) File.Delete(GetPath()); }
 
-    static string GetPath() { return Application.persistentDataPath + "/SDS"; }
+    static string GetPath() { return Path.Combine(Path.Combine(Application.persistentDataPath, "HDSD"), "SSD"); }
 }

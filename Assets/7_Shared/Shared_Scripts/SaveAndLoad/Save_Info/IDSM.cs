@@ -6,27 +6,21 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class IDSM : MonoBehaviour {
     public static void SaveData(PlayerInfoManager playerInfoManager) {
-        BinaryFormatter formatter = new BinaryFormatter();
-        FileStream stream = File.Create(GetPath());
-
-        formatter.Serialize(stream, new SID(playerInfoManager));
-        stream.Close();
+        using(FileStream stream = new FileStream(GetPath(), FileMode.OpenOrCreate)) {
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(stream, new SID(playerInfoManager));
+        }
     }
 
     public static SID LoadData() {
-        if (File.Exists(GetPath())) {
+        if (!File.Exists(GetPath())) return null;
+
+        using (FileStream stream = new FileStream(GetPath(), FileMode.Open)) {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(GetPath(), FileMode.Open);
-
             SID data = formatter.Deserialize(stream) as SID;
-            stream.Close();
-
             return data;
         }
-        else return null;
     }
 
-    public static void DeleteData() { if (File.Exists(GetPath())) File.Delete(GetPath()); }
-
-    static string GetPath() { return Application.persistentDataPath + "/ISD"; }
+    static string GetPath() { return Path.Combine(Path.Combine(Application.persistentDataPath, "HDSD"), "ISD"); }
 }

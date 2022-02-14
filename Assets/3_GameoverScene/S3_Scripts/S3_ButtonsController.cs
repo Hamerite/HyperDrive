@@ -33,7 +33,7 @@ public class S3_ButtonsController : MonoBehaviour {
     public void HighScoreAcheived() {
         nameInput.Select();
         nameInput.ActivateInputField();
-        MenusManager.Instance.ToggleInputingHighscore();
+        MenusManager.Instance.InputingHighscore = true;
     }
 
     public void SetName() {
@@ -43,7 +43,7 @@ public class S3_ButtonsController : MonoBehaviour {
         S3_GameOverManager.Instance.SetChampName(nameInput.text);
 
         ButtonsInteractability();
-        MenusManager.Instance.ToggleInputingHighscore();
+        MenusManager.Instance.InputingHighscore = false;
 
         Start();
     }

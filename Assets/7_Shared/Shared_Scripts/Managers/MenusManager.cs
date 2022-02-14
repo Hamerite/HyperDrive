@@ -12,8 +12,7 @@ public class MenusManager : MonoBehaviour {
     protected Button newSelectedButton;
     protected Toggle newSelectedToggle;
 
-    protected bool inputingHighscore;
-
+    public bool InputingHighscore { protected get; set; }
     public bool UsingMouse { get; set; }
 
     void Awake() {
@@ -22,26 +21,26 @@ public class MenusManager : MonoBehaviour {
     }
 
     void Update() {
-        if (inputingHighscore || SceneManager.GetActiveScene().name == "MainScene" || SceneManager.GetActiveScene().name == "LoadingScene") return;
+        if (InputingHighscore || SceneManager.GetActiveScene().name == "MainScene" || SceneManager.GetActiveScene().name == "LoadingScene") return;
 
-        if (Cursor.visible && (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)) MouseToKeys();
-        else if (!Cursor.visible && mousePos != Input.mousePosition) KeysToMouse();
+        if (Cursor.visible && (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)) ToggleNavigation(false);
+        else if (!Cursor.visible && mousePos != Input.mousePosition) ToggleNavigation(true);
     }
 
-    void MouseToKeys() {
-        mousePos = Input.mousePosition;
+    void ToggleNavigation(bool KBM) {
+        Cursor.visible = KBM;
 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        if (KBM) {
+            Cursor.lockState = CursorLockMode.None;
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+        else {
+            mousePos = Input.mousePosition;
+            Cursor.lockState = CursorLockMode.Locked;
 
-        if (newSelectedButton) EventSystem.current.SetSelectedGameObject(newSelectedButton.gameObject);
-        else if (newSelectedToggle) EventSystem.current.SetSelectedGameObject(newSelectedToggle.gameObject);
-    }
-
-    void KeysToMouse() {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-        EventSystem.current.SetSelectedGameObject(null);
+            if (newSelectedButton) EventSystem.current.SetSelectedGameObject(newSelectedButton.gameObject);
+            else if (newSelectedToggle) EventSystem.current.SetSelectedGameObject(newSelectedToggle.gameObject);
+        }
     }
 
     public void SetSelectedButton(Button selectedButton, Toggle selectedToggle, bool inputingHighscore) {
@@ -54,6 +53,4 @@ public class MenusManager : MonoBehaviour {
         }
         else EventSystem.current.SetSelectedGameObject(null);
     }
-
-    public void ToggleInputingHighscore() { inputingHighscore = !inputingHighscore; }
 }
