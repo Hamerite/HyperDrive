@@ -46,16 +46,11 @@ public class S1_Options : MonoBehaviour {
 
     public void ToggleStats() {
         AudioManager.Instance.PlayInteractionSound(1);
-        if (mutes[0].gameObject.activeInHierarchy) {
-            statsToggleText.text = "Settings";
-            settings.SetActive(false);
-            stats.SetActive(true);
-        }
-        else {
-            statsToggleText.text = "Player Stats";
-            settings.SetActive(true);
-            stats.SetActive(false);
-        }
+        if (mutes[0].gameObject.activeInHierarchy) { statsToggleText.text = "SETTINGS"; }
+        else { statsToggleText.text = "PLAYER STATS"; }
+
+        settings.SetActive(!settings.activeSelf);
+        stats.SetActive(!stats.activeSelf);
 
         MenusManager.Instance.SetSelectedButton(buttonsToToggle[1], null, false);
     }
@@ -65,10 +60,7 @@ public class S1_Options : MonoBehaviour {
         resetCheck.SetActive(true);
         S1_ButtonsController.Instance.SetPanelChange();
 
-        foreach (Button item in buttonsToToggle) item.interactable = false;
-        foreach (Toggle item in mutes) item.interactable = false;
-        foreach (Slider item in volumeSliders) item.interactable = false;
-
+        ToggleInteractables(false);
         MenusManager.Instance.SetSelectedButton(selectedButton, null, false);
     }
 
@@ -86,12 +78,18 @@ public class S1_Options : MonoBehaviour {
     }
 
     void DeactivateResetCheck() {
-        foreach (Button item in buttonsToToggle) item.interactable = true;
-        foreach (Toggle item in mutes) item.interactable = true;
-        foreach (Slider item in volumeSliders) item.interactable = true;
+        ToggleInteractables(true);
 
         resetCheck.SetActive(false);
         MenusManager.Instance.SetSelectedButton(buttonsToToggle[0], null, false);
+    }
+
+    void ToggleInteractables(bool status) {
+        for (int i = 0; i < mutes.Length; i++) { mutes[i].interactable = status; }
+        for (int i = 0; i < buttonsToToggle.Length; i++){
+            buttonsToToggle[i].interactable = status;
+            volumeSliders[i].interactable = status;
+        }
     }
 
     public bool GetResetCheck() { return resetCheck.activeInHierarchy; }

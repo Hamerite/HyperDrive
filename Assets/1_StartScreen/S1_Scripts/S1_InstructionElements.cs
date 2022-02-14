@@ -17,11 +17,11 @@ public class S1_InstructionElements : MonoBehaviour {
             buttons[i].interactable = !buttons[i].interactable;
             canvasgroups[i].interactable = !canvasgroups[i].interactable;
             canvasgroups[i].blocksRaycasts = !canvasgroups[i].blocksRaycasts;
+            InstructionElements[i].SetActive(!InstructionElements[i].activeSelf);
 
             if (buttons[i].interactable) MenusManager.Instance.SetSelectedButton(buttons[i], null, false);
         }
-        for (int i = 0; i < InstructionElements.Length; i++) InstructionElements[i].SetActive(!InstructionElements[i].activeSelf);
 
-        S1_ButtonsController.Instance.ChangePanels("Instructions", new bool[] { false, true, false, true });
+        S1_ButtonsController.Instance.ChangePanels(new bool[] { false, true, false, true });
     }
 }

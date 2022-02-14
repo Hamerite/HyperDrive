@@ -4,35 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class S1_TitleElements : MonoBehaviour {
-    [SerializeField] protected Button selectedButton = null;
+    [SerializeField] protected Button selectedButton;
 
     void OnEnable() { Invoke(nameof(CheckForButtonSelected), 0.001f); }
 
     void CheckForButtonSelected() { MenusManager.Instance.SetSelectedButton(selectedButton, null, false); }
 
-    public void StartButton() {
+    public void LoadNewScene(string name) {
         AudioManager.Instance.PlayInteractionSound(1);
-        GameManager.Instance.TraverseScenes("LoadingScene");
+        GameManager.Instance.TraverseScenes(name);
     }
 
-    public void InstructionsButton() {
+    public void SwitchNewPanel(int index) {
         AudioManager.Instance.PlayInteractionSound(1);
-        S1_ButtonsController.Instance.ChangePanels("Instructions", new bool[] { false, true, false, true }); 
-    }
-
-    public void ShipSelect() {
-        AudioManager.Instance.PlayInteractionSound(1);
-        GameManager.Instance.TraverseScenes("Hangar");
-    }
-
-    public void SoundTrackButton() {
-        AudioManager.Instance.PlayInteractionSound(1);
-        GameManager.Instance.TraverseScenes("Music");
-    }
-
-    public void OptionsButton() {
-        AudioManager.Instance.PlayInteractionSound(1);
-        S1_ButtonsController.Instance.ChangePanels("Ship Selection", new bool[] { false, false, true, true }); 
+        if(index == 0) { S1_ButtonsController.Instance.ChangePanels(new bool[] { false, true, false, true }); } //Instructions
+        else { S1_ButtonsController.Instance.ChangePanels(new bool[] { false, false, true, true }); } //Options
     }
 
     public void QuitGame(){
