@@ -2,12 +2,13 @@
 //Last revised 11-08-21 (Dylan LeClair)
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class S1_ButtonsController : MonoBehaviour {
     public static S1_ButtonsController Instance { get; private set; }
 
-    [SerializeField] protected Text titleText = null;
-    [SerializeField] protected GameObject[] startMenus = null;
+    [SerializeField] protected TextMeshProUGUI titleText;
+    [SerializeField] protected GameObject[] startMenus;
 
     protected bool panelChange;
 

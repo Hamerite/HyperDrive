@@ -2,20 +2,21 @@
 //Last modified 11-08-21 (Dylan LeClair)
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class S1_Options : MonoBehaviour {
     public static S1_Options Instance { get; private set; }
 
-    [SerializeField] protected GameObject settings = null;
-    [SerializeField] protected GameObject stats = null;
-    [SerializeField] protected GameObject resetCheck = null;
+    [SerializeField] protected GameObject settings;
+    [SerializeField] protected GameObject stats;
+    [SerializeField] protected GameObject resetCheck;
 
-    [SerializeField] protected Button selectedButton = null;
-    [SerializeField] protected Button[] buttonsToToggle = null;
-    [SerializeField] protected Toggle[] mutes = null; // { All, Menu }
-    [SerializeField] protected Slider[] volumeSliders = null; // { Master, Music, SFX }
+    [SerializeField] protected Button selectedButton;
+    [SerializeField] protected Button[] buttonsToToggle;
+    [SerializeField] protected Toggle[] mutes; // { All, Menu }
+    [SerializeField] protected Slider[] volumeSliders; // { Master, Music, SFX }
 
-    [SerializeField] protected Text statsToggleText = null;
+    [SerializeField] protected TextMeshProUGUI statsToggleText;
 
     void Awake() { Instance = this; }
 
