@@ -2,20 +2,21 @@
 //Last modified 11-08-21 (Dylan LeClair)
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class S1_Options : MonoBehaviour {
     public static S1_Options Instance { get; private set; }
 
-    [SerializeField] protected GameObject settings = null;
-    [SerializeField] protected GameObject stats = null;
-    [SerializeField] protected GameObject resetCheck = null;
+    [SerializeField] protected GameObject settings;
+    [SerializeField] protected GameObject stats;
+    [SerializeField] protected GameObject resetCheck;
 
-    [SerializeField] protected Button selectedButton = null;
-    [SerializeField] protected Button[] buttonsToToggle = null;
-    [SerializeField] protected Toggle[] mutes = null; // { All, Menu }
-    [SerializeField] protected Slider[] volumeSliders = null; // { Master, Music, SFX }
+    [SerializeField] protected Button selectedButton;
+    [SerializeField] protected Button[] buttonsToToggle;
+    [SerializeField] protected Toggle[] mutes; // { All, Menu }
+    [SerializeField] protected Slider[] volumeSliders; // { Master, Music, SFX }
 
-    [SerializeField] protected Text statsToggleText = null;
+    [SerializeField] protected TextMeshProUGUI statsToggleText;
 
     void Awake() { Instance = this; }
 
@@ -45,16 +46,11 @@ public class S1_Options : MonoBehaviour {
 
     public void ToggleStats() {
         AudioManager.Instance.PlayInteractionSound(1);
-        if (mutes[0].gameObject.activeInHierarchy) {
-            statsToggleText.text = "Settings";
-            settings.SetActive(false);
-            stats.SetActive(true);
-        }
-        else {
-            statsToggleText.text = "Player Stats";
-            settings.SetActive(true);
-            stats.SetActive(false);
-        }
+        if (mutes[0].gameObject.activeInHierarchy) { statsToggleText.text = "SETTINGS"; }
+        else { statsToggleText.text = "PLAYER STATS"; }
+
+        settings.SetActive(!settings.activeSelf);
+        stats.SetActive(!stats.activeSelf);
 
         MenusManager.Instance.SetSelectedButton(buttonsToToggle[1], null, false);
     }
@@ -64,10 +60,7 @@ public class S1_Options : MonoBehaviour {
         resetCheck.SetActive(true);
         S1_ButtonsController.Instance.SetPanelChange();
 
-        foreach (Button item in buttonsToToggle) item.interactable = false;
-        foreach (Toggle item in mutes) item.interactable = false;
-        foreach (Slider item in volumeSliders) item.interactable = false;
-
+        ToggleInteractables(false);
         MenusManager.Instance.SetSelectedButton(selectedButton, null, false);
     }
 
@@ -85,12 +78,18 @@ public class S1_Options : MonoBehaviour {
     }
 
     void DeactivateResetCheck() {
-        foreach (Button item in buttonsToToggle) item.interactable = true;
-        foreach (Toggle item in mutes) item.interactable = true;
-        foreach (Slider item in volumeSliders) item.interactable = true;
+        ToggleInteractables(true);
 
         resetCheck.SetActive(false);
         MenusManager.Instance.SetSelectedButton(buttonsToToggle[0], null, false);
+    }
+
+    void ToggleInteractables(bool status) {
+        for (int i = 0; i < mutes.Length; i++) { mutes[i].interactable = status; }
+        for (int i = 0; i < buttonsToToggle.Length; i++){
+            buttonsToToggle[i].interactable = status;
+            volumeSliders[i].interactable = status;
+        }
     }
 
     public bool GetResetCheck() { return resetCheck.activeInHierarchy; }

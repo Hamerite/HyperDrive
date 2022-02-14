@@ -1,33 +1,33 @@
 ﻿//Created by Dylan LeClair
 //Last revised 11-08-21 (Dylan LeClair)
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class S1_ButtonsController : MonoBehaviour {
     public static S1_ButtonsController Instance { get; private set; }
 
-    [SerializeField] protected Text titleText = null;
-    [SerializeField] protected GameObject[] startMenus = null;
+    [SerializeField] protected GameObject[] startMenus;
 
     protected bool panelChange;
 
     void Awake() { Instance = this; }
 
-    void Start() { startMenus[0].SetActive(true); }
-
     void Update() { if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1)) BackButton(); }
 
-    public void ChangePanels(string text, bool[] status) {
-        panelChange = true;
+    public void ChangePanels(bool[] status) {
+        SetPanelChange();
         AudioManager.Instance.PlayInteractionSound(1);
 
-        titleText.text = text;
         for (int i = 0; i < startMenus.Length; i++) { startMenus[i].SetActive(status[i]); }
-
-        panelChange = false;
     }
 
-    public void SetPanelChange() { panelChange = true; }
+    public void SetPanelChange() {
+        if (!panelChange) {
+            panelChange = true;
+            Invoke(nameof(SetPanelChange), 0.01f);
+        }
+        else { panelChange = false; }
+    }
 
     public void ButtonSelected() {
         if (panelChange) return;
@@ -40,7 +40,6 @@ public class S1_ButtonsController : MonoBehaviour {
         if(S1_Options.Instance && S1_Options.Instance.GetResetCheck()) return;
 
         if(startMenus[3].activeInHierarchy) AudioManager.Instance.SaveAudioSettings();
-        ChangePanels("HyperDrive", new bool[] { true, false, false, false });
-        panelChange = true;
+        ChangePanels(new bool[] { true, false, false, false });
     }
 }
