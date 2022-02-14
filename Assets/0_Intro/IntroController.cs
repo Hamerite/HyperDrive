@@ -11,7 +11,6 @@ public class IntroController : MonoBehaviour {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "HDSD"));
-        print(Application.persistentDataPath);
     }
 
     void Start() {
