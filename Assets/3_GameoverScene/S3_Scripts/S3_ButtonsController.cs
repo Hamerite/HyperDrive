@@ -6,21 +6,16 @@ using UnityEngine.UI;
 public class S3_ButtonsController : MonoBehaviour {
     public static S3_ButtonsController Instance { get; private set; }
 
-    [SerializeField] protected Button[] buttons = null;
-    [SerializeField] protected InputField nameInput = null;
+    [SerializeField] protected Button[] buttons;
+    [SerializeField] protected InputField nameInput;
 
     void Awake() { Instance = this; }
 
     public void Start() { MenusManager.Instance.SetSelectedButton(buttons[0], null, nameInput.isFocused); }
 
-    public void PlayAgainButton() {
+    public void LoadNewScene(string name) {
         AudioManager.Instance.PlayInteractionSound(1);
-        GameManager.Instance.TraverseScenes("MainScene");
-    }
-
-    public void MainMenuButton() {
-        AudioManager.Instance.PlayInteractionSound(1);
-        GameManager.Instance.TraverseScenes("StartScreen");
+        GameManager.Instance.TraverseScenes(name);
     }
 
     public void ButtonsInteractability() { for (int i = 0; i < buttons.Length; i++) { buttons[i].interactable = !buttons[i].interactable; } }
@@ -38,13 +33,11 @@ public class S3_ButtonsController : MonoBehaviour {
 
     public void SetName() {
         AudioManager.Instance.PlayInteractionSound(2);
-
-        nameInput.enabled = false;
         S3_GameOverManager.Instance.SetChampName(nameInput.text);
-
-        ButtonsInteractability();
         MenusManager.Instance.ToggleInputingHighscore();
 
+        nameInput.enabled = false;
+        ButtonsInteractability();
         Start();
     }
 }

@@ -1,7 +1,6 @@
 ﻿//Created by Dylan LeClair
 //Last revised 11-08-21 (Dylan LeClair)
 using UnityEngine;
-using TMPro;
 
 public class S1_ButtonsController : MonoBehaviour {
     public static S1_ButtonsController Instance { get; private set; }
@@ -37,7 +36,7 @@ public class S1_ButtonsController : MonoBehaviour {
     public void BackButton(){
         AudioManager.Instance.PlayInteractionSound(7);
 
-        if(S1_Options.Instance && S1_Options.Instance.GetResetCheck()) return;
+        if(S1_Options.Instance && S1_Options.Instance.GetResetCheck) return;
 
         if(startMenus[3].activeInHierarchy) AudioManager.Instance.SaveAudioSettings();
         ChangePanels(new bool[] { true, false, false, false });
