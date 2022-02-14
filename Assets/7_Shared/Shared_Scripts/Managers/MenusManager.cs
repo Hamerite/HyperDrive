@@ -14,7 +14,9 @@ public class MenusManager : MonoBehaviour {
 
     protected bool inputingHighscore;
 
-    void Start() {
+    public bool UsingMouse { get; set; }
+
+    void Awake() {
         Instance = this;
         mousePos = Input.mousePosition;
     }
