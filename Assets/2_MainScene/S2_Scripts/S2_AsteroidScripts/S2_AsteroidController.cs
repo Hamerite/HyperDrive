@@ -23,7 +23,7 @@ public class S2_AsteroidController : MonoBehaviour {
     void Update() {
         if (!isActiveAndEnabled) return;
         
-        transform.position = Vector3.MoveTowards(transform.position, DestroyerSingleton.Instance.gameObject.transform.position, 1.0f * S2_PoolController.Instance.GetSpeed() * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, DestroyerSingleton.Instance.gameObject.transform.position, 1.0f * S2_PoolController.Instance.Speed * Time.deltaTime);
         for (int i = 1; i < asteroids.Length - 1; i++) asteroids[i].Rotate(rotateDir[i] * rotateSpeed[i]);
 
         if (transform.position == DestroyerSingleton.Instance.gameObject.transform.position) {

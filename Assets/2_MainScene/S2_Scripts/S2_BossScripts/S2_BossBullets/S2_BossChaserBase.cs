@@ -1,62 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
+//Created by Alec Typelo
+//Last modified 14/02/22 ~Dylan LeClair
 using UnityEngine;
 
-public class S2_BossChaserBase : MonoBehaviour
-{
-    [SerializeField]
-    S2_ChaserStats[] bulletStats;
-    float speed;
-    float timeOnScreen;
+public class S2_BossChaserBase : MonoBehaviour {
+    [SerializeField] protected S2_ChaserStats[] bulletStats;
+    [SerializeField] protected GameObject[] bulletTypes; //use this to set type of bullet
 
-    [SerializeField]
-    GameObject[] bulletTypes; //use this to set type of bullet
+    protected float speed, timeOnScreen;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    void OnEnable() {
+        for (int i = 0; i < bulletTypes.Length; i++) { bulletTypes[i].SetActive(false); }
 
-    }
-
-    private void OnEnable()
-    {
-        for (int i = 0; i < bulletTypes.Length; i++)
-        { bulletTypes[i].SetActive(false); }
-        SelectBullet(S2_BossManager.Instance.GetBossNum());
         speed = bulletStats[S2_BossManager.Instance.GetBossNum()].GetSpeed();
         timeOnScreen = bulletStats[S2_BossManager.Instance.GetBossNum()].GetTimeOnScreen();
+        SelectBullet(S2_BossManager.Instance.GetBossNum());
         Invoke(nameof(StopDisableBullet), timeOnScreen);
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        Movement();
-    }
+    void FixedUpdate() { transform.position += speed * Time.fixedDeltaTime * transform.forward; }
 
+    public void StopDisableBullet() { gameObject.SetActive(false); }
 
-    public virtual void Movement()
-    {
-        transform.position += transform.forward * speed * Time.fixedDeltaTime;
-    }
+    public void SelectBullet(int i) { bulletTypes[i].SetActive(true); }
 
-    public void StopDisableBullet()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public void SelectBullet(int i)
-    {
-        bulletTypes[i].SetActive(true);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
+    void OnTriggerEnter(Collider other) {
         //play whatever effects needed here
-        if(other.gameObject.layer != 9)
-        {
-            gameObject.SetActive(false);
-        }
+        if(other.gameObject.layer != 9) { gameObject.SetActive(false); }
     }
-
 }

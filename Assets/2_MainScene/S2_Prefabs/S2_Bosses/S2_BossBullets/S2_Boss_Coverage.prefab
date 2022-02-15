@@ -110,7 +110,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4180392837441331567
 Transform:
   m_ObjectHideFlags: 0
@@ -239,7 +239,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &954544480032415876
 Transform:
   m_ObjectHideFlags: 0
@@ -1033,7 +1033,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5682985457813854416
 Transform:
   m_ObjectHideFlags: 0
@@ -1257,7 +1257,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1540187341509524845
 Transform:
   m_ObjectHideFlags: 0
@@ -1481,7 +1481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6032415602773930113
 Transform:
   m_ObjectHideFlags: 0
@@ -1934,8 +1934,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6dc0822830412b439e0bb69a448ee56, type: 2}
   - {fileID: 11400000, guid: 17013ae5c1777984dbd9591e3067481e, type: 2}
   - {fileID: 11400000, guid: ba7798cc2d2536b48955a94c62e40595, type: 2}
-  speed: 8
-  timeOnScreen: 15
   bulletTypes:
   - {fileID: 5518706715232495292}
   - {fileID: 1366086469884599209}
@@ -1947,6 +1945,8 @@ MonoBehaviour:
   - {fileID: 9212081176513807564}
   - {fileID: 7251563411013659298}
   - {fileID: 9212081175912926655}
+  speed: 8
+  timeOnScreen: 15
 --- !u!1 &9212081176513807564
 GameObject:
   m_ObjectHideFlags: 0

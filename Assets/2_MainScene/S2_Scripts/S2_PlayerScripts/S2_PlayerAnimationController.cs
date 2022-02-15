@@ -3,19 +3,19 @@
 using UnityEngine;
 
 public class S2_PlayerAnimationController : MonoBehaviour {
-    public static S2_PlayerAnimationController Instance { get; private set; }
+    public static S2_PlayerAnimationController Instance { get; protected set; }
 
-    [SerializeField] protected Animator animator = null;
+    [SerializeField] protected Animator animator;
 
-    protected bool isRolling = false;
     protected int thrust;
+    public bool IsRolling { get; protected set; }
 
     void Awake() { Instance = this; }
 
     void Start() { thrust = ShipStats.Instance.GetStats().GetAttributes()[3]; }
 
     void Update() {
-        if (thrust == 0 || isRolling) return;
+        if (thrust == 0 || IsRolling) return;
         if (Input.GetButtonDown("RollRight")) {
             animator.SetTrigger("RollRight");
             UseThrust();
@@ -40,7 +40,5 @@ public class S2_PlayerAnimationController : MonoBehaviour {
         S2_HUDUI.Instance.SetAttributes(2, 1);
     }
 
-    public bool GetIsRolling() { return isRolling; }
-
-    public void ToggleIsRolling() { isRolling = !isRolling; }
+    public void ToggleIsRolling() { IsRolling = !IsRolling; }
 }

@@ -3,16 +3,17 @@
 using UnityEngine;
 
 public class S2_PlayerCollisionController : MonoBehaviour {
-    public static S2_PlayerCollisionController Instance { get; private set; }
+    public static S2_PlayerCollisionController Instance { get; protected set; }
 
-    [SerializeField] protected ParticleSystem playerDeathParticles = null;
-    [SerializeField] protected ParticleSystem hitSparks = null;
-    [SerializeField] protected new Collider collider = null;
+    [SerializeField] protected ParticleSystem playerDeathParticles, hitSparks;
+    [SerializeField] protected new Collider collider;
 
     protected readonly LayerMask[] layers = { 9, 10, 11, 12 };
     protected readonly Vector3[] dir = new Vector3[] { Vector3.up, Vector3.down, Vector3.right, Vector3.left };
 
     protected bool[] playerStatus = { true, true, false }; //{ CanScore, IsAlive, WasHit }
+
+    public bool GetPlayerStatus(int index) { return playerStatus[index]; }
 
     void Start() { Instance = this; }
 
@@ -69,6 +70,4 @@ public class S2_PlayerCollisionController : MonoBehaviour {
     void ScoreLimiter() { playerStatus[0] = !playerStatus[0]; }
 
     void ToggleWasHit() { playerStatus[2] = !playerStatus[2]; }
-
-    public bool GetPlayerStatus(int index) { return playerStatus[index]; }
 }

@@ -13,10 +13,9 @@ public class S2_HitExplosionPooler : MonoBehaviour {
 
     public ParticleSystem GetHitExplosion(bool hitObstacle) {
         for (int i = 0; i < explosions.Count; i++) if (!explosions[i].gameObject.activeInHierarchy){
-                if (hitObstacle) explosions[i].GetComponent<HitExplosionCleanup>().ToggleHitObstacle();
-                return explosions[i];
-            }
-
+            if (hitObstacle) explosions[i].GetComponent<HitExplosionCleanup>().ToggleHitObstacle();
+            return explosions[i];
+        }
 
         ParticleSystem effect = Instantiate(explosionPrefab, transform);
         effect.gameObject.SetActive(false);

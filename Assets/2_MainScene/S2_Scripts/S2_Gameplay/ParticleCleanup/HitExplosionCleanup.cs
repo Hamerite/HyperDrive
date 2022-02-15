@@ -15,9 +15,7 @@ public class HitExplosionCleanup : MonoBehaviour {
 
     void OnEnable() { audioSource.Play(); }
        
-    void OnParticleSystemStopped() 
-    {
-        //print("stop particles");
+    void OnParticleSystemStopped() {
         transform.parent = null;
         gameObject.SetActive(false); 
     }

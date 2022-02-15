@@ -1,5 +1,68 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!64 &143985963404538524
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959568079887601759}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2432090755550338912, guid: b6b0efbc140dbcc43a85a987274b31e9, type: 3}
+--- !u!114 &1133393194278578908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959568079887601759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ba88b0846a2d24c8d407f0f792929a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossBody: {fileID: 0}
+  weakPoint_PS: {fileID: 8132614677212588166}
+  rend: {fileID: 7644200757186404026}
+  emissionLow: {r: 0, g: 0, b: 0, a: 0}
+  emissionHigh: {r: 0, g: 0, b: 0, a: 0}
+  vulnerable: 1
+  weakPoint: 1
+--- !u!1 &2092460836998913435
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5232521227328432252}
+  m_Layer: 15
+  m_Name: Laucher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5232521227328432252
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092460836998913435}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4612452459586414396}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3346184944741933223
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4612452459586414396}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Agatha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,9 +91,109 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 2407325625515854115}
+  - {fileID: 5232521227328432252}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!64 &1070136450720579511
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5426813771888074104}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2432090755550338912, guid: f1a91af3aafdef04c8687c35db088a70, type: 3}
+--- !u!114 &4932756304670540375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5426813771888074104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ba88b0846a2d24c8d407f0f792929a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossBody: {fileID: 0}
+  weakPoint_PS: {fileID: 3945753328666109345}
+  rend: {fileID: 3173718719952655261}
+  emissionLow: {r: 0, g: 0, b: 0, a: 0}
+  emissionHigh: {r: 0, g: 0, b: 0, a: 0}
+  vulnerable: 1
+  weakPoint: 1
+--- !u!64 &9087176771461661130
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6627338610561932477}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2432090755550338912, guid: c8a5cd24b78ae97488c677a52ea05d10, type: 3}
+--- !u!114 &3357670831713001310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6627338610561932477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ba88b0846a2d24c8d407f0f792929a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossBody: {fileID: 0}
+  weakPoint_PS: {fileID: 2771053775415485540}
+  rend: {fileID: 4376851608791241304}
+  emissionLow: {r: 0, g: 0, b: 0, a: 0}
+  emissionHigh: {r: 0, g: 0, b: 0, a: 0}
+  vulnerable: 1
+  weakPoint: 1
+--- !u!64 &3346814536335747443
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576816173820315006}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2432090755550338912, guid: 07847f5c660720449b68cc9468e79721, type: 3}
+--- !u!114 &6867686506382905890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576816173820315006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ba88b0846a2d24c8d407f0f792929a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossBody: {fileID: 0}
+  weakPoint_PS: {fileID: 1489435605960883623}
+  rend: {fileID: 1036663722189360027}
+  emissionLow: {r: 0, g: 0, b: 0, a: 0}
+  emissionHigh: {r: 0, g: 0, b: 0, a: 0}
+  vulnerable: 1
+  weakPoint: 1
 --- !u!1001 &1759465011900629238
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -103,8 +266,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Agatha-4-Swoop
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 07847f5c660720449b68cc9468e79721,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 07847f5c660720449b68cc9468e79721,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07847f5c660720449b68cc9468e79721, type: 3}
+--- !u!1 &1489435605960883623 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 07847f5c660720449b68cc9468e79721,
+    type: 3}
+  m_PrefabInstance: {fileID: 1759465011900629238}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7576816173820315006 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 07847f5c660720449b68cc9468e79721,
+    type: 3}
+  m_PrefabInstance: {fileID: 1759465011900629238}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1036663722189360027 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: 07847f5c660720449b68cc9468e79721,
+    type: 3}
+  m_PrefabInstance: {fileID: 1759465011900629238}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2211555066463490332
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -176,6 +367,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Agatha-5-BumbleBee
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b77887bbe75ce5f45901ec1f57d9dc7f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: b77887bbe75ce5f45901ec1f57d9dc7f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77887bbe75ce5f45901ec1f57d9dc7f, type: 3}
@@ -250,6 +451,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Agatha-7-BattleShip
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 01c464433cfd7ca40869c7746ee198a0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 01c464433cfd7ca40869c7746ee198a0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01c464433cfd7ca40869c7746ee198a0, type: 3}
@@ -331,8 +542,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Agatha-3-S2_AlienTank
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c8a5cd24b78ae97488c677a52ea05d10,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: c8a5cd24b78ae97488c677a52ea05d10,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8a5cd24b78ae97488c677a52ea05d10, type: 3}
+--- !u!1 &2771053775415485540 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c8a5cd24b78ae97488c677a52ea05d10,
+    type: 3}
+  m_PrefabInstance: {fileID: 3077554399735191861}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6627338610561932477 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: c8a5cd24b78ae97488c677a52ea05d10,
+    type: 3}
+  m_PrefabInstance: {fileID: 3077554399735191861}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4376851608791241304 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: c8a5cd24b78ae97488c677a52ea05d10,
+    type: 3}
+  m_PrefabInstance: {fileID: 3077554399735191861}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4180264519944657136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -405,8 +644,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Agatha-2-S2_AlienTank
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f1a91af3aafdef04c8687c35db088a70,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: f1a91af3aafdef04c8687c35db088a70,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1a91af3aafdef04c8687c35db088a70, type: 3}
+--- !u!1 &3945753328666109345 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f1a91af3aafdef04c8687c35db088a70,
+    type: 3}
+  m_PrefabInstance: {fileID: 4180264519944657136}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5426813771888074104 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: f1a91af3aafdef04c8687c35db088a70,
+    type: 3}
+  m_PrefabInstance: {fileID: 4180264519944657136}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3173718719952655261 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: f1a91af3aafdef04c8687c35db088a70,
+    type: 3}
+  m_PrefabInstance: {fileID: 4180264519944657136}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4658005915243301572
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -478,6 +745,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Agatha-6-enterprise
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8d6b81319c043ba49b76ba434bf4261a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 8d6b81319c043ba49b76ba434bf4261a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d6b81319c043ba49b76ba434bf4261a, type: 3}
@@ -553,5 +830,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Agatha-0-enemyCraftBomber
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6b0efbc140dbcc43a85a987274b31e9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: b6b0efbc140dbcc43a85a987274b31e9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6b0efbc140dbcc43a85a987274b31e9, type: 3}
+--- !u!1 &8132614677212588166 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b6b0efbc140dbcc43a85a987274b31e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8943498103800944087}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &959568079887601759 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: b6b0efbc140dbcc43a85a987274b31e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8943498103800944087}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7644200757186404026 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: b6b0efbc140dbcc43a85a987274b31e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8943498103800944087}
+  m_PrefabAsset: {fileID: 0}

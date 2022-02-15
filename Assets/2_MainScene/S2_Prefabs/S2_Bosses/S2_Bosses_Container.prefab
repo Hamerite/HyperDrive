@@ -906,7 +906,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1157,6 +1157,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lockOnPrefab: {fileID: 7465863813649154595, guid: b0a4fe152035ec54aaf82d0cd2aaa998,
     type: 3}
+  chasePrefab: {fileID: 3412378745206897865, guid: 66259af4a73ca4f49a7d1300841fde0b,
+    type: 3}
+  disruptorPrefab: {fileID: 6619727090505018997, guid: 95cfb3ad83c7fae429261e2c575a1cab,
+    type: 3}
+  coveragePrefab: {fileID: 9212081176486508066, guid: f1aa1d6f945b73942811f6bd1258c67c,
+    type: 3}
   lockOnBullets:
   - {fileID: 6737706283640525244}
   - {fileID: 4173164306093045006}
@@ -1168,8 +1174,6 @@ MonoBehaviour:
   - {fileID: 4407060269468918550}
   - {fileID: 324210748666649609}
   - {fileID: 6797026908911306380}
-  chasePrefab: {fileID: 3412378745206897865, guid: 66259af4a73ca4f49a7d1300841fde0b,
-    type: 3}
   chaseBullets:
   - {fileID: 2629126478130862175}
   - {fileID: 7794511863756335092}
@@ -1211,8 +1215,6 @@ MonoBehaviour:
   - {fileID: 6415143653980210684}
   - {fileID: 8774953533210682231}
   - {fileID: 1624588819062444166}
-  disruptorPrefab: {fileID: 6619727090505018997, guid: 95cfb3ad83c7fae429261e2c575a1cab,
-    type: 3}
   disruptorBullets:
   - {fileID: 4958493845357103611}
   - {fileID: 723990650244939281}
@@ -1224,8 +1226,6 @@ MonoBehaviour:
   - {fileID: 7254523672272342003}
   - {fileID: 3004562793562528227}
   - {fileID: 8569057007729207405}
-  coveragePrefab: {fileID: 9212081176486508066, guid: f1aa1d6f945b73942811f6bd1258c67c,
-    type: 3}
   coverageBullets:
   - {fileID: 8101399682554231125}
   - {fileID: 4801554749582554586}
@@ -1287,27 +1287,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8181ca4eef38f264d9a893c009a3837b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bosses:
-  - {fileID: 5218368405903215535}
-  - {fileID: 8727537632259994431}
-  - {fileID: 502256381674358500}
-  - {fileID: 998548793174013139}
-  - {fileID: 3031579443765987917}
   bossClasses:
   - {fileID: 5609109695201964913}
   - {fileID: 8727537631615542309}
   - {fileID: 502256382098412030}
   - {fileID: 998548792618886092}
   - {fileID: 3031579443143761235}
-  bossNum: 0
   bulletPooler: {fileID: 7575661075153145678}
   bossCanvas: {fileID: 7575661074319275182}
+  warningObject: {fileID: 4113294761946631504}
+  warningText: {fileID: 7634813603073037694}
+  bosses:
+  - {fileID: 5218368405903215535}
+  - {fileID: 8727537632259994431}
+  - {fileID: 502256381674358500}
+  - {fileID: 998548793174013139}
+  - {fileID: 3031579443765987917}
   healthText: {fileID: 7575661074332955833}
   shieldTest: {fileID: 7575661074742679901}
   healthBar: {fileID: 2160597484494117923}
   shieldBar: {fileID: 6857619721918096985}
-  warningObject: {fileID: 4113294761946631504}
-  warningText: {fileID: 7634813603073037694}
+  bossNum: 0
 --- !u!1 &7619083612380926065
 GameObject:
   m_ObjectHideFlags: 0

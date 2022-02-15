@@ -1,26 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+//Created by Alec Typelo
+//Last modified 15/02/22 ~Dylan LeClair
 using UnityEngine;
 
-public class S2_Boss_TempShield : MonoBehaviour
-{
-    [SerializeField]S2_BossBaseClass boss;
-    [SerializeField]int health;
-    private int damage;
+public class S2_Boss_TempShield : MonoBehaviour {
+    [SerializeField] protected S2_BossBaseClass boss;
 
+    [SerializeField] protected int health;
 
-    private void Awake()
-    {
-        //gameObject.SetActive(false);
-    }
+    protected int damage;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == 14)
-        {
+    void OnTriggerEnter(Collider other) {
+        if (other.gameObject.layer == 14) {
             damage++;
-            if (damage >= health)
-            {
+            if (damage >= health) {
                 boss.DestroyShield();
                 gameObject.SetActive(false);
             }
