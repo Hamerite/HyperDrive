@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour {
-    [SerializeField] protected AudioClip[] SongClips = null;
+    [SerializeField] protected AudioClip[] SongClips;
 
     protected bool sceneChanged;
 

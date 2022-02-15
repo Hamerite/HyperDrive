@@ -122,14 +122,14 @@ MonoBehaviour:
   - {fileID: 8593399587363099259}
   audioMixer: {fileID: 24100000, guid: 30374345278782d4db0e75ff59ec312a, type: 2}
   interactionSoundClips:
-  - {fileID: 8300000, guid: 6df9955fb15d2a248b7da19c9a0e1911, type: 3}
-  - {fileID: 8300000, guid: 5abf20370a724b14aae9d01333c0cc03, type: 3}
+  - {fileID: 8300000, guid: 897d60e4ec6bb044593087a7044382df, type: 3}
+  - {fileID: 8300000, guid: c63627e861249ba40acf5bf439e31a8f, type: 3}
   - {fileID: 8300000, guid: da9f6544c867fdd49b8be462469dc6a4, type: 3}
   - {fileID: 8300000, guid: 667189b04dc432545bd6ad8065b31ec3, type: 3}
   - {fileID: 8300000, guid: c2d6bec1e973f4d4db64a8e4b63c2216, type: 3}
   - {fileID: 8300000, guid: fecb43c501aa79849b00fb1f62f52e01, type: 3}
   - {fileID: 8300000, guid: 73fe2edbb12d7414d9c057de88db9da0, type: 3}
-  - {fileID: 8300000, guid: f9d387bd49596de49940cc6bf3b87669, type: 3}
+  - {fileID: 8300000, guid: 724687eb3c80c86458e5d7250edbf2de, type: 3}
 --- !u!82 &3135667942417822392
 AudioSource:
   m_ObjectHideFlags: 0

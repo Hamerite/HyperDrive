@@ -6,27 +6,21 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class GDSM{
     public static void SaveData(GameManager gameManager) {
-        BinaryFormatter formatter = new BinaryFormatter();
-        FileStream stream = File.Create(GetPath());
-
-        formatter.Serialize(stream, new SGD(gameManager));
-        stream.Close();
+        using(FileStream stream = new FileStream(GetPath(), FileMode.OpenOrCreate)) {
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(stream, new SGD(gameManager));
+        }
     }
 
     public static SGD LoadData(){
-        if (File.Exists(GetPath())) {
+        if (!File.Exists(GetPath())) return null;
+
+        using (FileStream stream = new FileStream(GetPath(), FileMode.OpenOrCreate)) {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(GetPath(), FileMode.Open);
-
             SGD data = formatter.Deserialize(stream) as SGD;
-            stream.Close();
-
             return data;
         }
-        else return null;
     }
 
-    public static void DeleteData() { if (File.Exists(GetPath())) File.Delete(GetPath()); }
-
-    static string GetPath() { return Application.persistentDataPath + "/GDS"; }
+    static string GetPath() { return Path.Combine(Path.Combine(Application.persistentDataPath, "HDSD"), "GSD"); }
 }

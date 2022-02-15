@@ -8,9 +8,9 @@ public class SID {
     public string highestDifficulty;
 
     public SID(PlayerInfoManager playerInfoManager) {
-        timePlayed = playerInfoManager.GetTimePlayed();
-        integerValues = playerInfoManager.GetIntergerValues();
-        highestDifficulty = playerInfoManager.GetHighestDifficulty();
-        memberSinceValues = playerInfoManager.GetMemberSinceValues();
+        timePlayed = playerInfoManager.TimePlayed;
+        integerValues = playerInfoManager.IntegerValues;
+        highestDifficulty = playerInfoManager.HighestDifficultyReached;
+        memberSinceValues = playerInfoManager.MemberSinceValues;
     }
 }

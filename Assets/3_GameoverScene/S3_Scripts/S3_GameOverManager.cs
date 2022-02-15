@@ -13,8 +13,8 @@ public class S3_GameOverManager : MonoBehaviour {
     protected int score, coins;
     protected float preAddedCoins, addedCoins, gameTime, addRate = 300.0f;
 
-    public int HighScore { get; private set; }
-    public string ChampName { get; private set; }
+    public int HighScore { get; protected set; }
+    public string ChampName { get; protected set; }
 
     void Awake() { 
         Instance = this;
@@ -27,8 +27,8 @@ public class S3_GameOverManager : MonoBehaviour {
     }
 
     void Start() {
-        score = GameManager.Instance.GetScoreAmount();
-        coins = GameManager.Instance.GetCoinAmount();
+        score = GameManager.Instance.ScoringStats[0];
+        coins = GameManager.Instance.ScoringStats[4];
 
         textElements[0].text = "Score: " + score.ToString();
         textElements[2].text = "High Score: " + ChampName + " : " + HighScore;
@@ -36,7 +36,7 @@ public class S3_GameOverManager : MonoBehaviour {
         preAddedCoins = coins;
         coinsGain.text = "Coins: " + preAddedCoins;
         GameManager.Instance.CalculateCoins();
-        coins = GameManager.Instance.GetCoinAmount();
+        coins = GameManager.Instance.ScoringStats[4];
         addedCoins = coins - preAddedCoins;
 
         gameTime = Time.time;
@@ -54,7 +54,7 @@ public class S3_GameOverManager : MonoBehaviour {
     void AddCoins() {
         if (addedCoins == 0) return;
 
-        AudioManager.Instance.PlayLoopingAudio(5);
+        AudioManager.Instance.ToggleLoopingAudio(true, 5);
         StartCoroutine(CoinsCountUp());
     }
 
@@ -73,7 +73,7 @@ public class S3_GameOverManager : MonoBehaviour {
         } while (preAddedCoins < coins);
 
         coinsGain.text = "Coins: " + preAddedCoins;
-        AudioManager.Instance.StopLoopingAudio();
+        AudioManager.Instance.ToggleLoopingAudio(false, 5);
     }
 
     void FlashingLetters(){

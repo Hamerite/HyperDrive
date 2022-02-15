@@ -22,19 +22,19 @@ public class S3_ButtonsController : MonoBehaviour {
 
     public void ButtonSelected() {
         if (!buttons[0].interactable) return;
-        AudioManager.Instance.PlayInteractionSound(0); 
+        AudioManager.Instance.PlayInteractionSound(0);
     }
 
     public void HighScoreAcheived() {
         nameInput.Select();
         nameInput.ActivateInputField();
-        MenusManager.Instance.ToggleInputingHighscore();
+        MenusManager.Instance.InputingHighscore = true;
     }
 
     public void SetName() {
         AudioManager.Instance.PlayInteractionSound(2);
         S3_GameOverManager.Instance.SetChampName(nameInput.text);
-        MenusManager.Instance.ToggleInputingHighscore();
+        MenusManager.Instance.InputingHighscore = false;
 
         nameInput.enabled = false;
         ButtonsInteractability();

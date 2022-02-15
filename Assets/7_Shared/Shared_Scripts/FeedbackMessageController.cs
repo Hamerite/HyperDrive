@@ -6,8 +6,8 @@ using TMPro;
 public class FeedbackMessageController : MonoBehaviour {
     public static FeedbackMessageController Instance { get; private set; }
 
-    [SerializeField] protected CanvasGroup canvasGroup = null;
-    [SerializeField] protected TextMeshProUGUI textmesh = null;
+    [SerializeField] protected CanvasGroup canvasGroup;
+    [SerializeField] protected TextMeshProUGUI textmesh;
 
     void Awake() { Instance = this; }
 
@@ -17,8 +17,6 @@ public class FeedbackMessageController : MonoBehaviour {
         textmesh.fontSharedMaterial.SetColor("_GlowColor", color);
         canvasGroup.alpha = 1;
 
-        FadeMessage();
+        canvasGroup.LeanAlpha(0f, 1.5f);
     }
-
-    void FadeMessage() { canvasGroup.LeanAlpha(0f, 1f); }
 }

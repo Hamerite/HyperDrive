@@ -23,8 +23,8 @@ public class S1_Options : MonoBehaviour {
     void Awake() { Instance = this; }
 
     void OnEnable() {
-        for (int i = 0; i < 2; i++) mutes[i].isOn = AudioManager.Instance.GetMutes()[i];
-        for (int i = 0; i < 3; i++) volumeSliders[i].value = AudioManager.Instance.GetVolumes()[i];
+        for (int i = 0; i < 2; i++) mutes[i].isOn = AudioManager.Instance.Mutes[i];
+        for (int i = 0; i < 3; i++) volumeSliders[i].value = AudioManager.Instance.Volumes[i];
 
         Invoke(nameof(CheckForButtonSelected), 0.001f);
     }
@@ -88,28 +88,28 @@ public class S1_Options : MonoBehaviour {
     }
 
     #region On Value Change
-    public void Mute(bool value) { 
-        AudioManager.Instance.SetMute(value);
+    public void Mute(bool status) { 
+        AudioManager.Instance.SetMutes(null, status, 0);
         MenusManager.Instance.SetSelectedButton(null, null, false);
     }
     
-    public void MuteMenu(bool value) { 
-        AudioManager.Instance.SetMenuMute(value);
+    public void MuteMenu(bool status) { 
+        AudioManager.Instance.SetMutes("MixerMenu", status, 1);
         MenusManager.Instance.SetSelectedButton(null, null, false);
     }
 
     public void SetMaster(float value) { 
-        AudioManager.Instance.SetMasterVolume(value);
+        AudioManager.Instance.SetVolume("MixerMaster", value, 0);
         MenusManager.Instance.SetSelectedButton(null, null, false);
     }
 
-    public void SetMusic(float value) { 
-        AudioManager.Instance.SetMusicVolume(value);
+    public void SetMusic(float value) {
+        AudioManager.Instance.SetVolume("MixerMaster", value, 1);
         MenusManager.Instance.SetSelectedButton(null, null, false);
     }
 
-    public void SetSFX(float value) { 
-        AudioManager.Instance.SetSFXVolume(value);
+    public void SetSFX(float value) {
+        AudioManager.Instance.SetVolume("MixerMaster", value, 2);
         MenusManager.Instance.SetSelectedButton(null, null, false);
     }
     #endregion
