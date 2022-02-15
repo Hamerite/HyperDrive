@@ -3,8 +3,8 @@
 using UnityEngine;
 
 public class SparksCleanup : MonoBehaviour {
-    [SerializeField] protected AudioSource audioSource = null;
-    [SerializeField] protected new ParticleSystem particleSystem = null;
+    [SerializeField] protected AudioSource audioSource;
+    [SerializeField] protected new ParticleSystem particleSystem;
 
     void Start() {
         ParticleSystem.MainModule main = particleSystem.main;

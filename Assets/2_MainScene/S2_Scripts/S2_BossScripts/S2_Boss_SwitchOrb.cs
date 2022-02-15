@@ -1,30 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+//Created by Alec Typelo
+//Last modified 15/02/22 ~Dylan LeClair
 using UnityEngine;
 
-public class S2_Boss_SwitchOrb : MonoBehaviour
-{
-    [SerializeField]int health;
-    int damage;
-    [SerializeField] S2_BossBaseClass boss;
+public class S2_Boss_SwitchOrb : MonoBehaviour {
+    [SerializeField] protected S2_BossBaseClass boss;
 
-    private void Awake()
-    {
-        //gameObject.SetActive(false);
-    }
+    [SerializeField] protected int health;
 
-    private void OnEnable()
-    {
-        damage = 0;
-    }
+    protected int damage;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == 14)
-        {
+    void OnEnable() { damage = 0; }
+
+    void OnTriggerEnter(Collider other) {
+        if (other.gameObject.layer == 14) {
             damage++;
-            if(damage >= health)
-            {
+            if(damage >= health) {
                 boss.OrbDestroyed();
                 gameObject.SetActive(false);
             }

@@ -1,37 +1,36 @@
 ﻿//Created by Dylan LeClair
-//Last revised 19-09-20 (Dylan LeClair)
-//Modified 10/20/21 (Kyle Ennis)
-//Modified 10/21/21 (Alek Tepylo)
+//Last revised 19-09-20 (Alek Tepylo)
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable] public class AsteroidArrays {
-    public string name = null;
+    public string name;
     public GameObject asteroidsPrefab;
     public List<GameObject> inSceneBank = new List<GameObject>();
 }
 
 [System.Serializable] public class AsteroidLevels {
-    public string name = null;
+    public string name;
     public AsteroidArrays[] asteroidArrays;
 }
 
 public class S2_PoolController : MonoBehaviour {
-    public static S2_PoolController Instance { get; private set; }
+    public static S2_PoolController Instance { get; protected set; }
 
     [SerializeField] private ParticleSystem[] particles;
 
-    [SerializeField] protected AsteroidLevels[] asteroidLevels = null;
+    [SerializeField] protected AsteroidLevels[] asteroidLevels;
     protected readonly List<int> benched = new List<int>();
 
-    protected GameObject startObstalce;
-
     protected int RNG, arrayIndex, bossIndex;
-    protected float speed = 75.0f, waitTime = 1.8f, benchedTime = 5.4f;
+    protected float waitTime = 1.8f, benchedTime = 5.4f;
     protected readonly string[] obstacleDifficulty = { "Very Easy", "Easy", "Medium", "Hard", "Very Hard" };
+
+    public float Speed { get; protected set; }
 
     void Awake() {
         Instance = this;
+        Speed = 75;
         for (int i = 0; i < asteroidLevels.Length; i++) for (int j = 0; j < asteroidLevels[arrayIndex].asteroidArrays.Length; j++) asteroidLevels[i].asteroidArrays[j].inSceneBank.TrimExcess();
     }
 
@@ -65,7 +64,9 @@ public class S2_PoolController : MonoBehaviour {
     }
 
     GameObject GetObstacle(int index) {
-        for (int i = 0; i < asteroidLevels[arrayIndex - 1].asteroidArrays[index].inSceneBank.Count; i++) if (!asteroidLevels[arrayIndex - 1].asteroidArrays[index].inSceneBank[i].activeInHierarchy) return asteroidLevels[arrayIndex - 1].asteroidArrays[index].inSceneBank[i];
+        for (int i = 0; i < asteroidLevels[arrayIndex - 1].asteroidArrays[index].inSceneBank.Count; i++) {
+            if (!asteroidLevels[arrayIndex - 1].asteroidArrays[index].inSceneBank[i].activeInHierarchy) { return asteroidLevels[arrayIndex - 1].asteroidArrays[index].inSceneBank[i]; }
+        }
 
         GameObject obstacle = Instantiate(asteroidLevels[arrayIndex - 1].asteroidArrays[index].asteroidsPrefab);
         asteroidLevels[arrayIndex - 1].asteroidArrays[index].inSceneBank.Add(obstacle);
@@ -78,18 +79,17 @@ public class S2_PoolController : MonoBehaviour {
     }
 
     public void CheckForBehaviourChange() {
-        int counterValue = S2_HUDUI.Instance.GetObstacleCounter();
+        int counterValue = S2_HUDUI.Instance.RunInfo[1];
 
         if (counterValue % 90 == 0) {
             benched.Clear();
             S2_HUDUI.Instance.SetLevel(obstacleDifficulty[arrayIndex]);
             S2_EnemyManager.Instance.SetDifficulty(obstacleDifficulty[arrayIndex-1]);
-            //S2_BossManager.Instance.StartBoss(arrayIndex - 1);
             bossIndex = arrayIndex - 1;
             StopAsteroids(true);
             arrayIndex++;
         }
-        else if (counterValue % 30 == 0) speed += 5.0f;
+        else if (counterValue % 30 == 0) Speed += 5.0f;
         else if (counterValue % 15 == 0) {
             CancelInvoke(nameof(ChooseObstacle));
             CancelInvoke(nameof(BringBackBenched));
@@ -99,52 +99,28 @@ public class S2_PoolController : MonoBehaviour {
 
             InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime);
         }
-        else if(counterValue % 10 == 0)
-        {
+        else if(counterValue % 10 == 0) {
             S2_EnemyManager.Instance.AdaptiveGameplay();
             S2_EnemyManager.Instance.GetPlayerShieldsAndHealth();
             S2_EnemyManager.Instance.ResetEnemyCounter();
         }
     }
 
-    public void StopAsteroids(bool bossWave)
-    {
+    public void StopAsteroids(bool bossWave) {
         CancelInvoke(nameof(ChooseObstacle));
-        for(int i = 0; i < particles.Length; i++)
-        {
-            particles[i].Stop();
-        }
-        //player warning sfx/sounds as the ship exits warp
-        if (bossWave)
-        {
+        for(int i = 0; i < particles.Length; i++) { particles[i].Stop(); }
+
+        if (bossWave) {
             Invoke(nameof(ShowBossWarning), 1.5f);
             Invoke(nameof(SpawnBoss), 5);
         }
     }
 
-    public void SpawnBoss()
-    {
-        S2_BossManager.Instance.StartBoss(bossIndex);
-    }
+    public void ShowBossWarning() { S2_BossManager.Instance.DisplayWarning(); }
 
-    public void ShowBossWarning()
-    {
-        S2_BossManager.Instance.DisplayWarning();
-    }
+    public void SpawnBoss() { S2_BossManager.Instance.StartBoss(bossIndex); }
 
-    public void StartParicles()
-    {
-        for (int i = 0; i < particles.Length; i++)
-        {
-            particles[i].Play();
-        }
-    }
+    public void StartParicles() { for (int i = 0; i < particles.Length; i++) { particles[i].Play(); } }
 
-    public void StartUpAsteroids()
-    {
-        InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime);        
-    }
-
-    public float GetSpeed() { return speed; }
-    public float GetWaitTime() { return waitTime; }
+    public void StartUpAsteroids() { InvokeRepeating(nameof(ChooseObstacle), waitTime + 0.1f, waitTime); }
 }

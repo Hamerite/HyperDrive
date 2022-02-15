@@ -3,9 +3,9 @@
 using UnityEngine;
 
 public class S2_PlayerController : MonoBehaviour {
-    public static S2_PlayerController Instance { get; private set; }
+    public static S2_PlayerController Instance { get; protected set; }
 
-    [SerializeField] protected GameObject[] shipChoice = null;
+    [SerializeField] protected GameObject[] shipChoice;
 
     protected int index;
 
@@ -21,9 +21,8 @@ public class S2_PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        if (!S2_ShootingController.Instance.GetIntroFinished() || !ShipStats.Instance) return;
+        if (!S2_ShootingController.Instance.IntroFinished || !ShipStats.Instance || S2_PlayerAnimationController.Instance.IsRolling) return;
 
-        if (S2_PlayerAnimationController.Instance.GetIsRolling()) return;
         float vertical = Input.GetAxis("Vertical") * ShipStats.Instance.GetStats().GetMaxSpeed() * Time.fixedDeltaTime;
         float horizontal = Input.GetAxis("Horizontal") * ShipStats.Instance.GetStats().GetMaxSpeed() * Time.fixedDeltaTime;
         transform.Translate(horizontal, vertical, 0.0f);

@@ -3,7 +3,7 @@
 using UnityEngine;
 
 public class DestroyerSingleton : MonoBehaviour {
-    public static DestroyerSingleton Instance { get; private set; }
+    public static DestroyerSingleton Instance { get; protected set; }
 
     private void Awake() { Instance = this; }
 }

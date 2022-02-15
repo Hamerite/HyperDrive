@@ -6,34 +6,35 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class S2_HUDUI : MonoBehaviour {
-    public static S2_HUDUI Instance { get; private set; }
+    public static S2_HUDUI Instance { get; protected set; }
 
-    [SerializeField] protected Text[] textElements = null; //{ Score, Obstacles, Level, Thruster }
-    [SerializeField] protected Slider[] shipAttributes = null; //{ Shields, Health, Thrusters }
+    [SerializeField] protected Text[] textElements; //{ Score, Obstacles, Level, Thruster }
+    [SerializeField] protected Slider[] shipAttributes; //{ Shields, Health, Thrusters }
 
     protected bool rapidKillRutineRunning;
-    int[] runInfo = new int[6]; // { Score, PassedCounter, EnemiesKilled, DifficultyPassed, HighestKillCount, RapidKillCount }
     protected float countDown, timer;
     protected string diffultyLevelName;
-    public string ReturnDifficulty()
-    {
-        return diffultyLevelName;
-    }
 
-    void Awake() { Instance = this; }
+    public int[] RunInfo { get; protected set; } // { Score, PassedCounter, EnemiesKilled, DifficultyPassed, HighestKillCount, RapidKillCount }
+    public float GetAttributesValue(int x) { return shipAttributes[x].value; }
+    public Slider[] GetAttributes() { return shipAttributes; }
+
+    void Awake() {
+        Instance = this;
+        RunInfo = new int[6];
+    }
 
     void Start() { Invoke(nameof(TurnOnHUD), 3); }
 
     void TurnOnHUD() {
         for (int i = 0; i < textElements.Length - 1; i++) textElements[i].gameObject.SetActive(true);
-        foreach (Slider item in shipAttributes) item.gameObject.SetActive(true);
-
+        for (int i = 0; i < shipAttributes.Length; i++) { shipAttributes[i].gameObject.SetActive(true); }
         for (int i = 0; i < shipAttributes.Length - 1; i++) shipAttributes[i].value = ShipStats.Instance.GetStats().GetAttributes()[i + 1];
     }
 
     public void SendGameInfo() { 
-        GameManager.Instance.SetScoreVariables(runInfo);
-        PlayerInfoManager.Instance.SetInfoValues(runInfo, diffultyLevelName);
+        GameManager.Instance.SetScoreVariables(RunInfo);
+        PlayerInfoManager.Instance.SetInfoValues(RunInfo, diffultyLevelName);
     }
 
     public void StartCountdownTimer() {
@@ -43,50 +44,40 @@ public class S2_HUDUI : MonoBehaviour {
     }
 
     public void EnemyKilled(int value) {
-        runInfo[2]++;
+        RunInfo[2]++;
 
-        if (runInfo[5] >= 5) value *= 2;
-        runInfo[0] += value;
-        textElements[0].text = "Score: " + runInfo[0].ToString();
+        if (RunInfo[5] >= 5) { value *= 2; }
+        RunInfo[0] += value;
+        textElements[0].text = "Score: " + RunInfo[0].ToString();
 
-        # region Calls to S2_EnemyManager
         S2_EnemyManager.Instance.SetEnemiesLive();
-        if(S2_EnemyManager.Instance.GetEnemiesLive() <= 0)
-        {
-            S2_EnemyManager.Instance.EndWave();
-        }
-        #endregion
+        if(S2_EnemyManager.Instance.GetEnemiesLive() <= 0) { S2_EnemyManager.Instance.EndWave(); }
 
-        runInfo[5]++;
+        RunInfo[5]++;
         timer = 3;
         if (!rapidKillRutineRunning) StartCoroutine(KillsMultiplierTimer());
     }
 
     public void SetScore(int value) {
-        runInfo[0] += value;
-        textElements[0].text = "Score: " + runInfo[0].ToString();
+        RunInfo[0] += value;
+        textElements[0].text = "Score: " + RunInfo[0].ToString();
     }
 
     public void SetObstacleCounter() {
-        runInfo[1]++;
-        textElements[1].text = "Obstacles Passed: " + runInfo[1].ToString();
+        RunInfo[1]++;
+        textElements[1].text = "Obstacles Passed: " + RunInfo[1].ToString();
     }
 
     public void SetLevel(string level) { 
         textElements[2].text = "Level: " + level;
         diffultyLevelName = level;
-        runInfo[3]++;
+        RunInfo[3]++;
 
-        if(runInfo[3] > 1) runInfo[0] += (int)(shipAttributes[0].value + shipAttributes[1].value);
+        if(RunInfo[3] > 1) RunInfo[0] += (int)(shipAttributes[0].value + shipAttributes[1].value);
     }
 
     public void SetAttributes(int index, int valueChange) { shipAttributes[index].value += valueChange; }
 
-    public int GetObstacleCounter() { return runInfo[1]; }
-
-    public Slider[] GetAttributes() { return shipAttributes; }
-
-    public float GetAttributesValue(int x) { return shipAttributes[x].value; }
     IEnumerator Countdown() {
         do {
             countDown -= Time.deltaTime;
@@ -105,8 +96,8 @@ public class S2_HUDUI : MonoBehaviour {
             yield return null;
         } while (timer > 0);
 
-        if (runInfo[5] > runInfo[4]) runInfo[4] = runInfo[5];
-        runInfo[5] = 0;
+        if (RunInfo[5] > RunInfo[4]) RunInfo[4] = RunInfo[5];
+        RunInfo[5] = 0;
         rapidKillRutineRunning = false;
     }
 }

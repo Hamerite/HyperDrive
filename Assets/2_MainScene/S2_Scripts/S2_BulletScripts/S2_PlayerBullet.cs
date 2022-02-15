@@ -3,31 +3,23 @@
 using UnityEngine;
 
 public class S2_PlayerBullet : MonoBehaviour {
-    [SerializeField] protected new Rigidbody rigidbody = null;
-    [SerializeField] private LayerMask mask;
+    [SerializeField] protected new Rigidbody rigidbody;
+    [SerializeField] protected LayerMask mask;
 
     protected Vector3 worldPosition;
     protected Vector3 offset = new Vector3(0, 0, -5);
 
     void OnEnable() {
-      
-        Vector3 screenPos = S2_ShootingController.Instance.GetScreenPos();
-        Vector3 worldPos = S2_ShootingController.Instance.GetWorldPos();
+        Vector3 screenPos = S2_ShootingController.Instance.ScreenPos;
+        Vector3 worldPos = S2_ShootingController.Instance.WorldPos;
 
         RaycastHit hit;
         Vector3 checkStart = (worldPos - screenPos).normalized;
         bool castHit = Physics.Raycast(screenPos + (checkStart * 15), checkStart, out hit, 35, mask); 
-        
-        //Debug.DrawLine(screenPos + (checkStart * 15), worldPos, Color.cyan, 5);
-        //Debug.DrawLine(screenPos, worldPos, Color.red, 5);
 
         Vector3 targetPos;
-        if (castHit)
-        {
-            targetPos = hit.point;
-        }
-        else
-            targetPos = worldPos;
+        if (castHit) { targetPos = hit.point; }
+        else { targetPos = worldPos; }
 
         rigidbody.velocity = Vector3.zero;
         transform.LookAt(targetPos);
@@ -43,20 +35,18 @@ public class S2_PlayerBullet : MonoBehaviour {
         if (other.gameObject.layer == 9) hitObstacle = true;
         ParticleSystem newExplosion = S2_HitExplosionPooler.Instance.GetHitExplosion(hitObstacle);
 
-        if (other.gameObject.layer == 9)
+        if (other.gameObject.layer == 9) { 
             newExplosion.transform.position = transform.position + offset;
-        else
+            newExplosion.transform.parent = other.transform.parent;
+        }
+        else { 
             newExplosion.transform.position = transform.position;
-
-
+            newExplosion.transform.parent = null;
+        }
+            
         newExplosion.time = 0;
         newExplosion.Play();
-        newExplosion.gameObject.SetActive(true);
-        if(other.gameObject.layer == 9)
-            newExplosion.transform.parent = other.transform.parent;
-        else
-            newExplosion.transform.parent = null;
-
+        newExplosion.gameObject.SetActive(true);    
         gameObject.SetActive(false);
     }
 }

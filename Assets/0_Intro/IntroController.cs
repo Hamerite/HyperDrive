@@ -10,6 +10,8 @@ public class IntroController : MonoBehaviour {
     void Awake() {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
+
+        if (Directory.Exists(Path.Combine(Application.persistentDataPath, "HDSD"))) return;
         Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "HDSD"));
     }
 
