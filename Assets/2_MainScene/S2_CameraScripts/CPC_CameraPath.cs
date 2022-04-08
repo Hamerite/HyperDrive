@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//Created by Kyle Ennis 15/09/21
+//Last modified 15/09/21 (Dylan LeClair)
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,17 +19,13 @@ public class CPC_Visual {
 [System.Serializable]
 public class CPC_Point {
     public Quaternion rotation;
-    public Vector3 position;
-    public Vector3 handleprev;
-    public Vector3 handlenext;
+    public Vector3 position, handlenext, handleprev;
+    public CPC_ECurveType curveTypePosition, curveTypeRotation;
 
-    public AnimationCurve rotationCurve;
-    public AnimationCurve positionCurve;
-
-    public CPC_ECurveType curveTypeRotation;
-    public CPC_ECurveType curveTypePosition;
+    public AnimationCurve positionCurve, rotationCurve;
 
     public bool chained;
+
     public CPC_Point(Vector3 pos, Quaternion rot) {
         rotation = rot;
         position = pos;
@@ -47,157 +45,116 @@ public class CPC_Point {
 public class CPC_CameraPath : MonoBehaviour {
     public CPC_Visual visual;
 
+    [SerializeField] protected CPC_EAfterLoop afterLoop = CPC_EAfterLoop.Continue;
+
     [SerializeField] protected Camera selectedCamera;
     [SerializeField] protected Transform target;
     [SerializeField] protected List<CPC_Point> points = new List<CPC_Point>();
 
-    [SerializeField] protected bool playOnAwake, useMainCamera, lookAtTarget, looped, hasTIme, alwaysShow;
+    [SerializeField] protected bool looped, alwaysShow;
     [SerializeField] protected float m_Timer;
-    [SerializeField] protected CPC_EAfterLoop afterLoop = CPC_EAfterLoop.Continue;
 
-    protected bool playing, paused;
-    protected int currentWaypointIndex;
-    protected float currentTimeInWaypoint, timePerSegment;
+    protected CPC_CameraPath localEndCam;
 
-    void Start () {
-	    foreach (var index in points) {
-            if (index.curveTypeRotation == CPC_ECurveType.EaseInAndOut) index.rotationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-            if (index.curveTypeRotation == CPC_ECurveType.Linear) index.rotationCurve = AnimationCurve.Linear(0, 0, 1, 1);
-            if (index.curveTypePosition == CPC_ECurveType.EaseInAndOut) index.positionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-            if (index.curveTypePosition == CPC_ECurveType.Linear) index.positionCurve = AnimationCurve.Linear(0, 0, 1, 1);
-        }
-    }
+    protected float timePerSegment, localStayTime, localEndCamTime;
 
-    public void PlayPath(float time, float t, float ET ,CPC_CameraPath endCam) {
-        if (time <= 0) time = 0.001f;
-        paused = false;
-        playing = true;
-
-        StopAllCoroutines();
-        StartCoroutine(FollowPath(time,t, ET,endCam));
-    }
-
-    public void ResumePath() {
-        if (paused) playing = true;
-        paused = false;
-    }
-
-    public void StopPath(float t, float ET,CPC_CameraPath endCam) {
-        playing = false;
-        paused = false;
-        if (!playing && t != 0) Invoke(nameof(waitForTime), t);
-        else if (!playing && ET != 0) Invoke(nameof(waitForTime), ET);
-    }
-
-    public void PausePath() {
-        paused = true;
-        playing = false;
-    }
-
-    void waitForTime() { StopAllCoroutines(); }
-
-    public void UpdateTimeInSeconds(float seconds) {
-        if (hasTIme) timePerSegment = seconds;
-        else timePerSegment = seconds / ((looped) ? points.Count : points.Count - 1);
-    }
-
-    public void RefreshTransform() {
-        Camera.main.transform.position = GetBezierPosition(currentWaypointIndex, currentTimeInWaypoint);
-       
-        if (!lookAtTarget) Camera.main.transform.rotation = GetLerpRotation(currentWaypointIndex, currentTimeInWaypoint);
-        else Camera.main.transform.rotation = Quaternion.LookRotation((target.transform.position - Camera.main.transform.position).normalized);
-    }
-
-    IEnumerator FollowPath(float time, float t, float ET,CPC_CameraPath endCam) {
-        if (!hasTIme) {
-            UpdateTimeInSeconds(time);
-            currentWaypointIndex = 0;
-         
-            while (currentWaypointIndex < points.Count) {
-                currentTimeInWaypoint = 0;
-                while (currentTimeInWaypoint < 1) {
-                    if (!paused) {
-                        currentTimeInWaypoint += Time.deltaTime / timePerSegment;
-                        Camera.main.transform.position = GetBezierPosition(currentWaypointIndex, currentTimeInWaypoint);
-                       
-                        if (!lookAtTarget) Camera.main.transform.rotation = GetLerpRotation(currentWaypointIndex, currentTimeInWaypoint);
-                        else Camera.main.transform.rotation = Quaternion.LookRotation((target.transform.position - Camera.main.transform.position).normalized);
-                    }
-                    yield return 0;
-                }
-                ++currentWaypointIndex;
-                if (currentWaypointIndex == points.Count - 1 && !looped) break;
-                if (currentWaypointIndex == points.Count && afterLoop == CPC_EAfterLoop.Continue) currentWaypointIndex = 0;
-            }
-            StopPath(t,ET,endCam);
-        }
-        else {
-            UpdateTimeInSeconds(m_Timer);
-            currentWaypointIndex = 0;
-
-            while (currentWaypointIndex < points.Count) {
-                currentTimeInWaypoint = 0;
-                while (currentTimeInWaypoint < 1) {
-                    if (!paused) {
-                        currentTimeInWaypoint += Time.deltaTime / timePerSegment;
-                        Camera.main.transform.position = GetBezierPosition(currentWaypointIndex, currentTimeInWaypoint);
-                        
-                        if (!lookAtTarget) Camera.main.transform.rotation = GetLerpRotation(currentWaypointIndex, currentTimeInWaypoint);
-                        else Camera.main.transform.rotation = Quaternion.LookRotation((target.transform.position - Camera.main.transform.position).normalized);
-                    }
-                    yield return 0;
-                }
-                ++currentWaypointIndex;
-                if (currentWaypointIndex == points.Count - 1 && !looped) break;
-                if (currentWaypointIndex == points.Count && afterLoop == CPC_EAfterLoop.Continue) currentWaypointIndex = 0;
-            }
-            StopPath(t, ET,endCam);
-        }
-    }
-
-    int GetNextIndex(int index) {
-        if (index == points.Count-1) return 0;
-        return index + 1;
-    }
-
-    Vector3 GetBezierPosition(int pointIndex, float time) {
-        if (!hasTIme) {
-            float t = points[pointIndex].positionCurve.Evaluate(time);
-            int nextIndex = GetNextIndex(pointIndex);
-
-            return
-                Vector3.Lerp(Vector3.Lerp(Vector3.Lerp(points[pointIndex].position, points[pointIndex].position + points[pointIndex].handlenext, t), Vector3.Lerp(points[pointIndex].position + points[pointIndex].handlenext, points[nextIndex].position + points[nextIndex].handleprev, t), t),
-                Vector3.Lerp(Vector3.Lerp(points[pointIndex].position + points[pointIndex].handlenext, points[nextIndex].position + points[nextIndex].handleprev, t),
-                Vector3.Lerp(points[nextIndex].position + points[nextIndex].handleprev, points[nextIndex].position, t), t), t);
-        }
-        else {
-            float t = points[pointIndex].positionCurve.Evaluate(time);
-            int nextIndex = GetNextIndex(pointIndex);
-            
-            return
-                Vector3.Lerp(Vector3.Lerp(Vector3.Lerp(points[pointIndex].position, points[pointIndex].position + points[pointIndex].handlenext, t), Vector3.Lerp(points[pointIndex].position + points[pointIndex].handlenext, points[nextIndex].position + points[nextIndex].handleprev, t), t),
-                Vector3.Lerp(Vector3.Lerp(points[pointIndex].position + points[pointIndex].handlenext, points[nextIndex].position + points[nextIndex].handleprev, t),
-                Vector3.Lerp(points[nextIndex].position + points[nextIndex].handleprev, points[nextIndex].position, t), t), t);
-        }
-    }
-
-    Quaternion GetLerpRotation(int pointIndex, float time) { return Quaternion.LerpUnclamped(points[pointIndex].rotation, points[GetNextIndex(pointIndex)].rotation, points[pointIndex].rotationCurve.Evaluate(time)); }
+    public bool Playing { get; protected set; }
+    public bool Paused { get; protected set; }
+    public int CurrentWaypointIndex { get; set; }
+    public float CurrentTimeInWaypoint { get; set; }
 
     public List<CPC_Point> GetPoints() { return points; }
 
-    public bool IsPaused() { return paused; }
-
-    public bool IsPlaying() { return playing; }
-
     public bool GetLooped() { return looped; }
 
-    public int GetCurrentWayPoint() { return currentWaypointIndex; }
+    public void SetPaused(bool status) {
+        Paused = status;
+        Playing = !status;
+    }
 
-    public float GetCurrentTimeInWaypoint() { return currentTimeInWaypoint; }
+    void Start () {
+        for (int i = 0; i < points.Count; i++) {
+            if (points[i].curveTypeRotation == CPC_ECurveType.EaseInAndOut) points[i].rotationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+            if (points[i].curveTypeRotation == CPC_ECurveType.Linear) points[i].rotationCurve = AnimationCurve.Linear(0, 0, 1, 1);
+            if (points[i].curveTypePosition == CPC_ECurveType.EaseInAndOut) points[i].positionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+            if (points[i].curveTypePosition == CPC_ECurveType.Linear) points[i].positionCurve = AnimationCurve.Linear(0, 0, 1, 1);
+        }
+    }
 
-    public void SetCurrentWayPoint(int value) { currentWaypointIndex = value; }
+    public void PlayPath(float time, float stayTime, float endCamTime ,CPC_CameraPath endCam) {
+        if (time <= 0) time = 0.001f;
 
-    public void SetCurrentTimeInWaypoint(float value) { currentTimeInWaypoint = value; }
+        localEndCam = endCam;
+        localStayTime = stayTime;
+        localEndCamTime = endCamTime;
+
+        SetPaused(false);
+        StopAllCoroutines();
+        StartCoroutine(FollowPath(time));
+    }
+
+    IEnumerator FollowPath(float time) {
+        if (m_Timer <= 0) { UpdateTimeInSeconds(time); }
+        else { UpdateTimeInSeconds(m_Timer); }
+
+        CurrentWaypointIndex = 0;
+         
+        while (CurrentWaypointIndex < points.Count) {
+            CurrentTimeInWaypoint = 0;
+            while (CurrentTimeInWaypoint < 1) {
+                if (!Paused) {
+                    CurrentTimeInWaypoint += Time.deltaTime / timePerSegment;
+                    RefreshTransform();
+                }
+                yield return 0;
+            }
+            ++CurrentWaypointIndex;
+            if (CurrentWaypointIndex == points.Count - 1 && !looped) break;
+            if (CurrentWaypointIndex == points.Count && afterLoop == CPC_EAfterLoop.Continue) CurrentWaypointIndex = 0;
+        }
+        Playing = false;
+        Paused = false;
+        Invoke(nameof(WaitForDecision), localStayTime);
+    }
+
+    public void UpdateTimeInSeconds(float seconds) {
+        if (m_Timer > 0) { timePerSegment = seconds; }
+        else { timePerSegment = seconds / ((looped) ? points.Count : points.Count - 1); }
+    }
+
+    public void RefreshTransform() {
+        Camera.main.transform.position = GetBezierPosition(CurrentWaypointIndex, CurrentTimeInWaypoint);
+       
+        if (target == null) Camera.main.transform.rotation = GetLerpRotation(CurrentWaypointIndex, CurrentTimeInWaypoint);
+        else Camera.main.transform.rotation = Quaternion.LookRotation((target.transform.position - Camera.main.transform.position).normalized);
+
+        Vector3 GetBezierPosition(int pointIndex, float time) {
+            float t = points[pointIndex].positionCurve.Evaluate(time);
+            int nextIndex = GetNextIndex(pointIndex);
+
+            return
+                Vector3.Lerp(Vector3.Lerp(Vector3.Lerp(points[pointIndex].position, points[pointIndex].position + points[pointIndex].handlenext, t), Vector3.Lerp(points[pointIndex].position + points[pointIndex].handlenext, points[nextIndex].position + points[nextIndex].handleprev, t), t),
+                Vector3.Lerp(Vector3.Lerp(points[pointIndex].position + points[pointIndex].handlenext, points[nextIndex].position + points[nextIndex].handleprev, t),
+                Vector3.Lerp(points[nextIndex].position + points[nextIndex].handleprev, points[nextIndex].position, t), t), t);
+        }
+
+        Quaternion GetLerpRotation(int pointIndex, float time) { return Quaternion.LerpUnclamped(points[pointIndex].rotation, points[GetNextIndex(pointIndex)].rotation, points[pointIndex].rotationCurve.Evaluate(time)); }
+
+        int GetNextIndex(int index) {
+            if (index == points.Count-1) return 0;
+            return index + 1;
+        }
+    }
+
+    void WaitForDecision() {
+        if (localEndCam) {
+            Camera.main.transform.SetPositionAndRotation(localEndCam.transform.position, localEndCam.transform.rotation);
+            Invoke(nameof(EndPathing), localEndCamTime);
+        }
+        else { EndPathing(); }
+    }
+
+    void EndPathing() { StopAllCoroutines(); }
 
 #if UNITY_EDITOR
     public void OnDrawGizmos() {
