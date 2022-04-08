@@ -14,20 +14,11 @@ public class CPC_CameraPathInspector : Editor {
     protected AnimationCurve allAnimationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     protected SerializedObject serializedObjectTarget;
-    protected SerializedProperty useMainCameraProperty;
     protected SerializedProperty selectedCameraProperty;
-    protected SerializedProperty lookAtTargetProperty;
     protected SerializedProperty lookAtTargetTransformProperty;
-    protected SerializedProperty playOnAwakeProperty;
-    protected SerializedProperty playOnAwakeTimeProperty;
-    protected SerializedProperty visualPathProperty;
-    protected SerializedProperty visualInactivePathProperty;
-    protected SerializedProperty visualFrustumProperty;
-    protected SerializedProperty visualHandleProperty;
-    protected SerializedProperty loopedProperty;
+    protected SerializedProperty visualPathProperty, visualInactivePathProperty, visualFrustumProperty, visualHandleProperty;
+    protected SerializedProperty loopedProperty, afterLoopProperty;
     protected SerializedProperty alwaysShowProperty;
-    protected SerializedProperty afterLoopProperty;
-    protected SerializedProperty hasTime;
     protected SerializedProperty timer;
 
     protected GUIContent addPointContent = new GUIContent("Add Point", "Adds a waypoint at the scene view camera's position/rotation");
@@ -45,9 +36,7 @@ public class CPC_CameraPathInspector : Editor {
     protected GUIContent replaceAllRotationContent = new GUIContent("Replace all rotation lerps", "Replaces curve types (and curves when set to \"Custom\") of all the waypoint rotation lerp types with the specified values");
     protected GUIContent AddTimer = new GUIContent("Add Time", "Adds timer to the camera");
 
-    protected CPC_EManipulationModes cameraTranslateMode;
-    protected CPC_EManipulationModes cameraRotationMode;
-    protected CPC_EManipulationModes handlePositionMode;
+    protected CPC_EManipulationModes cameraTranslateMode, handlePositionMode, cameraRotationMode;
     protected CPC_ENewWaypointMode waypointMode;
     protected CPC_ECurveType allCurveType = CPC_ECurveType.Custom;
 
@@ -71,7 +60,7 @@ public class CPC_CameraPathInspector : Editor {
     void Update() {
         if (CPCPathScript == null) return;
         
-        currentTime = CPCPathScript.GetCurrentWayPoint() + CPCPathScript.GetCurrentTimeInWaypoint();
+        currentTime = CPCPathScript.CurrentWaypointIndex + CPCPathScript.CurrentTimeInWaypoint;
         if (Math.Abs(currentTime - previousTime) > 0.0001f) {
             Repaint();
             previousTime = currentTime;
@@ -81,22 +70,22 @@ public class CPC_CameraPathInspector : Editor {
     public override void OnInspectorGUI() {
         serializedObjectTarget.Update();
         DrawPlaybackWindow();
+
         Rect scale = GUILayoutUtility.GetLastRect();
         hasScrollBar = (Screen.width - scale.width <= 12);
-        GUILayout.Space(5);
-        GUILayout.Box("", GUILayout.Width(Screen.width - 20), GUILayout.Height(3));
-        GUILayout.Space(5);
-        DrawBasicSettings();
-        GUILayout.Space(5);
+
+        GUILayout.Space(5); GUILayout.Box("", GUILayout.Width(Screen.width - 20), GUILayout.Height(3));
+        GUILayout.Space(5); DrawBasicSettings();
+
+        GUILayout.Space(5); 
         GUILayout.Box("", GUILayout.Width(Screen.width - 20), GUILayout.Height(3));
         DrawVisualDropdown();
         GUILayout.Box("", GUILayout.Width(Screen.width - 20), GUILayout.Height(3));
         DrawManipulationDropdown();
         GUILayout.Box("", GUILayout.Width(Screen.width - 20), GUILayout.Height(3));
-        GUILayout.Space(10);
-        DrawWaypointList();
-        GUILayout.Space(10);
-        DrawRawValues();
+
+        GUILayout.Space(10); DrawWaypointList();
+        GUILayout.Space(10); DrawRawValues();
         serializedObjectTarget.ApplyModifiedProperties();
     }
 
@@ -125,20 +114,15 @@ public class CPC_CameraPathInspector : Editor {
 
     void GetVariableProperties() {
         serializedObjectTarget = new SerializedObject(CPCPathScript);
-        useMainCameraProperty = serializedObjectTarget.FindProperty("useMainCamera");
         selectedCameraProperty = serializedObjectTarget.FindProperty("selectedCamera");
-        lookAtTargetProperty = serializedObjectTarget.FindProperty("lookAtTarget");
         lookAtTargetTransformProperty = serializedObjectTarget.FindProperty("target");
         visualPathProperty = serializedObjectTarget.FindProperty("visual.pathColor");
         visualInactivePathProperty = serializedObjectTarget.FindProperty("visual.inactivePathColor");
         visualFrustumProperty = serializedObjectTarget.FindProperty("visual.frustrumColor");
         visualHandleProperty = serializedObjectTarget.FindProperty("visual.handleColor");
         loopedProperty = serializedObjectTarget.FindProperty("looped");
-        hasTime = serializedObjectTarget.FindProperty("hasTIme");
         alwaysShowProperty = serializedObjectTarget.FindProperty("alwaysShow");
         afterLoopProperty = serializedObjectTarget.FindProperty("afterLoop");
-        playOnAwakeProperty = serializedObjectTarget.FindProperty("playOnAwake");
-        playOnAwakeTimeProperty = serializedObjectTarget.FindProperty("playOnAwakeTime");
         timer = serializedObjectTarget.FindProperty("m_Timer");
     }
 
@@ -149,12 +133,14 @@ public class CPC_CameraPathInspector : Editor {
         pointReorderableList.drawElementCallback = (rect, index, active, focused) => {
             float startRectY = rect.y;
             if (index > CPCPathScript.GetPoints().Count - 1) return;
+
             rect.height -= 2;
             float fullWidth = rect.width - 16 * (hasScrollBar ? 1 : 0);
             rect.width = 40;
             fullWidth -= 40;
             rect.height /= 2;
             GUI.Label(rect, "#" + (index + 1));
+
             rect.y += rect.height - 3;
             rect.x -= 14;
             rect.width += 12;
@@ -251,11 +237,14 @@ public class CPC_CameraPathInspector : Editor {
             float fullWidth = rect.width;
             rect.width = 56;
             GUI.Label(rect, "Sum: " + CPCPathScript.GetPoints().Count);
+
             rect.x += rect.width;
             rect.width = (fullWidth - 78) / 3;
             GUI.Label(rect, "Position Lerp");
+
             rect.x += rect.width;
             GUI.Label(rect, "Rotation Lerp");
+
             rect.x += rect.width * 2;
             GUI.Label(rect, "Del.");
         };
@@ -272,11 +261,11 @@ public class CPC_CameraPathInspector : Editor {
         GUILayout.BeginHorizontal();
         if (GUILayout.Button(testButtonContent)) { /*CPCPathScript.PlayPath(time);*/ }
 
-        if (!CPCPathScript.IsPaused()) {
-            if (Application.isPlaying && !CPCPathScript.IsPlaying()) GUI.enabled = false;
-            if (GUILayout.Button(pauseButtonContent)) CPCPathScript.PausePath();
+        if (!CPCPathScript.Paused) {
+            if (Application.isPlaying && !CPCPathScript.Playing) GUI.enabled = false;
+            if (GUILayout.Button(pauseButtonContent)) CPCPathScript.SetPaused(true);
         }
-        else if (GUILayout.Button(continueButtonContent)) CPCPathScript.ResumePath();
+        else if (GUILayout.Button(continueButtonContent)) CPCPathScript.SetPaused(false);
 
         if (GUILayout.Button(stopButtonContent)) /*CPCPathScript.StopPath();*/
 
@@ -295,8 +284,8 @@ public class CPC_CameraPathInspector : Editor {
         EditorGUI.BeginChangeCheck();
         currentTime = EditorGUILayout.Slider(currentTime, 0, CPCPathScript.GetPoints().Count - ((CPCPathScript.GetLooped()) ? 0.01f : 1.01f));
         if (EditorGUI.EndChangeCheck()) {
-            CPCPathScript.SetCurrentWayPoint(Mathf.FloorToInt(currentTime));
-            CPCPathScript.SetCurrentTimeInWaypoint(currentTime % 1);
+            CPCPathScript.CurrentWaypointIndex = Mathf.FloorToInt(currentTime);
+            CPCPathScript.CurrentTimeInWaypoint = currentTime % 1;
             CPCPathScript.RefreshTransform();
         }
         GUI.enabled = false;
@@ -315,15 +304,11 @@ public class CPC_CameraPathInspector : Editor {
 
     void DrawBasicSettings() {
         GUILayout.BeginHorizontal();
-        useMainCameraProperty.boolValue = GUILayout.Toggle(useMainCameraProperty.boolValue, "Use main camera", GUILayout.Width(Screen.width / 3f));
-        GUI.enabled = !useMainCameraProperty.boolValue;
         selectedCameraProperty.objectReferenceValue = (Camera)EditorGUILayout.ObjectField(selectedCameraProperty.objectReferenceValue, typeof(Camera), true);
         GUI.enabled = true;
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        lookAtTargetProperty.boolValue = GUILayout.Toggle(lookAtTargetProperty.boolValue, "Look at target", GUILayout.Width(Screen.width / 3f));
-        GUI.enabled = lookAtTargetProperty.boolValue;
         lookAtTargetTransformProperty.objectReferenceValue = (Transform)EditorGUILayout.ObjectField(lookAtTargetTransformProperty.objectReferenceValue, typeof(Transform), true);
         GUI.enabled = true;
         GUILayout.EndHorizontal();
@@ -337,16 +322,6 @@ public class CPC_CameraPathInspector : Editor {
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        playOnAwakeProperty.boolValue = GUILayout.Toggle(playOnAwakeProperty.boolValue, "Play on awake", GUILayout.Width(Screen.width / 3f));
-        GUI.enabled = playOnAwakeProperty.boolValue;
-        GUILayout.Label("Time: ", GUILayout.Width(Screen.width / 4f));
-        playOnAwakeTimeProperty.floatValue = EditorGUILayout.FloatField(playOnAwakeTimeProperty.floatValue);
-        GUI.enabled = true;
-        GUILayout.EndHorizontal();
-
-        GUILayout.BeginHorizontal();
-        hasTime.boolValue = GUILayout.Toggle(hasTime.boolValue, "Has Time", GUILayout.Width(Screen.width / 3f));
-        GUI.enabled = hasTime.boolValue;
         GUILayout.Label("Camera Timer: ", GUILayout.Width(Screen.width / 4f));
         timer.floatValue = EditorGUILayout.FloatField(timer.floatValue);
         GUI.enabled = true;
@@ -441,31 +416,28 @@ public class CPC_CameraPathInspector : Editor {
         if (GUILayout.Button(addPointContent)) {
             Undo.RecordObject(CPCPathScript, "Added camera path point");
             switch (waypointMode) {
-                case CPC_ENewWaypointMode.MainCamera:
-                    CPCPathScript.GetPoints().Add(new CPC_Point(Camera.main.transform.position, Camera.main.transform.rotation));
-                    break;
-                case CPC_ENewWaypointMode.SceneCamera:
-                    CPCPathScript.GetPoints().Add(new CPC_Point(SceneView.lastActiveSceneView.camera.transform.position, SceneView.lastActiveSceneView.camera.transform.rotation));
-                    break;
+                case CPC_ENewWaypointMode.MainCamera: CPCPathScript.GetPoints().Add(new CPC_Point(Camera.main.transform.position, Camera.main.transform.rotation)); break;
+                case CPC_ENewWaypointMode.SceneCamera: CPCPathScript.GetPoints().Add(new CPC_Point(SceneView.lastActiveSceneView.camera.transform.position, SceneView.lastActiveSceneView.camera.transform.rotation)); break;
                 case CPC_ENewWaypointMode.LastWaypoint:
-                    if (CPCPathScript.GetPoints().Count > 0) CPCPathScript.GetPoints().Add(new CPC_Point(CPCPathScript.GetPoints()[CPCPathScript.GetPoints().Count - 1].position, CPCPathScript.GetPoints()[CPCPathScript.GetPoints().Count - 1].rotation) { handlenext = CPCPathScript.GetPoints()[CPCPathScript.GetPoints().Count - 1].handlenext, handleprev = CPCPathScript.GetPoints()[CPCPathScript.GetPoints().Count - 1].handleprev });
-                    else {
-                        CPCPathScript.GetPoints().Add(new CPC_Point(Vector3.zero, Quaternion.identity));
-                        Debug.LogWarning("No previous waypoint found to place this waypoint, defaulting position to world center");
+                    if (CPCPathScript.GetPoints().Count > 0) {
+                        CPCPathScript.GetPoints().Add(new CPC_Point(CPCPathScript.GetPoints()[CPCPathScript.GetPoints().Count - 1].position, CPCPathScript.GetPoints()[CPCPathScript.GetPoints().Count - 1].rotation) {
+                            handlenext = CPCPathScript.GetPoints()[CPCPathScript.GetPoints().Count - 1].handlenext,
+                            handleprev = CPCPathScript.GetPoints()[CPCPathScript.GetPoints().Count - 1].handleprev
+                        });
                     }
+                    else { CPCPathScript.GetPoints().Add(new CPC_Point(Vector3.zero, Quaternion.identity)); }
                     break;
                 case CPC_ENewWaypointMode.WaypointIndex:
-                    if (CPCPathScript.GetPoints().Count > waypointIndex - 1 && waypointIndex > 0) CPCPathScript.GetPoints().Add(new CPC_Point(CPCPathScript.GetPoints()[waypointIndex - 1].position, CPCPathScript.GetPoints()[waypointIndex - 1].rotation) { handlenext = CPCPathScript.GetPoints()[waypointIndex - 1].handlenext, handleprev = CPCPathScript.GetPoints()[waypointIndex - 1].handleprev });
-                    else {
-                        CPCPathScript.GetPoints().Add(new CPC_Point(Vector3.zero, Quaternion.identity));
-                        Debug.LogWarning("Waypoint index " + waypointIndex + " does not exist, defaulting position to world center");
+                    if (CPCPathScript.GetPoints().Count > waypointIndex - 1 && waypointIndex > 0) {
+                        CPCPathScript.GetPoints().Add(new CPC_Point(CPCPathScript.GetPoints()[waypointIndex - 1].position, CPCPathScript.GetPoints()[waypointIndex - 1].rotation) {
+                            handlenext = CPCPathScript.GetPoints()[waypointIndex - 1].handlenext,
+                            handleprev = CPCPathScript.GetPoints()[waypointIndex - 1].handleprev
+                        });
                     }
+                    else { CPCPathScript.GetPoints().Add(new CPC_Point(Vector3.zero, Quaternion.identity)); }
                     break;
-                case CPC_ENewWaypointMode.WorldCenter:
-                    CPCPathScript.GetPoints().Add(new CPC_Point(Vector3.zero, Quaternion.identity));
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                case CPC_ENewWaypointMode.WorldCenter: CPCPathScript.GetPoints().Add(new CPC_Point(Vector3.zero, Quaternion.identity)); break;
+                default: throw new ArgumentOutOfRangeException();
             }
             selectedIndex = CPCPathScript.GetPoints().Count - 1;
             SceneView.RepaintAll();
@@ -533,6 +505,7 @@ public class CPC_CameraPathInspector : Editor {
                 }
                 else if (Event.current.button != 1 && Handles.Button(CPCPathScript.GetPoints()[i].position + CPCPathScript.GetPoints()[i].handleprev, Quaternion.identity, size, size, Handles.CubeHandleCap)) SelectIndex(i);
             }
+
             if (EditorGUI.EndChangeCheck()) {
                 Undo.RecordObject(target, "Changed Handle Position");
                 CPCPathScript.GetPoints()[i].handleprev = posPrev - CPCPathScript.GetPoints()[i].position;
@@ -571,9 +544,7 @@ public class CPC_CameraPathInspector : Editor {
 
     void DrawSelectionHandles(int i) {
         if (Event.current.button != 1 && selectedIndex != i) {
-            if (cameraTranslateMode == CPC_EManipulationModes.SelectAndTransform && Tools.current == Tool.Move
-                || cameraRotationMode == CPC_EManipulationModes.SelectAndTransform && Tools.current == Tool.Rotate)
-            {
+            if (cameraTranslateMode == CPC_EManipulationModes.SelectAndTransform && Tools.current == Tool.Move || cameraRotationMode == CPC_EManipulationModes.SelectAndTransform && Tools.current == Tool.Rotate) {
                 float size = HandleUtility.GetHandleSize(CPCPathScript.GetPoints()[i].position) * 0.2f;
                 if (Handles.Button(CPCPathScript.GetPoints()[i].position, Quaternion.identity, size, size, Handles.CubeHandleCap)) SelectIndex(i);
             }

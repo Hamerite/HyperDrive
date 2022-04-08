@@ -11,7 +11,7 @@ public class CameraPaths : MonoBehaviour {
     [SerializeField] protected CPC_CameraPath[] paths;
 
     [Header("Behaviour Variables")]
-    [SerializeField] protected bool playOnStart, hasEndCam;
+    [SerializeField] protected bool playOnStart;
     [SerializeField] protected float time, startDelay, stayTime, endCamStayTime;
 
     protected WaitForEndOfFrame waitForEndOfFrame;
@@ -22,8 +22,8 @@ public class CameraPaths : MonoBehaviour {
         if (playOnStart) Invoke(nameof(StartPathing), startDelay);
     }
 
-    void StartPathing() {
-        foreach (var item in paths) item.gameObject.SetActive(false);
+    public void StartPathing() {
+        for (int i = 0; i < paths.Length - 1; i++) { paths[i].gameObject.SetActive(false); }
         path.gameObject.SetActive(true);
 
         StartCoroutine(StartSequence());
@@ -32,7 +32,7 @@ public class CameraPaths : MonoBehaviour {
     IEnumerator StartSequence() {
         yield return waitForEndOfFrame;
 
-        if (hasEndCam) path.PlayPath(time, stayTime, endCamStayTime,endCam);
-        else path.PlayPath(time,stayTime, endCamStayTime, null);
+        if (endCam != null) { path.PlayPath(time, stayTime, endCamStayTime, endCam); }
+        else { path.PlayPath(time, stayTime, endCamStayTime, null); }
     }
 }
